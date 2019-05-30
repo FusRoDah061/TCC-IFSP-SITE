@@ -1,0 +1,101 @@
+.form {
+    position: relative;
+    display: block;
+    padding: 16px;
+
+    .form-inputs {
+        position: relative;
+        display: block;
+        background-color: $white;
+        padding: 15px;
+        margin-bottom: 6px;
+
+        &:last-of-type{
+            margin-bottom: 20px;
+        }
+
+        label {
+            margin-left: 25px;
+        }
+    }
+}
+
+label {
+    font-family: $font-family;
+}
+
+.form-control {
+    border: 5px solid $black;
+    border-radius: 100px;
+    padding: 6px;
+    background-color: #fff;
+
+    input {
+        position: relative;
+        border: none;
+        width: 100%;
+        border-radius: 100px;
+        outline: none;
+        padding-left: 10px;
+    }
+}
+
+.input--w-icon {
+    position: relative;
+
+    input {
+        padding-right: 50px;
+    }
+}
+
+.form-email::after,
+.form-password::after,
+.form-search::after {
+    position: absolute;
+    display: block;
+    font-family: "Ionicons";
+    right: 1rem;
+    top: 0;
+    font-size: 2.3rem;
+    height: 100%;
+    color: $black;
+}
+
+.form-email {
+    &::after{
+        content: '\f322';
+    }
+}
+
+.form-password {
+    &::after {
+        content: '\f316';
+    }
+}
+
+.form-search {
+    &::after {
+        content: '\f375';
+    }
+}
+
+@media only screen and (min-width: 770px) {
+    .input--w-icon {
+        .input {
+            padding-right: 0px;
+        }
+
+    }
+
+    .form-email::after,
+    .form-password::after,
+    .form-search::after {
+        position: absolute;
+        display: block;
+        font-family: "Ionicons";
+        right: 1rem;
+        top: 0;
+        font-size: 1.6rem;
+        height: 100%;
+    }
+}
