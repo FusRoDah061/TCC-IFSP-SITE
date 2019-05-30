@@ -7,8 +7,7 @@
         position: relative;
         display: block;
         background-color: $white;
-        padding: 15px;
-        margin-bottom: 6px;
+        padding: 10px;
 
         &:last-of-type{
             margin-bottom: 20px;
@@ -50,7 +49,8 @@ label {
 
 .form-email::after,
 .form-password::after,
-.form-search::after {
+.form-search::after,
+.form-name::after {
     position: absolute;
     display: block;
     font-family: "Ionicons";
@@ -76,6 +76,12 @@ label {
 .form-search {
     &::after {
         content: '\f375';
+    }
+}
+
+.form-name {
+    &::after {
+        content: '\f2d6';
     }
 }
 

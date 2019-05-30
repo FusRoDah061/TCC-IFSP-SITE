@@ -11,6 +11,12 @@
     overflow: hidden;
     z-index: 1;
     mix-blend-mode: screen;
+    text-align: center;
+
+    &:hover {
+        text-decoration: none;
+        color: $black;
+    }
 }
 
 .btn-block {
@@ -21,14 +27,14 @@
 .btn-white {
     background: $white;
     color: $black;
-    border: 3px solid #e8e8e8;
+    border: 3px solid $white-grayer;
 
     &::after {
         content: "";
         position: absolute;
         display: block;
         transition: 0.25s;
-        background: #e8e8e8;
+        background: $white-grayer;
         width: 10%;
         height: 10%;
         border-radius: 100%;
@@ -43,7 +49,7 @@
     }
 
     &:hover{
-        background-color: transparent;
+        color: $black;
 
         &::after {
             opacity: 1;
@@ -54,8 +60,38 @@
 }
 
 .btn-green {
-    background: $white;
-    color: $black;
+    background: $green;
+    color: $white;
+    border: 3px solid $green-darker;
+
+    &::after {
+        content: "";
+        position: absolute;
+        display: block;
+        transition: 0.25s;
+        background: $green-darker;
+        width: 10%;
+        height: 10%;
+        border-radius: 100%;
+        transform-origin: 50% 50%;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        margin: auto;
+        opacity: 0;
+        z-index: -1;
+    }
+
+    &:hover{
+        color: $white;
+
+        &::after {
+            opacity: 1;
+            transform: scale(15);
+            transition-timing-function: ease-in-out;
+        }
+    }
 }
 
 .btn-blue {

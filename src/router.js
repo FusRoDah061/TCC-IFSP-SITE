@@ -1,7 +1,7 @@
 import Vue from "vue";
 import Router from "vue-router";
 import Login from "./views/Login.vue";
-import Theme from "./views/Theme.vue";
+import Cadastro from "./views/Cadastro.vue";
 
 Vue.use(Router);
 
@@ -15,9 +15,9 @@ export default new Router({
       component: Login
     },
     {
-      path: "/theme",
-      name: "theme",
-      component: Theme
+      path: "/cadastrar",
+      name: "cadastrar",
+      component: Cadastro
     }
   ]
 });
