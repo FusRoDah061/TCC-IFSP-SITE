@@ -7,7 +7,7 @@
         position: relative;
         display: block;
         background-color: $white;
-        padding: 10px;
+        padding: 5px 10px;
 
         &:last-of-type{
             margin-bottom: 20px;
@@ -86,22 +86,21 @@ label {
 }
 
 @media only screen and (min-width: 770px) {
-    .input--w-icon {
-        .input {
-            padding-right: 0px;
-        }
 
+    .form-control {
+        padding: 3px;
     }
 
     .form-email::after,
     .form-password::after,
-    .form-search::after {
+    .form-search::after,
+    .form-name::after {
         position: absolute;
         display: block;
         font-family: "Ionicons";
         right: 1rem;
         top: 0;
-        font-size: 1.6rem;
+        font-size: 1.38rem;
         height: 100%;
     }
 }

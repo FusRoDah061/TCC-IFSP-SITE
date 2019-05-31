@@ -27,7 +27,7 @@
 .btn-white {
     background: $white;
     color: $black;
-    border: 3px solid $white-grayer;
+    border: 5px solid $white-grayer;
 
     &::after {
         content: "";
@@ -62,7 +62,7 @@
 .btn-green {
     background: $green;
     color: $white;
-    border: 3px solid $green-darker;
+    border: 5px solid $green-darker;
 
     &::after {
         content: "";
@@ -97,4 +97,10 @@
 .btn-blue {
     background: $white;
     color: $black;
+}
+
+@media only screen and (min-width: 770px) {
+    .btn {
+        padding: 7px 20px;
+    }
 }

@@ -3,9 +3,9 @@
         h1.app-title Prancha de Comunicação
             span Online
 
-        h2.text-center Cadastrar-se
+        h2.text-center.no-mg Cadastrar-se
 
-        form#js-frm-cadastro.form.col-md-8.offset-md-2
+        form#js-frm-cadastro.form.col-md-8.offset-md-2.col-lg-6.offset-lg-3
 
             div.form-inputs
                 label(for="js-nome") Nome
@@ -27,7 +27,7 @@
                 div.form-control.form-password.input--w-icon
                     input#js-senha-conf(type="password" minlength="8" maxlength="255" required)
 
-            button.btn.btn-green.mt-4.mb-4.btn-block Criar minha conta
+            button.btn.btn-green.mt-md-2.mb-md-2.mt-sm-4.mb-sm-4.btn-block Criar minha conta
 
-            router-link(to="/").btn.btn-white.mt-4.mb-4.btn-block Já tenho uma conta
+            router-link(to="/").btn.btn-white.mt-md-2.mb-md-2.mt-sm-4.mb-sm-4.btn-block Já tenho uma conta
 </template>
