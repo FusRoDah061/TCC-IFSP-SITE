@@ -16,8 +16,8 @@
 
             div.g-recaptcha(data-sitekey="6Lf2baYUAAAAADyhVMO1-BWawCloaD_ywRehnqwt")
 
-            button.btn.btn-green.mt-md-2.mb-md-2.mt-sm-4.mb-sm-4.btn-block Confirmar
+            button.btn.btn-green.my-md-2.my-sm-4.my-2.btn-block Confirmar
 
-            router-link(to="/").btn.btn-white.mt-md-2.mb-md-2.mt-sm-4.mb-sm-4.btn-block Lembrei minha senha!
-            router-link(to="/cadastrar").btn.btn-white.mt-md-2.mb-md-2.mt-sm-4.mb-sm-4.btn-block Não tenho uma conta
+            router-link(to="/").btn.btn-white.my-md-2.my-sm-4.my-2.btn-block Lembrei minha senha!
+            router-link(to="/cadastrar").btn.btn-white.my-md-2.my-sm-4.my-2.btn-block Não tenho uma conta
 </template>

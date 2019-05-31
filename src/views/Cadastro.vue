@@ -27,7 +27,7 @@
                 div.form-control.form-password.input--w-icon
                     input#js-senha-conf(type="password" minlength="8" maxlength="255" required)
 
-            button.btn.btn-green.mt-md-2.mb-md-2.mt-sm-4.mb-sm-4.btn-block Criar minha conta
+            button.btn.btn-green.my-md-2.my-sm-4.my-2.btn-block Criar minha conta
 
-            router-link(to="/").btn.btn-white.mt-md-2.mb-md-2.mt-sm-4.mb-sm-4.btn-block Já tenho uma conta
+            router-link(to="/").btn.btn-white.my-md-2.my-sm-4.my-2.btn-block Já tenho uma conta
 </template>

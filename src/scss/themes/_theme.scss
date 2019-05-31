@@ -1,20 +1,20 @@
 .app-title {
     text-align: center;
     font-weight: normal;
-    font-size: 3rem;
+    font-size: 2rem;
 
     span {
         display: block;
         text-align: center;
         font-weight: bold;
-        font-size: 5rem;
+        font-size: 4rem;
         line-height: normal;
     }
 }
 
-@media only screen and (min-width: 770px) {
+@media only screen and (max-width: 470px) {
     .app-title {
-        font-size: 1.7rem;
+        font-size: 1.5rem;
 
         span {
             font-size: 2.6rem;

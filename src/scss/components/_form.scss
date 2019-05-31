@@ -55,10 +55,10 @@ label {
     display: block;
     font-family: "Ionicons";
     right: 1rem;
-    top: 0;
-    font-size: 2.3rem;
-    height: 100%;
+    font-size: 2rem;
     color: $black;
+    top: 50%;
+    transform: translateY(-50%);
 }
 
 .form-email {
@@ -99,8 +99,8 @@ label {
         display: block;
         font-family: "Ionicons";
         right: 1rem;
-        top: 0;
         font-size: 1.38rem;
-        height: 100%;
+        top: 50%;
+        transform: translateY(-50%);
     }
 }

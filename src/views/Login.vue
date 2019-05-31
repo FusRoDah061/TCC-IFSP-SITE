@@ -14,9 +14,9 @@
                 div.form-control.form-password.input--w-icon
                     input#js-senha(type="password" minlength="8" maxlength="255" required)
 
-            router-link(to="/recuperar").d-block.text-right.mb-sm-4 Esqueci minha senha
+            router-link(to="/recuperar").d-block.text-right.mb-4 Esqueci minha senha
 
-            button.btn.btn-green.mt-md-2.mb-md-2.mt-sm-4.mb-sm-4.btn-block Acessar
+            button.btn.btn-green.my-md-2.my-sm-4.my-2.btn-block Acessar
 
-            router-link(to="/cadastrar").btn.btn-white.mt-md-2.mb-md-2.mt-sm-4.mb-sm-4.btn-block Não tenho uma conta
+            router-link(to="/cadastrar").btn.btn-white.my-md-2.my-sm-4.my-2.btn-block Não tenho uma conta
 </template>
