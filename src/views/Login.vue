@@ -31,7 +31,6 @@
         name: 'login',
         data()  {
             return {
-                loginEnabled: false,
                 email: '',
                 senha: ''
             }
@@ -39,6 +38,19 @@
         methods: {
             login(event) {
                 event.preventDefault();
+
+                if(!this.email) {
+                    toast.error('Informe seu e-mail.');
+                    return;
+                }
+                else if(!this.senha) {
+                    toast.error('Você deve informar uma senha.');
+                    return;
+                }
+                else if(this.senha.length < 8){
+                    toast.error('Sua senha não deve conter menos de 8 caracteres.');
+                    return;
+                }
 
                 axios({
                     method: 'get',
@@ -51,12 +63,15 @@
                         'Accept': 'application/json'
                     }
                 })
-                .then(response => console.log(response))
+                .then(response => {
+                    if(response.status == 200){
+                        localStorage.usuario = JSON.stringify(response.data);
+                        this.$router.push("home");
+                    }
+                })
                 .catch(error => {
                     if (error.response) {
                         let toast = this.$refs.toast;
-
-                        console.log(error.response);
                         toast.error(error.response.data.message);
                     }
                 });

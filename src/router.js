@@ -4,6 +4,7 @@ import Login from "./views/Login.vue";
 import Cadastro from "./views/Cadastro.vue";
 import Recuperar from "./views/Recuperar.vue";
 import Senha from "./views/Senha.vue";
+import Home from "./views/Home.vue";
 
 Vue.use(Router);
 
@@ -30,6 +31,11 @@ export default new Router({
       path: "/senha/:pedido",
       name: "senha",
       component: Senha
+    },
+    {
+      path: "/home",
+      name: "home",
+      component: Home
     }
   ]
 });
