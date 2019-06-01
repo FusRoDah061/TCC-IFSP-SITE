@@ -21,7 +21,8 @@ export default {
             showDetails: false,
             mensagem: null,
             detalhes: null,
-            type: 'toast-default'
+            type: 'toast-default',
+            closeCallback: null
         }
     },
     computed: {
@@ -33,25 +34,27 @@ export default {
         }
     },
     methods: {
-        info(mensagem, detalhes = null) {
-            this.show(mensagem, detalhes, 'info');
+        info(mensagem, detalhes = null, callback = null) {
+            this.show(mensagem, detalhes, 'info', callback);
         },
 
-        error(mensagem, detalhes = null) {
-            this.show(mensagem, detalhes, 'error');
+        error(mensagem, detalhes = null, callback = null) {
+            this.show(mensagem, detalhes, 'error', callback);
         },
 
-        success() {
-            this.show(mensagem, detalhes, 'success');
+        success(mensagem, detalhes = null, callback = null) {
+            this.show(mensagem, detalhes, 'success', callback);
         },
 
-        show(mensagem, detalhes = null, type = 'default') {
+        show(mensagem, detalhes = null, type = 'default', callback = null) {
             this.mensagem = mensagem;
             this.detalhes = detalhes;
 
             this.shown = true;
 
             this.type = `toast-${type}`;
+
+            this.closeCallback = callback;
 
             setTimeout(() => {
                 this.close();
@@ -62,6 +65,10 @@ export default {
             this.mensagem = '';
             this.detalhes = '';
             this.shown = false;
+
+            if(this.closeCallback != null){
+                this.closeCallback();
+            }
         },
 
         toggleDetails() {

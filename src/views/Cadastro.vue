@@ -52,23 +52,23 @@
                 event.preventDefault();
 
                 if(!this.nome) {
-                    toast.error('Informe seu nome.');
+                    toast.info('Informe seu nome.');
                     return;
                 }
                 else if(!this.email) {
-                    toast.error('Informe seu e-mail.');
+                    toast.info('Informe seu e-mail.');
                     return;
                 }
                 else if(!this.senha) {
-                    toast.error('Você deve informar uma senha.');
+                    toast.info('Você deve informar uma senha.');
                     return;
                 }
                 else if(this.senha.length < 8){
-                    toast.error('Sua senha não deve conter menos de 8 caracteres.');
+                    toast.info('Sua senha não deve conter menos de 8 caracteres.');
                     return;
                 }
                 else if(this.senha != this.senhaConf) {
-                    toast.error('As senhas devem ser iguais.');
+                    toast.info('As senhas devem ser iguais.');
                     return;
                 }
 
@@ -81,7 +81,7 @@
                         senha: md5(this.senha),
                         senha_confirmation: md5(this.senhaConf)
                     },
-                    header: {
+                    headers: {
                         'Accept': 'application/json',
                         'Content-Type': 'application/json'
                     }

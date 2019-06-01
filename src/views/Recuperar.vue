@@ -48,11 +48,11 @@ export default {
             let recaptchaToken = grecaptcha.getResponse();
 
             if(!this.email){
-                this.toast.error('Informe seu e-mail cadastrado.');
+                this.toast.info('Informe seu e-mail cadastrado.');
                 return;
             }
             else if(!recaptchaToken) {
-                this.toast.error('Marque a caixa "Não sou um robô".');
+                this.toast.info('Marque a caixa "Não sou um robô".');
                 return;
             }
 

@@ -40,15 +40,15 @@
                 event.preventDefault();
 
                 if(!this.email) {
-                    toast.error('Informe seu e-mail.');
+                    toast.info('Informe seu e-mail.');
                     return;
                 }
                 else if(!this.senha) {
-                    toast.error('Você deve informar uma senha.');
+                    toast.info('Você deve informar uma senha.');
                     return;
                 }
                 else if(this.senha.length < 8){
-                    toast.error('Sua senha não deve conter menos de 8 caracteres.');
+                    toast.info('Sua senha não deve conter menos de 8 caracteres.');
                     return;
                 }
 
@@ -59,14 +59,14 @@
                         email: this.email,
                         password: md5(this.senha)
                     },
-                    header: {
+                    headers: {
                         'Accept': 'application/json'
                     }
                 })
                 .then(response => {
                     if(response.status == 200){
                         localStorage.usuario = JSON.stringify(response.data);
-                        this.$router.push("home");
+                        this.$router.push("/home");
                     }
                 })
                 .catch(error => {
