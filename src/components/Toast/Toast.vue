@@ -54,11 +54,13 @@ export default {
             this.type = `toast-${type}`;
 
             setTimeout(() => {
-                this.shown = false;
+                this.close();
             }, 4000);
         },
 
         close() {
+            this.mensagem = '';
+            this.detalhes = '';
             this.shown = false;
         },
 

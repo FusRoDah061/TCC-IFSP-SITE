@@ -1,5 +1,5 @@
 <template lang="pug">
-    div.cadastro.form-middle
+    div.form-middle
         toast(ref="toast")
 
         h1.app-title Prancha de Comunicação

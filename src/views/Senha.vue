@@ -1,5 +1,5 @@
 <template lang="pug">
-    div.login
+    div.form-middle
         h1.app-title Prancha de Comunicação
             span Online
 
