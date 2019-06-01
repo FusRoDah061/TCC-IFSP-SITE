@@ -32,8 +32,12 @@
         data()  {
             return {
                 email: '',
-                senha: ''
+                senha: '',
+                toast: null
             }
+        },
+        mounted() {
+            this.toast = this.$refs.toast;
         },
         methods: {
             login(event) {
@@ -71,8 +75,7 @@
                 })
                 .catch(error => {
                     if (error.response) {
-                        let toast = this.$refs.toast;
-                        toast.error(error.response.data.message);
+                        this.toast.error(error.response.data.message);
                     }
                 });
             }

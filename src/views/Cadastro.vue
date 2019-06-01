@@ -44,8 +44,12 @@
                 nome: '',
                 email: '',
                 senha: '',
-                senhaConf: ''
+                senhaConf: '',
+                toast: null
             }
+        },
+        mounted() {
+            this.toast = this.$refs.toast;
         },
         methods: {
             cadastrar(event) {
@@ -94,8 +98,7 @@
                 })
                 .catch(error => {
                     if (error.response) {
-                        let toast = this.$refs.toast;
-                        toast.error(error.response.data.message);
+                        this.toast.error(error.response.data.message);
                     }
                 });
             }
