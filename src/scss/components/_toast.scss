@@ -1,0 +1,111 @@
+.toast {
+    position: fixed;
+    display: block;
+    min-width: 300px;
+    margin: auto;
+    margin-top: 15px;
+    padding: 12px;
+    color: $white;
+    background: $gray;
+    border: 5px solid $black;
+    top: -200px;
+    right: 15px;
+    left: 15px;
+    z-index: 100;
+    transition: top 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+    border-radius: 28px;
+
+    p {
+        margin: 0;
+    }
+
+    .toast-toggle-details {
+        position: relative;
+        cursor: pointer;
+        padding-left: 15px;
+        font-size: 1rem;
+        margin-top: 5px;
+
+        .icon {
+            position: absolute;
+            left: 0;
+            transition: .2s;
+        }
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+
+    .toast-details {
+        position: relative;
+        display: none;
+        font-size: 1.1rem;
+    }
+
+    .toast-details--open {
+        display: block;
+    }
+
+    &--shown {
+        top: 0;
+    }
+
+    &-close {
+        position: absolute;
+        display: block;
+        width: 50px;
+        height: 50px;
+        margin: 5px;
+        top: 0;
+        right: 0;
+        border: none;
+        outline: none !important;
+        background: transparent;
+        border-radius: 100%;
+        cursor: pointer;
+        transition: background .2s ease-in-out;
+
+        &:hover {
+            background: rgba(255,255,255,.3);
+        }
+
+        .icon {
+            font-size: 2rem;
+            color: $white;
+        }
+    }
+
+    &-info {
+        background: $blue;
+        border: 5px solid $blue-darker;
+    }
+
+    &-error {
+        background: $red;
+        border: 5px solid $red-darker;
+    }
+
+    &-success {
+        background: $green;
+        border: 5px solid $green-darker;
+    }
+}
+
+@media only screen and (min-width: 770px) {
+    .toast {
+        width: 50vw;
+        margin-right: 15px;
+        border-radius: 17px;
+
+        &-close {
+            width: 30px;
+            height: 30px;
+
+            .icon {
+                font-size: 1.2rem;
+                color: $white;
+            }
+        }
+    }
+}

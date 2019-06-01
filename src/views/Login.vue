@@ -1,5 +1,7 @@
 <template lang="pug">
-    div.login
+    div.login.form-middle
+        toast(ref="toast")
+
         h1.app-title Prancha de Comunicação
             span Online
 
@@ -23,6 +25,8 @@
 
 <script>
 
+    import { Values } from '../env';
+
     export default {
         name: 'login',
         data()  {
@@ -36,8 +40,26 @@
             login(event) {
                 event.preventDefault();
 
-                console.log(this.email);
-                console.log(md5(this.senha));
+                axios({
+                    method: 'get',
+                    url: `${Values.API_URL}/auth`,
+                    params: {
+                        email: this.email,
+                        password: md5(this.senha)
+                    },
+                    header: {
+                        'Accept': 'application/json'
+                    }
+                })
+                .then(response => console.log(response))
+                .catch(error => {
+                    if (error.response) {
+                        let toast = this.$refs.toast;
+
+                        console.log(error.response);
+                        toast.error(error.response.data.message);
+                    }
+                });
             }
         }
     }
