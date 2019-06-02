@@ -1,6 +1,7 @@
 <template lang="pug">
     div.form-middle
         toast(ref="toast")
+        spinner(position="center" fixed=true v-bind:show="isLoading")
 
         h1.app-title Prancha de Comunicação
             span Online
@@ -33,7 +34,8 @@ export default {
         return {
             email: '',
             enviado: false,
-            toast: null
+            toast: null,
+            isLoading: false
         }
     },
     mounted() {
@@ -56,6 +58,8 @@ export default {
                 return;
             }
 
+            this.isLoading = true;
+
             axios({
                 method: 'post',
                 url: `${Values.API_URL}/senha/recuperar`,
@@ -65,22 +69,33 @@ export default {
                 }
             })
             .then(response =>  {
+                this.isLoading = false;
+
                 if(response.status == 200){
                     this.enviado = true;
                 }
             })
             .catch(error => {
+                this.isLoading = false;
+
                 if (error.response) {
                     this.toast.error(error.response.data.message);
+                }
+                else {
+                    this.toast.error(error.message, error.stack);
                 }
             });
         },
         initReCaptcha() {
+            this.isLoading = true;
+
             setTimeout(() => {
                 if (typeof grecaptcha === 'undefined' && typeof grecaptcha.render ==='undefined') {
                     this.initReCaptcha();
                 }
                 else {
+                    this.isLoading = false;
+
                     grecaptcha.render('recaptcha', {
                         'sitekey': Values.RECAPTCHA_KEY
                     });

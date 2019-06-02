@@ -12,7 +12,7 @@
     right: 15px;
     left: 15px;
     z-index: 100;
-    transition: top 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+    transition: top 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55), height 0.4s;
     border-radius: 28px;
 
     p {
@@ -23,7 +23,7 @@
         position: relative;
         cursor: pointer;
         padding-left: 15px;
-        font-size: 1rem;
+        font-size: 0.8rem;
         margin-top: 5px;
 
         .icon {
@@ -40,7 +40,7 @@
     .toast-details {
         position: relative;
         display: none;
-        font-size: 1.1rem;
+        font-size: 0.8rem;
     }
 
     .toast-details--open {

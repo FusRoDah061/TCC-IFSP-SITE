@@ -1,6 +1,7 @@
 <template lang="pug">
     div.form-middle
         toast(ref="toast")
+        spinner(position="center" fixed=true v-bind:show="isLoading")
 
         h1.app-title Prancha de Comunicação
             span Online
@@ -35,7 +36,8 @@ export default {
             novaSenhaConf: '',
             toast: null,
             pedidoValido: false,
-            usuario: null
+            usuario: null,
+            isLoading: false
         }
     },
     mounted() {
@@ -71,6 +73,8 @@ export default {
                 return;
             }
 
+            this.isLoading = true;
+
             axios({
                 method: 'put',
                 url: `${Values.API_URL}/usuarios/${this.usuario.hid}/senha`,
@@ -87,6 +91,8 @@ export default {
                 }
             })
             .then(response =>  {
+                this.isLoading = false;
+
                 if(response.status == 200){
                     this.toast.success('Senha alterada com sucesso! Você já pode fazer login.', null, () => {
                         this.$router.push("/");
@@ -94,8 +100,13 @@ export default {
                 }
             })
             .catch(error => {
+                this.isLoading = false;
+
                 if (error.response) {
                     this.toast.error(error.response.data.message);
+                }
+                else {
+                    this.toast.error(error.message, error.stack);
                 }
             });
         },
@@ -103,7 +114,9 @@ export default {
         verificarPedido(){
             let tokenPedido = this.$route.params.pedido;
 
-             axios({
+            this.isLoading = true;
+
+            axios({
                 method: 'get',
                 url: `${Values.API_URL}/senha/recuperar/${tokenPedido}`,
                 headers: {
@@ -111,24 +124,35 @@ export default {
                 }
             })
             .then(response =>  {
+                this.isLoading = false;
+
                 if(response.status == 200){
                     this.usuario = response.data;
                     this.pedidoValido = true;
                 }
             })
             .catch(error => {
+                this.isLoading = false;
+
                 if (error.response) {
                     this.toast.error(error.response.data.message);
+                }
+                else {
+                    this.toast.error(error.message, error.stack);
                 }
             });
         },
 
         initReCaptcha() {
+            this.isLoading = true;
+
             setTimeout(() => {
                 if (typeof grecaptcha === 'undefined' && typeof grecaptcha.render ==='undefined') {
                     this.initReCaptcha();
                 }
                 else {
+                    this.isLoading = false;
+
                     grecaptcha.render('recaptcha', {
                         'sitekey': Values.RECAPTCHA_KEY
                     });

@@ -1,6 +1,7 @@
 <template lang="pug">
     div.form-middle
         toast(ref="toast")
+        spinner(position="center" fixed=true v-bind:show="isLoading")
 
         h1.app-title Prancha de Comunicação
             span Online
@@ -45,7 +46,8 @@
                 email: '',
                 senha: '',
                 senhaConf: '',
-                toast: null
+                toast: null,
+                isLoading: false
             }
         },
         mounted() {
@@ -76,6 +78,8 @@
                     return;
                 }
 
+                this.isLoading = true;
+
                 axios({
                     method: 'post',
                     url: `${Values.API_URL}/usuarios`,
@@ -91,14 +95,21 @@
                     }
                 })
                 .then(response =>  {
+                    this.isLoading = false;
+
                     if(response.status == 201){
                         localStorage.usuario = JSON.stringify(response.data);
                         this.$router.push("home");
                     }
                 })
                 .catch(error => {
+                    this.isLoading = false;
+
                     if (error.response) {
                         this.toast.error(error.response.data.message);
+                    }
+                    else {
+                        this.toast.error(error.message, error.stack);
                     }
                 });
             }

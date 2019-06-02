@@ -26,7 +26,7 @@ export default {
         }
     },
     computed: {
-        classObject: function () {
+        classObject() {
             return {
                 'toast--shown': this.shown,
                 [this.type]: this.type
@@ -62,13 +62,17 @@ export default {
         },
 
         close() {
-            this.mensagem = '';
-            this.detalhes = '';
             this.shown = false;
 
-            if(this.closeCallback != null){
-                this.closeCallback();
-            }
+            setTimeout(() => {
+                this.mensagem = '';
+                this.detalhes = '';
+                this.showDetails = false;
+
+                if(this.closeCallback != null){
+                    this.closeCallback();
+                }
+            }, 500);
         },
 
         toggleDetails() {
