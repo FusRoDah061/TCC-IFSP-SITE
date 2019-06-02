@@ -1,5 +1,6 @@
 .spinner {
     display: none;
+    z-index: 200;
 
     &--shown {
         display: block;

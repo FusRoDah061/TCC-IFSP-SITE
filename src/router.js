@@ -8,6 +8,15 @@ import Home from "./views/Home.vue";
 
 Vue.use(Router);
 
+function guard(to, from, next) {
+  if (localStorage.usuario) {
+    next();
+  }
+  else {
+    next('/');
+  }
+}
+
 export default new Router({
   mode: "history",
   base: process.env.BASE_URL,
@@ -35,6 +44,7 @@ export default new Router({
     {
       path: "/home",
       name: "home",
+      beforeEnter: guard,
       component: Home
     }
   ]
