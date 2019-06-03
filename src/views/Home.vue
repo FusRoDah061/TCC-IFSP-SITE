@@ -1,3 +1,6 @@
 <template lang="pug">
-    <h1>Home</h1>
+    div.body
+        cabecalho
+
+        h1 Home
 </template>

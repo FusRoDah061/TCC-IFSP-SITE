@@ -1,0 +1,211 @@
+$header-height: 60px;
+$image-size: 75px;
+$image-size-smaller: 60px;
+
+.body {
+    padding-top: $header-height;
+}
+
+.page-header {
+    position: fixed;
+    display: block;
+    width: 100vw;
+    top: 0;
+    height: $header-height;
+    background-color: $white;
+
+    .btn-menu {
+        width: $header-height;
+        height: $header-height;
+        padding: 14px 0px;
+        background: none;
+        border: none;
+        outline: none !important;
+        cursor: pointer;
+
+        .icon::before {
+            font-size: 2rem;
+        }
+    }
+
+    .sidemenu-overlay {
+        position: fixed;
+        display: none;
+        height: 100vh;
+        width: 100vw;
+    }
+
+    .sidemenu {
+        position: fixed;
+        display: block;
+        height: 100vh;
+        width: 50vw;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        left: -55vw;
+        padding: 15px;
+        transition: left 0.2s cubic-bezier(0.51, -0.02, 0.74, 0.05);
+        background: $white;
+        box-shadow: 0px 0px 6px 1px $gray;
+
+        .sidemenu-close {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: $header-height;
+            height: $header-height;
+            padding: 14px 0px;
+            background: none;
+            border: none;
+            outline: none !important;
+            cursor: pointer;
+
+            .icon::before {
+                font-size: 2rem;
+            }
+        }
+
+        .sidemenu-head {
+            display: flex;
+            margin-bottom: 40px;
+
+            img {
+                width: $image-size;
+                height: $image-size;
+                border: 5px solid $white;
+                margin-right: 15px;
+            }
+
+            p {
+                font-size: 1.7rem;
+                font-weight: bold;
+                margin: 0;
+                height: $image-size;
+                line-height: $image-size;
+            }
+        }
+
+        .sidemenu-list {
+            position: relative;
+            padding: 0;
+            margin: 0;
+
+            .sidemenu-item {
+                list-style: none;
+                cursor: pointer;
+                padding: 15px 20px;
+                transition: .2s;
+
+                a, p {
+                    color: $black;
+                    text-decoration: none !important;
+                    margin: 0;
+                }
+
+                &:hover {
+                    background: $white-grayer;
+                    font-weight: bold;
+                }
+            }
+
+            .item--static {
+                padding: 0px 27px;
+                transition: none;
+                cursor: default;
+                font-size: .75rem;
+
+                a, p {
+                    color: $gray;
+                }
+
+                &:hover {
+                    background: $white;
+                    font-weight: normal;
+                }
+            }
+
+            .item--divider {
+                height: 2px;
+                background: $white-grayer;
+                padding: 0 !important;
+                margin: 0;
+            }
+        }
+    }
+
+    .sidemenu--open {
+        position: absolute;
+        height: 100vh;
+        top: 0;
+        bottom: 0;
+        left: 0 !important;
+    }
+
+    .sidemenu-overlay--open {
+        position: absolute;
+        display: block;
+        background: rgba(0, 0, 0, 0.5);
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        height: 100vh;
+        width: 100vw;
+
+        animation-name: fade-in;
+        animation-duration: .2s;
+        animation-fill-mode: forwards;
+    }
+
+}
+
+@media only screen and (max-width: 570px) {
+    .page-header {
+        .sidemenu {
+            width: 70vw;
+            left: -78vw;
+        }
+    }
+}
+
+@media only screen and (min-width: 770px) {
+
+    .page-header{
+        .sidemenu {
+            width: 300px;
+            left: -310px;
+
+            .sidemenu-head {
+                img {
+                    width: $image-size-smaller;
+                    height: $image-size-smaller;
+                }
+
+                p {
+                    font-size: 1.3rem;
+                    height: $image-size-smaller;
+                    line-height: $image-size-smaller;
+                }
+            }
+
+            .sidemenu-list {
+                .sidemenu-item {
+                    padding: 10px 15px;
+                }
+            }
+        }
+    }
+}
+
+@keyframes fade-in {
+    0% {
+        display: block;
+        opacity: 0;
+    }
+    100% {
+        display: block;
+        opacity: 1;
+    }
+}
