@@ -3,7 +3,7 @@ $image-size: 75px;
 $image-size-smaller: 60px;
 
 .body {
-    padding-top: $header-height;
+    padding-top: $header-height !important;
 }
 
 .page-header {
@@ -11,8 +11,12 @@ $image-size-smaller: 60px;
     display: block;
     width: 100vw;
     top: 0;
+    left: 0;
+    right: 0;
     height: $header-height;
     background-color: $white;
+    padding: 0px $body-padding;
+    z-index: 100;
 
     .btn-menu {
         width: $header-height;

@@ -1,0 +1,65 @@
+
+.pranchas {
+    .pranchas-content {
+        & > p {
+            margin: 0;
+            font-size: $font-size-sec-title;
+            margin-bottom: 7px;
+        }
+
+        .pranchas-list {
+            position: relative;
+            display: flex;
+            padding: 0;
+            margin: 0;
+            overflow: hidden;
+            justify-content: start;
+
+            .prancha {
+                list-style: none;
+
+                a, button {
+                    display: block;
+                    background: $white;
+                    border: 3px solid $white-grayer;
+                    padding: 6px 15px;
+                    margin: 0px 3px;
+                    border-radius: 8px;
+                    color: $black;
+                    outline: none !important;
+                    text-decoration: none !important;
+                    font-size: 1.2rem;
+                    font-weight: bold;
+                }
+            }
+
+            .btn-nova-prancha > button {
+                background: $green;
+                border: 3px solid $green-darker;
+                color: $white;
+            }
+
+            .btn-todas-pranchas > button {
+                background: $white;
+                border: 3px solid $white-grayer;
+                text-transform: uppercase;
+            }
+        }
+    }
+}
+
+.spinner--shown {
+    display: inline-block;
+}
+
+.spinner {
+    margin-left: 10px;
+
+    .spinner-border {
+        width: 1.5rem;
+        height: 1.5rem;
+        border: 0.2em solid currentColor;
+        border-right-color: transparent;
+        border-radius: 100%;
+    }
+}

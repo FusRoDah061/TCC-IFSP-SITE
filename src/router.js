@@ -8,12 +8,21 @@ import Home from "./views/Home.vue";
 
 Vue.use(Router);
 
-function guard(to, from, next) {
+function authGuard(to, from, next) {
   if (localStorage.usuario) {
     next();
   }
   else {
     next('/');
+  }
+}
+
+function loginGuard(to, from, next) {
+  if (localStorage.usuario) {
+    next('/home');
+  }
+  else {
+    next();
   }
 }
 
@@ -24,27 +33,31 @@ export default new Router({
     {
       path: "/",
       name: "login",
+      beforeEnter: loginGuard,
       component: Login
     },
     {
       path: "/cadastrar",
       name: "cadastrar",
+      beforeEnter: loginGuard,
       component: Cadastro
     },
     {
       path: "/recuperar",
       name: "recuperar",
+      beforeEnter: loginGuard,
       component: Recuperar
     },
     {
       path: "/senha/:pedido",
       name: "senha",
+      beforeEnter: loginGuard,
       component: Senha
     },
     {
       path: "/home",
       name: "home",
-      beforeEnter: guard,
+      beforeEnter: authGuard,
       component: Home
     }
   ]
