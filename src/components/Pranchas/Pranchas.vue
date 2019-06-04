@@ -1,16 +1,17 @@
 <template lang="pug">
-    div.pranchas
+    div.pranchas(v-bind:class="{ 'pranchas-modal':modalView }" v-on:click="toggleModal")
         div.pranchas-content
             p Minhas pranchas temáticas
                 spinner(position="center" v-bind:show="isLoading")
 
-            ul.pranchas-list
-                li.prancha.btn-nova-prancha
-                    button Criar prancha
-                li.prancha(v-for="prancha in pranchas")
-                    router-link(:to="'prancha/' + prancha.hid") {{ prancha.nome }}
-                li.prancha.btn-todas-pranchas(v-if="pranchas")
-                    button Ver todas
+            div.pranchas-list-wrapper
+                ul.pranchas-list
+                    li.prancha.btn-nova-prancha
+                        router-link(to="prancha") Criar nova
+                    li.prancha(v-for="prancha in pranchas")
+                        router-link(:to="'prancha/' + prancha.hid") {{ prancha.nome }}
+                    li.prancha.btn-todas-pranchas(v-if="pranchas")
+                        button(v-on:click="toggleModal") Ver todas
 </template>
 
 <script>
@@ -21,15 +22,13 @@ export default {
     data() {
         return {
             pranchas: null,
-            isLoading: false
-        }
+            isLoading: false,
+            modalView: false
+        };
     },
     props: {
         usuario: String,
         auth: String
-    },
-    created() {
-
     },
     mounted() {
         this.fetchPranchas();
@@ -48,8 +47,9 @@ export default {
             })
             .then(response => {
                 this.isLoading = false;
+
                 if(response.status == 200){
-                    this.pranchas = response.data
+                    this.pranchas = response.data;
                 }
             })
             .catch(error => {
@@ -61,6 +61,11 @@ export default {
                     console.log(error.message, error.stack);
                 }
             });
+        },
+
+        toggleModal(event) {
+            event.stopPropagation();
+            this.modalView = !this.modalView;
         }
     }
 }

@@ -150,7 +150,7 @@ $image-size-smaller: 60px;
     .sidemenu-overlay--open {
         position: absolute;
         display: block;
-        background: rgba(0, 0, 0, 0.5);
+        background: $overlay-background;
         top: 0;
         right: 0;
         bottom: 0;
@@ -168,8 +168,8 @@ $image-size-smaller: 60px;
 @media only screen and (max-width: 570px) {
     .page-header {
         .sidemenu {
-            width: 70vw;
-            left: -78vw;
+            width: 80vw;
+            left: -88vw;
         }
     }
 }

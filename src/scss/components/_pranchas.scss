@@ -1,52 +1,75 @@
-
 .pranchas {
+    transition: .1s;
+
     .pranchas-content {
+        transition: .2s;
+
         & > p {
             margin: 0;
             font-size: $font-size-sec-title;
             margin-bottom: 7px;
         }
 
-        .pranchas-list {
-            position: relative;
-            display: flex;
-            padding: 0;
-            margin: 0;
-            overflow: hidden;
-            justify-content: start;
+        .pranchas-list-wrapper {
+            .pranchas-list {
+                position: relative;
+                display: flex;
+                padding: 0;
+                margin: 0;
+                overflow: hidden;
+                justify-content: start;
 
-            .prancha {
-                list-style: none;
+                & li:nth-child(n+5) {
+                    display: none;
+                }
 
-                a, button {
+                li:last-child {
                     display: block;
+                }
+
+                .prancha {
+                    display: block;
+                    list-style: none;
+                    flex-grow: 1;
+                    flex-basis: 0;
+                    min-width: 0;
+
+                    a, button {
+                        display: block;
+                        background: $white;
+                        border: 3px solid $white-grayer;
+                        padding: 6px 15px;
+                        margin: 0px 3px;
+                        border-radius: 8px;
+                        color: $black;
+                        outline: none !important;
+                        text-decoration: none !important;
+                        font-size: 1.2rem;
+                        font-weight: bold;
+                        white-space: nowrap;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        text-align: center;
+                    }
+                }
+
+                .btn-nova-prancha > a {
+                    background: $green;
+                    border: 3px solid $green-darker;
+                    color: $white;
+                }
+
+                .btn-todas-pranchas > button {
                     background: $white;
                     border: 3px solid $white-grayer;
-                    padding: 6px 15px;
-                    margin: 0px 3px;
-                    border-radius: 8px;
-                    color: $black;
-                    outline: none !important;
-                    text-decoration: none !important;
-                    font-size: 1.2rem;
-                    font-weight: bold;
+                    text-transform: uppercase;
                 }
-            }
-
-            .btn-nova-prancha > button {
-                background: $green;
-                border: 3px solid $green-darker;
-                color: $white;
-            }
-
-            .btn-todas-pranchas > button {
-                background: $white;
-                border: 3px solid $white-grayer;
-                text-transform: uppercase;
             }
         }
     }
 }
+
+
 
 .spinner--shown {
     display: inline-block;
@@ -61,5 +84,131 @@
         border: 0.2em solid currentColor;
         border-right-color: transparent;
         border-radius: 100%;
+    }
+}
+
+@media only screen and (max-width: 1370px) {
+    .pranchas {
+        .pranchas-content {
+            & > p {
+                margin: 0;
+                font-size: $font-size-sec-title-small;
+                margin-bottom: 5px;
+            }
+
+            .pranchas-list-wrapper {
+                .pranchas-list {
+                    li {
+                        display: block;
+                    }
+
+                    & li:nth-child(n+7) {
+                        display: none;
+                    }
+
+                    li:last-child {
+                        display: block;
+                    }
+
+                    .prancha {
+                        a, button {
+                            padding: 4px 10px;
+                            font-size: 1rem;
+                        }
+                    }
+
+                    .btn-todas-pranchas > button {
+                        text-transform: none;
+                    }
+                }
+            }
+        }
+    }
+
+    .pranchas-modal {
+        position: absolute;
+        background: $overlay-background;
+        width: 100vw;
+        height: 100vh;
+        top: 0;
+        left: 0;
+        z-index: 200;
+
+        .pranchas-content {
+            position: absolute;
+            width: 70vw;
+            height: 60vh;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: $white;
+            margin: auto;
+            padding: $body-padding;
+            box-shadow: 0px 0px 6px 1px $gray;
+            border-radius: 10px;
+
+            .pranchas-list-wrapper {
+                overflow: auto;
+                max-height: calc(100% - 31px);
+
+                .pranchas-list {
+                    flex-direction: column;
+
+                    .prancha {
+                        display: block !important;
+                        width: 100%;
+                        margin-bottom: 5px;
+                    }
+
+                    .btn-todas-pranchas {
+                        display: none !important;
+                    }
+                }
+            }
+        }
+
+    }
+}
+
+@media only screen and (max-width: 570px) {
+    .pranchas {
+        .pranchas-content {
+            & > p {
+                margin: 0;
+                font-size: $font-size-sec-title-small;
+                margin-bottom: 5px;
+            }
+
+            .pranchas-list-wrapper {
+                .pranchas-list {
+                    & li:nth-child(n+3) {
+                        display: none;
+                    }
+
+                    li:last-child {
+                        display: block;
+                    }
+
+                    .prancha {
+                        a, button {
+                            padding: 4px 10px;
+                            font-size: 1rem;
+                        }
+                    }
+
+                    .btn-todas-pranchas > button {
+                        text-transform: none;
+                    }
+                }
+            }
+        }
+    }
+
+    .pranchas-modal {
+        .pranchas-content {
+            width: 90vw;
+            height: 70vh;
+        }
     }
 }

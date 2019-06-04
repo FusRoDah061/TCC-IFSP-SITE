@@ -60,5 +60,8 @@ export default new Router({
       beforeEnter: authGuard,
       component: Home
     }
+
+    //prancha/:hid   visualizar
+    //prancha/      criar
   ]
 });
