@@ -1,0 +1,41 @@
+.categorias {
+    position: relative;
+
+    & > p {
+        margin: 0;
+        font-size: $font-size-sec-title-small;
+        margin-bottom: 5px;
+    }
+
+    .categorias-list {
+        position: relative;
+        display: flex;
+        padding: 0;
+        margin: 0;
+        overflow: hidden;
+        justify-content: start;
+        padding-right: 5px;
+
+        .categoria {
+            display: block;
+            list-style: none;
+            flex-grow: 1;
+            flex-basis: 0;
+            min-width: 0;
+            margin: 0px 2px;
+
+            & > button {
+                position: relative;
+                display: block;
+                background: $white;
+                border: 3px solid $white-grayer;
+                border-radius: 8px;
+                color: $black;
+                outline: none !important;
+                text-decoration: none !important;
+                font-size: 1rem;
+
+            }
+        }
+    }
+}

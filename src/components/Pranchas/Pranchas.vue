@@ -2,16 +2,16 @@
     div.pranchas(v-bind:class="{ 'pranchas-modal':modalView }" v-on:click="toggleModal")
         div.pranchas-content
             p Minhas pranchas temáticas
-                spinner(position="center" v-bind:show="isLoading")
+                spinner(v-bind:show="isLoading")
 
             div.pranchas-list-wrapper
                 ul.pranchas-list
                     li.prancha.btn-nova-prancha
-                        router-link(to="prancha") Criar nova
+                        router-link.btn.btn-green(to="prancha") Criar nova
                     li.prancha(v-for="prancha in pranchas")
-                        router-link(:to="'prancha/' + prancha.hid") {{ prancha.nome }}
+                        router-link.btn.btn-white(:to="'prancha/' + prancha.hid") {{ prancha.nome }}
                     li.prancha.btn-todas-pranchas(v-if="pranchas")
-                        button(v-on:click="toggleModal") Ver todas
+                        button.btn.btn-white(v-on:click="toggleModal") Ver todas
 </template>
 
 <script>
