@@ -3,15 +3,17 @@
         p Categorias de símbolos
             spinner(position="center" v-bind:show="isLoading")
 
-            ul.categorias-list
-                li.categoria(v-for="(categoria, i) in categorias")
-                    button(v-on:click="disparaCategoria(i)") {{ categoria.nome }}
-                li.categoria.btn-todos-simbolos(v-if="categorias")
-                    button(v-on:click="meusSimbolos") Meus símbolos
+        ul.categorias-list
+            li.categoria(v-for="(categoria, i) in categorias")
+                button(v-on:click="disparaCategoria(i)" v-bind:style="{ 'background-color':categoria.cor, 'border-color':escurecerCor(categoria.cor), 'color':contraste(categoria.cor) }") {{ categoria.nome }}
+            li.categoria.btn-todos-simbolos(v-if="categorias")
+                button(v-on:click="meusSimbolos") Meus símbolos
 </template>
 
 <script>
 import { Values } from '../../env';
+import ColorUtil from '../../util/color';
+import ColorUtils from '../../util/color';
 
 export default {
     name:'categorias',
@@ -42,7 +44,7 @@ export default {
             .then(response => {
                 this.isLoading = false;
 
-                if(response.status == 200){
+                if(response.status == 200 && typeof(response.data) === 'object'){
                     this.categorias = response.data;
                 }
             })
@@ -64,6 +66,14 @@ export default {
         disparaCategoria(indice) {
             let categoria = this.categorias[indice];
             console.log(categoria);
+        },
+
+        escurecerCor(cor) {
+            return ColorUtil.lightenDarkenColor(-.15, cor);
+        },
+
+        contraste(cor){
+            return ColorUtils.higherContrast(cor);
         }
     }
 }

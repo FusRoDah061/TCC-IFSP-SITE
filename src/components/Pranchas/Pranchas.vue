@@ -48,7 +48,7 @@ export default {
             .then(response => {
                 this.isLoading = false;
 
-                if(response.status == 200){
+                if(response.status == 200 && typeof(response.data) === 'object'){
                     this.pranchas = response.data;
                 }
             })

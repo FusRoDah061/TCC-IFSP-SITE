@@ -27,14 +27,48 @@
             & > button {
                 position: relative;
                 display: block;
+                width: 100%;
                 background: $white;
                 border: 3px solid $white-grayer;
-                border-radius: 8px;
+                border-radius: 5px;
                 color: $black;
                 outline: none !important;
                 text-decoration: none !important;
                 font-size: 1rem;
+                padding: 8px 15px;
+                font-weight: bold;
+                overflow: hidden;
+                z-index: 1;
+                mix-blend-mode: screen;
 
+                &::after {
+                    content: "";
+                    position: absolute;
+                    display: block;
+                    transition: 0.25s;
+                    background: rgba(0,0,0,.1);
+                    width: 10%;
+                    height: 10%;
+                    border-radius: 50%;
+                    transform-origin: 50% 50%;
+                    top: 0;
+                    right: 0;
+                    bottom: 0;
+                    left: 0;
+                    margin: auto;
+                    opacity: 0;
+                    z-index: -1;
+                }
+
+                &:hover{
+                    color: $black;
+
+                    &::after {
+                        opacity: 1;
+                        transform: scale(15);
+                        transition-timing-function: ease-in-out;
+                    }
+                }
             }
         }
     }
