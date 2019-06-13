@@ -101,6 +101,7 @@
             max-height: calc(100% - 31px);
 
             .pranchas-list {
+                z-index: 1;
                 flex-direction: column;
 
                 .prancha {

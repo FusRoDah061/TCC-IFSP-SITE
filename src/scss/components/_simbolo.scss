@@ -1,0 +1,41 @@
+$simbolo-base-dim: 120px;
+
+.simbolo {
+    position: relative;
+    display: block;
+    width: $simbolo-base-dim;
+    height: $simbolo-base-dim;
+    max-width: $simbolo-base-dim;
+    max-height: $simbolo-base-dim;
+    min-width: $simbolo-base-dim;
+    min-height: $simbolo-base-dim;
+    border: 3px solid $white-grayer;
+    border-radius: 5px;
+    padding: 15px;
+    list-style: none;
+    margin: 3px 3px;
+
+    & > button {
+        position: relative;
+        display: block;
+        width: 100%;
+        width: 100%;
+        background: $white;
+        color: $black;
+        outline: none !important;
+        text-decoration: none !important;
+        font-size: 1rem;
+    }
+}
+
+.simbolo-sm {
+
+}
+
+.simbolo-md {
+
+}
+
+.simbolo-lg {
+
+}
