@@ -59,13 +59,13 @@ export default {
             });
         },
 
-        meusSimbolos(){
-            console.log('Meus símbolos');
+        meusSimbolos() {
+            this.$emit('selected', 'meus');
         },
 
         disparaCategoria(indice) {
             let categoria = this.categorias[indice];
-            console.log(categoria);
+            this.$emit('selected', categoria.hid);
         },
 
         escurecerCor(cor) {
