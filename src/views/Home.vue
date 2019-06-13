@@ -2,9 +2,9 @@
     div.body
         cabecalho
 
-        pranchas(v-bind:usuario="usuario.hid" v-bind:auth="usuario.api_token")
-
-        categorias(v-bind:auth="usuario.api_token" v-on:selected="mudaCategoria")
+        div.nav
+            pranchas(v-bind:usuario="usuario.hid" v-bind:auth="usuario.api_token")
+            categorias(v-bind:auth="usuario.api_token" v-on:selected="mudaCategoria")
 </template>
 
 <script>
