@@ -12,6 +12,13 @@
             button.btn.btn-green(@click="buscarSimbolos") Buscar
 
         ul.simbolos-box
+            li.simbolo(v-for="(simbolo, i) in simbolos" @click="simboloSeleciondo(i)" v-bind:style="{ 'background-color':simbolo.categoria.cor, 'border-color':escurecerCor(simbolo.categoria.cor), 'color':contraste(simbolo.categoria.cor) }")
+                div.simbolo-content
+                    img.simbolo-icone(v-bind:src="getUrlIcone(simbolo)")
+                    p.simbolo-palavra {{ simbolo.nome }}
+
+            li.simbolos-load-more
+                spinner(position="center" v-bind:show="isLoading")
 </template>
 
 <script>
@@ -27,7 +34,7 @@ export default {
         return {
             simbolos: null,
             pagina: 1,
-            isLoading: false,
+            isLoading: true,
             busca: null
         }
     },
@@ -91,9 +98,8 @@ export default {
             .then(response => {
                 this.isLoading = false;
 
-                console.log(response.data);
                 if(response.status == 200 && typeof(response.data) === 'object'){
-                    this.simbolos = response.data;
+                    this.simbolos = response.data || [];
                 }
 
             })
@@ -106,6 +112,23 @@ export default {
                     console.log(error.message, error.stack);
                 }
             });
+        },
+
+        getUrlIcone(simbolo){ 
+            return `${Values.IMAGEM_URL}/${simbolo.arquivo}`;
+        },
+
+        simboloSeleciondo(indice) {
+            let simbolo = this.simbolos[indice];
+            this.$emit('selected', simbolo);
+        },
+
+        escurecerCor(cor) {
+            return ColorUtil.lightenDarkenColor(-.15, cor);
+        },
+
+        contraste(cor){
+            return ColorUtils.higherContrast(cor);
         }
     },
     watch: {

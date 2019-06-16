@@ -12,7 +12,69 @@
 
     &-box {
         position: relative;
-        display: flex;
-        flex-flow: wrap;    
+        display: grid;
+        grid-gap: 10px;
+        grid-template-columns: repeat(auto-fit, $simbolo-base-dim);
+        padding: 0;
+        place-content: space-between;
+
+        .simbolo.simbolos-load-more {
+            list-style: none;
+            width: 100%;
+            margin: 0;
+            margin-top: 10px;
+        }
+    }
+}
+
+@media only screen and (max-width: 915px) {
+    .simbolos {
+        &-box {
+            grid-template-columns:  repeat(auto-fit, $simbolo-md-dim);
+
+            .simbolo {
+                @include simbolo-size($simbolo-md-dim);
+                
+                &-content {
+                    .simbolo-icone {
+                        max-width: 25px;
+                    }
+            
+                    .simbolo-palavra {
+                        height: 13px * 3;
+                        line-height: 13px !important;
+                        font-size: 13px !important;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media only screen and (max-width: 470px) {
+
+    .simbolos {
+        &-box {
+            grid-template-columns:  repeat(auto-fit, $simbolo-sm-dim);
+            
+            .simbolo {
+                @include simbolo-size($simbolo-sm-dim);
+                padding: 5px;
+                
+                &-content {
+                    padding: 1px;
+
+                    .simbolo-icone {
+                        max-width: 30px;
+                    }
+            
+                    .simbolo-palavra {
+                        height: 11px * 2;
+                        line-height: 11px !important;
+                        font-size: 11px !important;
+                    }
+                }
+            }
+        }
     }
 }
