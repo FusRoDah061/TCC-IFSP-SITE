@@ -1,0 +1,18 @@
+.simbolos {
+    position: relative;
+
+    & > p {
+        margin: 0;
+        font-size: $font-size-sec-title-small;
+    }
+
+    &-busca {
+        margin-bottom: 10px;
+    }
+
+    &-box {
+        position: relative;
+        display: flex;
+        flex-flow: wrap;    
+    }
+}

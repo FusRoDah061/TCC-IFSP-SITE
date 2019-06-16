@@ -23,6 +23,15 @@
             flex-basis: 0;
             min-width: 0;
             margin: 0px 2px;
+            transition: .2s;
+
+            &:not(.categoria--selected) {
+                transform: scale(.9);
+            }
+
+            &--selected > button{
+                border-color: $red !important;
+            }
 
             & > button {
                 position: relative;

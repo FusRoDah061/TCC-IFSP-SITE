@@ -4,9 +4,11 @@
             spinner(position="center" v-bind:show="isLoading")
 
         ul.categorias-list
-            li.categoria(v-for="(categoria, i) in categorias")
-                button(v-on:click="disparaCategoria(i)" v-bind:style="{ 'background-color':categoria.cor, 'border-color':escurecerCor(categoria.cor), 'color':contraste(categoria.cor) }") {{ categoria.nome }}
-            li.categoria.btn-todos-simbolos(v-if="categorias")
+            li.categoria.btn-todos-simbolos(v-if="categorias" v-bind:class="{ 'categoria--selected': (categoriaSelecionada == 'todos') }")
+                button(v-on:click="todosSimbolos") Todos os símbolos
+            li.categoria(v-for="(categoria, i) in categorias" v-bind:class="{ 'categoria--selected': (categoriaSelecionada == categoria.hid) }")
+                button(v-on:click="disparaCategoria(categoria.hid)" v-bind:style="{ 'background-color':categoria.cor, 'border-color':escurecerCor(categoria.cor), 'color':contraste(categoria.cor) }") {{ categoria.nome }}
+            li.categoria.btn-todos-simbolos(v-if="categorias" v-bind:class="{ 'categoria--selected': (categoriaSelecionada == 'meus') }")
                 button(v-on:click="meusSimbolos") Meus símbolos
 </template>
 
@@ -20,7 +22,8 @@ export default {
     data() {
         return {
             categorias: null,
-            isLoading: false
+            isLoading: false,
+            categoriaSelecionada: null
         };
     },
     props: {
@@ -28,6 +31,7 @@ export default {
     },
     mounted() {
         this.fetchCategorias();
+        this.todosSimbolos();
     },
     methods: {
         fetchCategorias() {
@@ -60,12 +64,18 @@ export default {
         },
 
         meusSimbolos() {
+            this.categoriaSelecionada = 'meus';
             this.$emit('selected', 'meus');
         },
 
-        disparaCategoria(indice) {
-            let categoria = this.categorias[indice];
-            this.$emit('selected', categoria.hid);
+        todosSimbolos() {
+            this.categoriaSelecionada = 'todos';
+            this.$emit('selected', 'todos');
+        },
+
+        disparaCategoria(hid) {
+            this.categoriaSelecionada = hid;
+            this.$emit('selected', hid);
         },
 
         escurecerCor(cor) {

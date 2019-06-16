@@ -40,7 +40,7 @@ button:disabled {
 .btn-white {
     background: $white;
     color: $black;
-    border: 5px solid $white-grayer;
+    border: 3px solid $white-grayer;
 
     &::after {
         content: "";
@@ -75,7 +75,7 @@ button:disabled {
 .btn-green {
     background: $green;
     color: $white;
-    border: 5px solid $green-darker;
+    border: 3px solid $green-darker;
 
     &::after {
         content: "";
@@ -114,6 +114,6 @@ button:disabled {
 
 @media only screen and (min-width: 770px) {
     .btn {
-        padding: 7px 20px;
+        padding: 4px 20px;
     }
 }

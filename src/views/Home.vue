@@ -5,6 +5,8 @@
         div.nav
             pranchas(v-bind:usuario="usuario.hid" v-bind:auth="usuario.api_token")
             categorias(v-bind:auth="usuario.api_token" v-on:selected="mudaCategoria")
+
+        simbolos(v-bind:usuario="usuario.hid" v-bind:auth="usuario.api_token" v-bind:categoria="categoria")
 </template>
 
 <script>
@@ -22,7 +24,6 @@ export default {
     },
     methods: {
         mudaCategoria(categoria) {
-            console.log(categoria);
             this.categoria = categoria;
         }
     }
@@ -30,7 +31,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-    .pranchas {
+    .pranchas, .categorias, .simbolos {
         margin-bottom: 10px;
     }
+
 </style>
