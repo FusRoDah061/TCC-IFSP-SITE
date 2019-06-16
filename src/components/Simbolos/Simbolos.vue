@@ -77,6 +77,9 @@ export default {
             if(this.prancha){
                 url = `${Values.API_URL}/usuarios/${this.usuario}/pranchas/${this.prancha}/simbolos?nome=${this.busca || ''}&page=${this.pagina}`;
             }
+            else if(this.categoria && this.categoria != Values.CATEGORIA_TODOS && this.categoria != Values.CATEGORIA_MEUS) {
+                url = `${Values.API_URL}/usuarios/${this.usuario}/simbolos/buscar?nome=${this.busca || ''}&categoria=${this.categoria}&page=${this.pagina}`;
+            }
             else {
                 url = `${Values.API_URL}/usuarios/${this.usuario}/simbolos/buscar?nome=${this.busca || ''}&page=${this.pagina}`;
             }
