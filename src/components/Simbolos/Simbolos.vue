@@ -12,19 +12,19 @@
             button.btn.btn-green(@click="buscarSimbolos") Buscar
 
         ul.simbolos-box
-            li.simbolo(v-for="(simbolo, i) in simbolos" @click="simboloSeleciondo(i)" v-bind:style="{ 'background-color':simbolo.categoria.cor, 'border-color':escurecerCor(simbolo.categoria.cor), 'color':contraste(simbolo.categoria.cor) }")
+            li.simbolo(v-for="(simbolo, i) in simbolos" :key="simbolo.hid" @click="simboloSeleciondo(i)" v-bind:style="{ 'background-color':simbolo.categoria.cor, 'border-color':escurecerCor(simbolo.categoria.cor), 'color':contraste(simbolo.categoria.cor) }")
                 div.simbolo-content
                     img.simbolo-icone(v-bind:src="getUrlIcone(simbolo)")
                     p.simbolo-palavra {{ simbolo.nome }}
 
-            li.simbolos-load-more
+            li.simbolos-load-more#js-simbolos-load-more
                 spinner(position="center" v-bind:show="isLoading")
 </template>
 
 <script>
 import { Values } from '../../env';
-import ColorUtil from '../../util/color';
 import ColorUtils from '../../util/color';
+import DOMUtils from '../../util/dom';
 
 //TODO: Por performance, manter as categorias em cache assim que forem buscadas, junto das cores já calculadas, para não calcular denovo toda hora.
 
@@ -32,10 +32,12 @@ export default {
     name: 'simbolos',
     data() {
         return {
-            simbolos: null,
+            simbolos: [],
             pagina: 1,
             isLoading: true,
-            busca: null
+            busca: null,
+            url: null,
+            buscandoPagina: false
         }
     },
     props: {
@@ -43,6 +45,16 @@ export default {
         auth: String,
         prancha: String,
         categoria: String
+    },
+    mounted() {
+        document.addEventListener('scroll', () => {
+            if(DOMUtils.isElementInViewport('js-simbolos-load-more')) console.log('Tá na área');
+
+            if(DOMUtils.isElementInViewport('js-simbolos-load-more') && this.simbolos.length > 0 && !this.buscandoPagina){
+                this.buscandoPagina = true;
+                this.carregaNovaPagina();
+            }
+        });
     },
     methods: {
         carregarSimbolos() {
@@ -88,6 +100,9 @@ export default {
         },
 
         fetchSimbolos(url) {
+            console.log(url);
+
+            this.url = url;
             this.isLoading = true;
 
             axios({
@@ -100,14 +115,17 @@ export default {
             })
             .then(response => {
                 this.isLoading = false;
+                this.buscandoPagina = false;
 
                 if(response.status == 200 && typeof(response.data) === 'object'){
-                    this.simbolos = response.data || [];
+                    this.simbolos = this.simbolos.concat(response.data || []);
                 }
 
             })
             .catch(error => {
                 this.isLoading = false;
+                this.buscandoPagina = false;
+
                 if (error.response) {
                     console.log(error.response.data.message);
                 }
@@ -127,11 +145,18 @@ export default {
         },
 
         escurecerCor(cor) {
-            return ColorUtil.lightenDarkenColor(-.15, cor);
+            return ColorUtils.lightenDarkenColor(-.15, cor);
         },
 
         contraste(cor){
             return ColorUtils.higherContrast(cor);
+        },
+
+        carregaNovaPagina() {
+            this.pagina++;
+            let url = this.url.substring(0, this.url.indexOf('page=')) + `page=${this.pagina}`;
+
+            this.fetchSimbolos(url);
         }
     },
     watch: {
