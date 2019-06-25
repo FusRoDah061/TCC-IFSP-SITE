@@ -24,6 +24,10 @@
         padding: 0;
         place-content: space-between;
 
+        li {
+            list-style: none;
+        }
+
         .simbolos-load-more {
             list-style: none;
             width: 100%;

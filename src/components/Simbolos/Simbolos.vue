@@ -12,10 +12,8 @@
             button.btn.btn-green(@click="buscarSimbolos") Buscar
 
         ul.simbolos-box
-            li.simbolo(v-for="(simbolo, i) in simbolos" :key="simbolo.hid" @click="simboloSeleciondo(i)" v-bind:style="{ 'background-color':simbolo.categoria.cor, 'border-color':escurecerCor(simbolo.categoria.cor), 'color':contraste(simbolo.categoria.cor) }")
-                div.simbolo-content
-                    img.simbolo-icone(v-bind:src="getUrlIcone(simbolo)")
-                    p.simbolo-palavra {{ simbolo.nome }}
+            li(v-for="(simbolo, i) in simbolos")
+                simbolo(:key="simbolo.hid" :simbolo="simbolo" @click="simboloSeleciondo(i)")
 
             li.simbolos-load-more#js-simbolos-load-more
                 spinner(position="center" v-bind:show="isLoading")
@@ -23,7 +21,6 @@
 
 <script>
 import { Values } from '../../env';
-import ColorUtils from '../../util/color';
 import DOMUtils from '../../util/dom';
 
 //TODO: Por performance, manter as categorias em cache assim que forem buscadas, junto das cores já calculadas, para não calcular denovo toda hora.
@@ -146,21 +143,9 @@ export default {
             });
         },
 
-        getUrlIcone(simbolo){ 
-            return `${Values.IMAGEM_URL}/${simbolo.arquivo}`;
-        },
-
         simboloSeleciondo(indice) {
             let simbolo = this.simbolos[indice];
             this.$emit('selected', simbolo);
-        },
-
-        escurecerCor(cor) {
-            return ColorUtils.lightenDarkenColor(-.15, cor);
-        },
-
-        contraste(cor){
-            return ColorUtils.higherContrast(cor);
         },
 
         carregaNovaPagina() {
