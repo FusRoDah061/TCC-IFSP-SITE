@@ -53,14 +53,14 @@
 
 .simbolo-md {
     @include simbolo-size($simbolo-md-dim);
-
+    
     &-content {
         .simbolo-icone {
-            max-width: 25px;
+            max-width: 25px !important;
         }
 
         .simbolo-palavra {
-            height: 13px * 3;
+            height: 13px * 3.6 !important;
             line-height: 13px !important;
             font-size: 13px !important;
         }
@@ -69,17 +69,17 @@
 
 .simbolo-sm {
     @include simbolo-size($simbolo-sm-dim);
-    padding: 5px;
-
+    padding: 5px !important;
+    
     &-content {
-        padding: 1px;
+        padding: 1px !important;
 
         .simbolo-icone {
-            max-width: 30px;
+            max-width: 30px !important;
         }
 
         .simbolo-palavra {
-            height: 11px * 2;
+            height: 11px * 2.5 !important;
             line-height: 11px !important;
             font-size: 11px !important;
         }

@@ -108,8 +108,38 @@ button:disabled {
 }
 
 .btn-blue {
-    background: $white;
-    color: $black;
+    background: $blue;
+    color: $white;
+    border: 3px solid $blue-darker;
+    
+    &::after {
+        content: "";
+        position: absolute;
+        display: block;
+        transition: 0.25s;
+        background: $blue-darker;
+        width: 10%;
+        height: 10%;
+        border-radius: 100%;
+        transform-origin: 50% 50%;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        margin: auto;
+        opacity: 0;
+        z-index: -1;
+    }
+
+    &:hover{
+        color: $white;
+
+        &::after {
+            opacity: 1;
+            transform: scale(15);
+            transition-timing-function: ease-in-out;
+        }
+    }
 }
 
 @media only screen and (min-width: 770px) {

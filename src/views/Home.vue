@@ -8,7 +8,7 @@
 
         simbolos(v-bind:usuario="usuario.hid" v-bind:auth="usuario.api_token" v-bind:categoria="categoria" v-on:selected="simboloSelecionado")
 
-        sentenca(:simbolos="simbolosSentenca")
+        sentenca(:simbolos="simbolosSentenca" @simboloRemovido="simboloRemovidoSentenca" @limpar="limparSentenca" @interpretar="interpretarSentenca")
 </template>
 
 <script>
@@ -35,8 +35,20 @@ export default {
         },
 
         simboloSelecionado(simbolo) {
-            console.log(simbolo);
             this.simbolosSentenca.push(simbolo);
+        },
+
+        simboloRemovidoSentenca(simbolo) {
+            let i = this.simbolosSentenca.findIndex(s => s.hid == simbolo.hid);
+            this.simbolosSentenca.splice(i, 1);
+        },
+
+        limparSentenca() {
+            this.simbolosSentenca = [];
+        },
+
+        interpretarSentenca(simbolos){
+            console.log(simbolos);
         }
     }
 }

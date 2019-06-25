@@ -1,5 +1,5 @@
 <template lang="pug">
-    div.simbolo(:style="{ 'background-color':simbolo.categoria.cor, 'border-color':escurecerCor(simbolo.categoria.cor), 'color':contraste(simbolo.categoria.cor) }")
+    div.simbolo(@click="simboloClicado" :style="{ 'background-color':simbolo.categoria.cor, 'border-color':escurecerCor(simbolo.categoria.cor), 'color':contraste(simbolo.categoria.cor) }")
         div.simbolo-content
             img.simbolo-icone(:src="getUrlIcone(simbolo.imagem)")
             p.simbolo-palavra {{ simbolo.nome }}
@@ -25,6 +25,10 @@ export default {
 
         contraste(cor){
             return ColorUtils.higherContrast(cor);
+        },
+
+        simboloClicado() {
+            this.$emit('selecionado', this.simbolo);
         }
     }
 }

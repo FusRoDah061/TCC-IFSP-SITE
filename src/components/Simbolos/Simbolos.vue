@@ -13,7 +13,7 @@
 
         ul.simbolos-box
             li(v-for="(simbolo, i) in simbolos")
-                simbolo(:key="simbolo.hid" :simbolo="simbolo" @click="simboloSeleciondo(i)")
+                simbolo(:key="simbolo.hid" :simbolo="simbolo" @selecionado="simboloSelecionado")
 
             li.simbolos-load-more#js-simbolos-load-more
                 spinner(position="center" v-bind:show="isLoading")
@@ -53,13 +53,11 @@ export default {
                 !this.buscandoPagina &&
                 !this.disparouBuscaPagina
             ){
-                console.log("visivel");
                 this.buscandoPagina = true;
                 this.disparouBuscaPagina = true;
                 this.carregaNovaPagina();
             }
             else if (!estaVisivel){
-                console.log("invisivel");
                 this.disparouBuscaPagina = false
             }
         });
@@ -143,8 +141,7 @@ export default {
             });
         },
 
-        simboloSeleciondo(indice) {
-            let simbolo = this.simbolos[indice];
+        simboloSelecionado(simbolo) {
             this.$emit('selected', simbolo);
         },
 
