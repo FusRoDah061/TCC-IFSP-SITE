@@ -23,6 +23,15 @@
             flex-basis: 0;
             min-width: 0;
             margin: 0px 2px;
+            transition: .2s;
+
+            &:not(.categoria--selected) {
+                transform: scale(.9);
+            }
+
+            &--selected > button{
+                border-color: $red !important;
+            }
 
             & > button {
                 position: relative;
@@ -38,7 +47,6 @@
                 font-size: 1rem;
                 padding: 8px 15px;
                 font-weight: bold;
-                overflow: hidden;
                 z-index: 1;
                 mix-blend-mode: screen;
                 overflow: hidden;

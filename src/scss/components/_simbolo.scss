@@ -1,19 +1,12 @@
-$simbolo-base-dim: 120px;
-
 .simbolo {
     position: relative;
     display: block;
-    width: $simbolo-base-dim;
-    height: $simbolo-base-dim;
-    max-width: $simbolo-base-dim;
-    max-height: $simbolo-base-dim;
-    min-width: $simbolo-base-dim;
-    min-height: $simbolo-base-dim;
+    @include simbolo-size($simbolo-base-dim);
     border: 3px solid $white-grayer;
     border-radius: 5px;
-    padding: 15px;
+    padding: 5px;
     list-style: none;
-    margin: 3px 3px;
+    cursor: pointer;
 
     & > button {
         position: relative;
@@ -26,16 +19,69 @@ $simbolo-base-dim: 120px;
         text-decoration: none !important;
         font-size: 1rem;
     }
-}
 
-.simbolo-sm {
+    &-content {
+        position: relative;
+        display: block;
+        width: 100%;
+        height: 100%;
+        background-color: $white;
+        border: 3px solid $white-grayer;
+        border-radius: 5px;
+        padding: 3px;
 
+        .simbolo-icone {
+            display: block;
+            max-width: 50px;
+            margin: auto;
+        }
+
+        .simbolo-palavra {
+            position: relative;
+            display: block;
+            width: 100%;
+            height: 16px * 3.3;
+            margin: 0;
+            text-align: center;    
+            line-height: 16px !important;
+            font-size: 16px !important;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+    }
 }
 
 .simbolo-md {
+    @include simbolo-size($simbolo-md-dim);
 
+    &-content {
+        .simbolo-icone {
+            max-width: 25px;
+        }
+
+        .simbolo-palavra {
+            height: 13px * 3;
+            line-height: 13px !important;
+            font-size: 13px !important;
+        }
+    }
 }
 
-.simbolo-lg {
+.simbolo-sm {
+    @include simbolo-size($simbolo-sm-dim);
+    padding: 5px;
 
+    &-content {
+        padding: 1px;
+
+        .simbolo-icone {
+            max-width: 30px;
+        }
+
+        .simbolo-palavra {
+            height: 11px * 2;
+            line-height: 11px !important;
+            font-size: 11px !important;
+        }
+    }
 }

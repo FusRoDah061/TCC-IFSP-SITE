@@ -24,7 +24,7 @@ label {
 }
 
 .form-control {
-    border: 5px solid $black;
+    border: 3px solid $black;
     border-radius: 100px;
     padding: 6px;
     background-color: #fff;
@@ -94,6 +94,21 @@ label {
     left: 0;
     bottom: 0;
     justify-content: center;
+}
+
+.form-inline {
+    display: flex;
+    align-items: flex-end;
+
+    .form-inputs, button {
+        display: inline-block;
+        height: 0%;
+    }
+
+    .form-inputs {
+        margin-right: 10px;
+        flex-grow: 1;
+    }
 }
 
 @media only screen and (min-width: 770px) {

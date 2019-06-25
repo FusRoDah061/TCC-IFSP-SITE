@@ -1,0 +1,93 @@
+.simbolos {
+    position: relative;
+
+    & > p {
+        margin: 0;
+        font-size: $font-size-sec-title-small;
+    }
+
+    &-busca {
+        margin-bottom: 10px;
+
+        .btn {
+            padding: 8px 30px;
+            overflow: visible;
+            overflow: unset;
+            overflow: initial;
+        }
+    }
+
+    &-box {
+        position: relative;
+        display: grid;
+        grid-gap: 10px;
+        grid-template-columns: repeat(auto-fit, $simbolo-base-dim);
+        padding: 0;
+        place-content: space-between;
+
+        .simbolos-load-more {
+            list-style: none;
+            width: 100%;
+            margin: 0;
+            margin-top: 10px;    
+            grid-column-start: 1;
+            grid-column-end: -1;
+
+            .spinner {
+                width: 100%;
+            }
+        }
+    }
+}
+
+@media only screen and (max-width: 915px) {
+    .simbolos {
+        &-box {
+            grid-template-columns:  repeat(auto-fit, $simbolo-md-dim);
+
+            .simbolo {
+                @include simbolo-size($simbolo-md-dim);
+                
+                &-content {
+                    .simbolo-icone {
+                        max-width: 25px;
+                    }
+            
+                    .simbolo-palavra {
+                        height: 13px * 3.6;
+                        line-height: 13px !important;
+                        font-size: 13px !important;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media only screen and (max-width: 470px) {
+
+    .simbolos {
+        &-box {
+            grid-template-columns:  repeat(auto-fit, $simbolo-sm-dim);
+            
+            .simbolo {
+                @include simbolo-size($simbolo-sm-dim);
+                padding: 5px;
+                
+                &-content {
+                    padding: 1px;
+
+                    .simbolo-icone {
+                        max-width: 30px;
+                    }
+            
+                    .simbolo-palavra {
+                        height: 11px * 2.5;
+                        line-height: 11px !important;
+                        font-size: 11px !important;
+                    }
+                }
+            }
+        }
+    }
+}
