@@ -37,7 +37,8 @@ export default {
             isLoading: true,
             busca: null,
             url: null,
-            buscandoPagina: false
+            buscandoPagina: false,
+            disparouBuscaPagina: false
         }
     },
     props: {
@@ -48,9 +49,21 @@ export default {
     },
     mounted() {
         document.addEventListener('scroll', () => {
-            if(DOMUtils.isElementInViewport('js-simbolos-load-more') && this.simbolos.length > 0 && !this.buscandoPagina){
+            let estaVisivel = DOMUtils.isElementInViewport('js-simbolos-load-more');
+
+            if( estaVisivel && 
+                this.simbolos.length > 0 && 
+                !this.buscandoPagina &&
+                !this.disparouBuscaPagina
+            ){
+                console.log("visivel");
                 this.buscandoPagina = true;
+                this.disparouBuscaPagina = true;
                 this.carregaNovaPagina();
+            }
+            else if (!estaVisivel){
+                console.log("invisivel");
+                this.disparouBuscaPagina = false
             }
         });
     },
@@ -76,6 +89,8 @@ export default {
 
         buscarSimbolos(event) {
             let url = '';
+            this.simbolos = [];
+            this.pagina = 1;
 
             event.preventDefault();
 
