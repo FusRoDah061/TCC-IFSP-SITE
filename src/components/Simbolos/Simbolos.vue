@@ -48,8 +48,6 @@ export default {
     },
     mounted() {
         document.addEventListener('scroll', () => {
-            if(DOMUtils.isElementInViewport('js-simbolos-load-more')) console.log('Tá na área');
-
             if(DOMUtils.isElementInViewport('js-simbolos-load-more') && this.simbolos.length > 0 && !this.buscandoPagina){
                 this.buscandoPagina = true;
                 this.carregaNovaPagina();
@@ -100,8 +98,6 @@ export default {
         },
 
         fetchSimbolos(url) {
-            console.log(url);
-
             this.url = url;
             this.isLoading = true;
 
@@ -161,8 +157,14 @@ export default {
     },
     watch: {
         categoria: function(novoValor, antigoValor) {
-            if(novoValor && novoValor != antigoValor)
+            if(novoValor && novoValor != antigoValor) {
+                this.simbolos = [];
+                this.pagina = 1;
+                this.busca = null,
+                this.url = null,
+                this.buscandoPagina = false
                 this.carregarSimbolos();
+            }
         }
     }
 }
