@@ -16,6 +16,10 @@
         }
     }
 
+    .sentenca-aberta {
+        padding-bottom: 150px;
+    }
+
     &-box {
         position: relative;
         display: grid;
@@ -23,6 +27,10 @@
         grid-template-columns: repeat(auto-fit, $simbolo-base-dim);
         padding: 0;
         place-content: space-between;
+
+        li {
+            list-style: none;
+        }
 
         .simbolos-load-more {
             list-style: none;

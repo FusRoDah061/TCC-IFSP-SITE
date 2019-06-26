@@ -11,11 +11,9 @@
 
             button.btn.btn-green(@click="buscarSimbolos") Buscar
 
-        ul.simbolos-box
-            li.simbolo(v-for="(simbolo, i) in simbolos" :key="simbolo.hid" @click="simboloSeleciondo(i)" v-bind:style="{ 'background-color':simbolo.categoria.cor, 'border-color':escurecerCor(simbolo.categoria.cor), 'color':contraste(simbolo.categoria.cor) }")
-                div.simbolo-content
-                    img.simbolo-icone(v-bind:src="getUrlIcone(simbolo)")
-                    p.simbolo-palavra {{ simbolo.nome }}
+        ul.simbolos-box(:class="{'sentenca-aberta': sentenca}")
+            li(v-for="(simbolo, i) in simbolos")
+                simbolo(:key="simbolo.hid + simbolo.indice" :simbolo="simbolo" @selecionado="simboloSelecionado")
 
             li.simbolos-load-more#js-simbolos-load-more
                 spinner(position="center" v-bind:show="isLoading")
@@ -23,7 +21,6 @@
 
 <script>
 import { Values } from '../../env';
-import ColorUtils from '../../util/color';
 import DOMUtils from '../../util/dom';
 
 //TODO: Por performance, manter as categorias em cache assim que forem buscadas, junto das cores já calculadas, para não calcular denovo toda hora.
@@ -45,9 +42,12 @@ export default {
         usuario: String,
         auth: String,
         prancha: String,
-        categoria: String
+        categoria: String,
+        sentenca: Boolean
     },
     mounted() {
+        this.carregarSimbolos();
+
         document.addEventListener('scroll', () => {
             let estaVisivel = DOMUtils.isElementInViewport('js-simbolos-load-more');
 
@@ -56,13 +56,11 @@ export default {
                 !this.buscandoPagina &&
                 !this.disparouBuscaPagina
             ){
-                console.log("visivel");
                 this.buscandoPagina = true;
                 this.disparouBuscaPagina = true;
                 this.carregaNovaPagina();
             }
             else if (!estaVisivel){
-                console.log("invisivel");
                 this.disparouBuscaPagina = false
             }
         });
@@ -146,21 +144,8 @@ export default {
             });
         },
 
-        getUrlIcone(simbolo){ 
-            return `${Values.IMAGEM_URL}/${simbolo.arquivo}`;
-        },
-
-        simboloSeleciondo(indice) {
-            let simbolo = this.simbolos[indice];
+        simboloSelecionado(simbolo) {
             this.$emit('selected', simbolo);
-        },
-
-        escurecerCor(cor) {
-            return ColorUtils.lightenDarkenColor(-.15, cor);
-        },
-
-        contraste(cor){
-            return ColorUtils.higherContrast(cor);
         },
 
         carregaNovaPagina() {
