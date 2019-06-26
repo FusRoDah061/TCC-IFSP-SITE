@@ -1,6 +1,7 @@
 <template lang="pug">
     div.simbolo(@click="simboloClicado" :style="{ 'background-color':simbolo.categoria.cor, 'border-color':escurecerCor(simbolo.categoria.cor), 'color':contraste(simbolo.categoria.cor) }")
         div.simbolo-content
+            span.simbolo-indice(v-if="simbolo.indice") {{simbolo.indice}}
             img.simbolo-icone(:src="getUrlIcone(simbolo.imagem)")
             p.simbolo-palavra {{ simbolo.nome }}
 </template>

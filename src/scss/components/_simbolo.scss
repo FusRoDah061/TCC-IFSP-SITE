@@ -54,7 +54,7 @@
 .simbolo-md {
     @include simbolo-size($simbolo-md-dim);
     
-    &-content {
+    .simbolo-content {
         .simbolo-icone {
             max-width: 25px !important;
         }
@@ -71,7 +71,7 @@
     @include simbolo-size($simbolo-sm-dim);
     padding: 5px !important;
     
-    &-content {
+    .simbolo-content {
         padding: 1px !important;
 
         .simbolo-icone {

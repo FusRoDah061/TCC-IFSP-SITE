@@ -13,7 +13,7 @@
 
         ul.simbolos-box
             li(v-for="(simbolo, i) in simbolos")
-                simbolo(:key="simbolo.hid" :simbolo="simbolo" @selecionado="simboloSelecionado")
+                simbolo(:key="simbolo.hid + simbolo.indice" :simbolo="simbolo" @selecionado="simboloSelecionado")
 
             li.simbolos-load-more#js-simbolos-load-more
                 spinner(position="center" v-bind:show="isLoading")
@@ -45,6 +45,8 @@ export default {
         categoria: String
     },
     mounted() {
+        this.carregarSimbolos();
+
         document.addEventListener('scroll', () => {
             let estaVisivel = DOMUtils.isElementInViewport('js-simbolos-load-more');
 
