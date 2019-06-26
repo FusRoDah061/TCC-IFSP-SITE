@@ -11,7 +11,7 @@
 
             button.btn.btn-green(@click="buscarSimbolos") Buscar
 
-        ul.simbolos-box
+        ul.simbolos-box(:class="{'sentenca-aberta': sentenca}")
             li(v-for="(simbolo, i) in simbolos")
                 simbolo(:key="simbolo.hid + simbolo.indice" :simbolo="simbolo" @selecionado="simboloSelecionado")
 
@@ -42,7 +42,8 @@ export default {
         usuario: String,
         auth: String,
         prancha: String,
-        categoria: String
+        categoria: String,
+        sentenca: Boolean
     },
     mounted() {
         this.carregarSimbolos();

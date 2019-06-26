@@ -6,7 +6,7 @@
             pranchas(v-bind:usuario="usuario.hid" v-bind:auth="usuario.api_token")
             categorias(v-bind:auth="usuario.api_token" v-on:selected="mudaCategoria")
 
-        simbolos(v-bind:usuario="usuario.hid" v-bind:auth="usuario.api_token" v-bind:categoria="categoria" v-on:selected="simboloSelecionado")
+        simbolos(:usuario="usuario.hid" :auth="usuario.api_token" :categoria="categoria" :sentenca="simbolosSentenca.length > 0" @selected="simboloSelecionado")
 
         sentenca(:simbolos="simbolosSentenca" @simboloRemovido="simboloRemovidoSentenca" @limpar="limparSentenca" @interpretar="interpretarSentenca")
 </template>
