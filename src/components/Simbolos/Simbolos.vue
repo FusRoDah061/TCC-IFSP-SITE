@@ -46,7 +46,8 @@ export default {
         sentenca: Boolean
     },
     mounted() {
-        this.carregarSimbolos();
+        if(this.categoria != null)
+            this.carregarSimbolos();
 
         document.addEventListener('scroll', () => {
             let estaVisivel = DOMUtils.isElementInViewport('js-simbolos-load-more');
@@ -157,6 +158,7 @@ export default {
     },
     watch: {
         categoria: function(novoValor, antigoValor) {
+            
             if(novoValor && novoValor != antigoValor) {
                 this.simbolos = [];
                 this.pagina = 1;
