@@ -1,0 +1,2 @@
+Module.progress = null;
+Module.canvas = document.getElementById('canvas');
