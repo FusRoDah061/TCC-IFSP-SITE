@@ -175,7 +175,7 @@
 	function Player(options) {
 	  this.options = assign({
 	    translator: 'http://traducao.vlibras.gov.br/translate',
-	    target: { name: 'Builds', path: 'target' }
+	    target: { name: 'Builds', path: 'thirdparty/vlibras/target' }
 	  }, options);
 
 	  this.playerManager = new PlayerManagerAdapter();

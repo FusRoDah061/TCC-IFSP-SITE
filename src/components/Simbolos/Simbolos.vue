@@ -158,7 +158,6 @@ export default {
     },
     watch: {
         categoria: function(novoValor, antigoValor) {
-            
             if(novoValor && novoValor != antigoValor) {
                 this.simbolos = [];
                 this.pagina = 1;
