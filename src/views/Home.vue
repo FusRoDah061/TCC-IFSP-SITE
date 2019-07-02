@@ -2,7 +2,7 @@
     div.body
         cabecalho
 
-        pranchas(v-bind:usuario="usuario.hid" v-bind:auth="usuario.api_token")
+        pranchas(:usuario="usuario.hid" :auth="usuario.api_token")
 
         simbolos-board(:usuario="usuario" :sentenca="true")
 

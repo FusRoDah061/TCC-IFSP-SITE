@@ -50,7 +50,6 @@ export default {
         initTradutor() {
             if(this.ativo && !this.handTalk){
                 let parent = document.getElementById('handtalk-parent');
-                console.log(process.env.VUE_APP_HANDTALK_KEY);
 
                 this.handTalk = new HT({
                     token: process.env.VUE_APP_HANDTALK_KEY,
@@ -58,26 +57,43 @@ export default {
                     exceptions: ['#app']
                 });
 
-                console.log(this.handTalk);
-
                 parent.lastElementChild.children[2].click();
 
-                this.handTalk.on('activated', function () {
+                this.handTalk.on('errorOnAuth', () => {
+                    console.log('Erro ao autenticar');
+                    this.$emit('onload', 'Erro ao autenticar');
+                });
+
+                this.handTalk.on('hugoLoaded', () => {
+                    console.log('Hugo carregado');
+                    this.$emit('onload', 'Hugo carregado');
+                });
+
+                this.handTalk.on('activated', () => {
                     console.log('Feature de texto ou vídeo ativada');
                 });
 
-                this.handTalk.on('translated', function () {
+                this.handTalk.on('translated', () => {
                     console.log('Texto traduzido corretamente no Servidor da Hand Talk');
                 });
 
-                this.handTalk.on('signalized', function () {
-                    console.log('Sentença sinalizada por completo');
+                this.handTalk.on('errorOnTranslate', () => {
+                    console.log('Erro ao traduzir texto no servidor da Hand Talk');
                 });
 
-                this.handTalk.on('errorOnTranslate', function () {
-                    console.error('Erro ao traduzir texto no servidor da Hand Talk');
+                this.handTalk.on('signalized', () => {
+                    console.log('Sentença sinalizada por completo');
                 });
             }
+        },
+
+        traduzir() {
+            /*
+            ht = this.handTalk
+            ht.textManager.lastText = "Allex"
+            ht.textManager.emit('validElementClicked', { target: document.getElementById('js-teste') }, "Allex")
+            emit('validElementClicked', clickEventObj, targetText)
+            */
         }
     }
 }

@@ -6,7 +6,7 @@
 
         sentenca(v-if="sentenca" :simbolos="simbolosSentenca" @simboloRemovido="simboloRemovidoSentenca" @limpar="limparSentenca" @interpretar="interpretarSentenca")
 
-        Tradutor(v-if="sentenca" :simbolos="simbolosSentenca" :interpretar="interpretar" @terminou="interpretarAcabou")
+        tradutor(v-if="sentenca" :simbolos="simbolosSentenca" :interpretar="interpretar" @terminou="interpretarAcabou")
 </template>
 
 <script>
@@ -59,8 +59,9 @@ export default {
             this.interpretar = true;
         },
 
-        interpretarAcabou() {
-            console.log('terminou de interpretar');
+        interpretarAcabou(result) {
+            console.log('terminou de interpretar: ', result);
+            this.interpretar = false;
         }
     }
 }

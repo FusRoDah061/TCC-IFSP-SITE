@@ -4,7 +4,7 @@
     width: 100vw;
     height: 100vh;
     top: 0;
-    left: 0;
+    left: 100vw;
     right: 0;
     bottom: 0;
     z-index: 500;
@@ -29,6 +29,7 @@
 .tradutor--shown {    
     display: flex;
     background: $overlay-background;
+    left: 0;
 }
 
 @media screen and (max-width: 770px) {

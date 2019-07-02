@@ -1,8 +1,7 @@
 <template lang="pug">
-    div.tradutor(:class="{'tradutor--shown': interpretar}")
+    div.tradutor(:class="{'tradutor--shown': interpretar}" @click="fechar")
         div.tradutor-content
-            hand-talk(:ativo="interpretar")
-            div.espaco
+            hand-talk(:ativo="interpretar" @onload="tradutorCarregou")
 </template>
 
 <script>
@@ -11,6 +10,11 @@ import HandTalk from './HandTalk/HandTalk';
 
 export default {
     name:'tradutor',
+    data() {
+        return {
+            tradutorPronto: false
+        }
+    },
     props: {
         interpretar: Boolean,
         simbolos: Array
@@ -24,7 +28,15 @@ export default {
         }
     },
     methods: {
+        fechar() {
+            if(this.interpretar && this.tradutorPronto) {
+                this.$emit('terminou', 'canceled');
+            }
+        },
 
+        tradutorCarregou(result) {
+            this.tradutorPronto = true;
+        }
     }
 }
 </script>
