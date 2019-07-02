@@ -1,11 +1,13 @@
 <template lang="pug">
     div.tradutor(:class="{'tradutor--shown': interpretar}")
         div.tradutor-content
-            vlibras(:ativo="interpretar")
+            hand-talk(:ativo="interpretar")
+            div.espaco
 </template>
 
 <script>
 import Vlibras from './Vlibras/Vlibras';
+import HandTalk from './HandTalk/HandTalk';
 
 export default {
     name:'tradutor',
@@ -14,7 +16,7 @@ export default {
         simbolos: Array
     },
     components: {
-        Vlibras
+        Vlibras, HandTalk
     },
     watch: {
         interpretar: function(novoValor, antigoValor) {

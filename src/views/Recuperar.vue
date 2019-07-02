@@ -97,7 +97,7 @@ export default {
                     this.isLoading = false;
 
                     grecaptcha.render('recaptcha', {
-                        'sitekey': Values.RECAPTCHA_KEY
+                        'sitekey': process.env.VUE_APP_RECAPTCHA_KEY
                     });
                 }
             }, 200);
