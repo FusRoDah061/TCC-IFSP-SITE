@@ -1,3 +1,5 @@
 module.exports = {
-    publicPath: '/TCC-IFSP-SITE'
+    publicPath: process.env.NODE_ENV === 'production'
+    ? '/TCC-IFSP-SITE'
+    : '/'
 }

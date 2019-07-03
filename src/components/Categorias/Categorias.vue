@@ -13,7 +13,6 @@
 </template>
 
 <script>
-import { Values } from '../../env';
 import ColorUtils from '../../util/color';
 
 export default {
@@ -38,7 +37,7 @@ export default {
 
             axios({
                 method: 'get',
-                url: `${Values.API_URL}/categorias`,
+                url: `${process.env.VUE_APP_API_URL}/categorias`,
                 headers: {
                     'Accept': 'application/json',
                     'Authorization': `Bearer ${this.auth}`

@@ -20,7 +20,6 @@
 </template>
 
 <script>
-import { Values } from '../../env';
 import DOMUtils from '../../util/dom';
 
 //TODO: Por performance, manter as categorias em cache assim que forem buscadas, junto das cores já calculadas, para não calcular denovo toda hora.
@@ -71,16 +70,16 @@ export default {
             let url = '';
 
             if(this.prancha){
-                url = `${Values.API_URL}/usuarios/${this.usuario}/pranchas/${this.prancha}/simbolos?page=${this.pagina}`;
+                url = `${process.env.VUE_APP_API_URL}/usuarios/${this.usuario}/pranchas/${this.prancha}/simbolos?page=${this.pagina}`;
             }
-            else if(this.categoria == Values.CATEGORIA_TODOS || !this.categoria){
-                url = `${Values.API_URL}/usuarios/${this.usuario}/categorias/simbolos?page=${this.pagina}`;
+            else if(this.categoria == process.env.VUE_APP_CATEGORIA_TODOS || !this.categoria){
+                url = `${process.env.VUE_APP_API_URL}/usuarios/${this.usuario}/categorias/simbolos?page=${this.pagina}`;
             }
-            else if (this.categoria == Values.CATEGORIA_MEUS) {
-                url = `${Values.API_URL}/usuarios/${this.usuario}/simbolos?page=${this.pagina}`;
+            else if (this.categoria == process.env.VUE_APP_CATEGORIA_MEUS) {
+                url = `${process.env.VUE_APP_API_URL}/usuarios/${this.usuario}/simbolos?page=${this.pagina}`;
             }
             else if(this.categoria){
-                url = `${Values.API_URL}/usuarios/${this.usuario}/categorias/${this.categoria}/simbolos?page=${this.pagina}`;
+                url = `${process.env.VUE_APP_API_URL}/usuarios/${this.usuario}/categorias/${this.categoria}/simbolos?page=${this.pagina}`;
             }
 
             this.fetchSimbolos(url);
@@ -98,14 +97,17 @@ export default {
                 return;
             }
 
+            console.lgo(process.env.VUE_APP_CATEGORIA_TODOS);
+            console.lgo(process.env.VUE_APP_CATEGORIA_MEUS);
+
             if(this.prancha){
-                url = `${Values.API_URL}/usuarios/${this.usuario}/pranchas/${this.prancha}/simbolos?nome=${this.busca || ''}&page=${this.pagina}`;
+                url = `${process.env.VUE_APP_API_URL}/usuarios/${this.usuario}/pranchas/${this.prancha}/simbolos?nome=${this.busca || ''}&page=${this.pagina}`;
             }
-            else if(this.categoria && this.categoria != Values.CATEGORIA_TODOS && this.categoria != Values.CATEGORIA_MEUS) {
-                url = `${Values.API_URL}/usuarios/${this.usuario}/simbolos/buscar?nome=${this.busca || ''}&categoria=${this.categoria}&page=${this.pagina}`;
+            else if(this.categoria && this.categoria != process.env.VUE_APP_CATEGORIA_TODOS && this.categoria != process.env.VUE_APP_CATEGORIA_MEUS) {
+                url = `${process.env.VUE_APP_API_URL}/usuarios/${this.usuario}/simbolos/buscar?nome=${this.busca || ''}&categoria=${this.categoria}&page=${this.pagina}`;
             }
             else {
-                url = `${Values.API_URL}/usuarios/${this.usuario}/simbolos/buscar?nome=${this.busca || ''}&page=${this.pagina}`;
+                url = `${process.env.VUE_APP_API_URL}/usuarios/${this.usuario}/simbolos/buscar?nome=${this.busca || ''}&page=${this.pagina}`;
             }
 
             this.fetchSimbolos(url);

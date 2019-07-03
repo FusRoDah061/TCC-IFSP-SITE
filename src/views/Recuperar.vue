@@ -26,8 +26,6 @@
 </template>
 
 <script>
-import { Values } from '../env';
-
 export default {
     name: 'recuperar',
     data() {
@@ -62,7 +60,7 @@ export default {
 
             axios({
                 method: 'post',
-                url: `${Values.API_URL}/senha/recuperar`,
+                url: `${process.env.VUE_APP_API_URL}/senha/recuperar`,
                 params: {
                     email: this.email,
                     validation: recaptchaToken
