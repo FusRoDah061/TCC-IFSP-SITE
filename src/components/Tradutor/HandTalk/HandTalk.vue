@@ -8,13 +8,23 @@
         display: block;
 
         ._2KZ3eJtGgPe0N0PiC6Cdie {
-            top: 0 !important; 
-            left: 0;
-            position: absolute;
-            right: 0;
+            position: relative;
+            display: block;
             width: 264px;
-            margin: auto;
+            top: auto !important;
+            left: auto;
+            right: auto;
         }
+
+        /*.Z3VP_ow4tw0rnDnoiLykZ {
+            position: relative;
+            bottom: auto;
+            right: auto;
+
+            .ht-md-actions {
+                display: none;
+            }
+        }*/
 
         ._2VauUVQw9BdMxBDl8GX4GQ, ._3Q4E6l7PtCF-ICONC1-lT_ {
             opacity: 0;
@@ -54,7 +64,8 @@ export default {
                 this.handTalk = new HT({
                     token: process.env.VUE_APP_HANDTALK_KEY,
                     parentElement: parent,
-                    exceptions: ['#app']
+                    exceptions: ['#app'],
+                    mobileEnabled: true
                 });
 
                 parent.lastElementChild.children[2].click();

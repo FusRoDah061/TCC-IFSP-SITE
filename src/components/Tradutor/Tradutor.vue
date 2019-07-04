@@ -1,18 +1,44 @@
 <template lang="pug">
-    div.tradutor(:class="{'tradutor--shown': interpretar}" @click="fechar")
+    div.tradutor(:class="{'tradutor--shown': interpretar}")
         div.tradutor-content
-            hand-talk(:ativo="interpretar" @onload="tradutorCarregou")
+            button.tradutor-close(@click="fechar") 
+                span &times;
+
+            div.interprete
+                hand-talk(:ativo="interpretar" @onload="tradutorCarregou")
+
+            p.palavra-atual {{ palavra }}
+
+            div.simbolos-interpretar
+                div.simbolos-botoes
+                    button.btn.btn-white(@click="simboloAnterior")
+                        i.icon.ion-md-skip-backward
+                        span Anterior 
+                    button.btn.btn-white(@click="proximoSimbolo")
+                        i.icon.ion-md-skip-forward
+                        span Próximo
+                    button.btn.btn-white(@click="repetirTudo")
+                        i.icon.ion-md-refresh
+                        span Repetir tudo 
+                
+                ul.simbolos-sentenca(id="js-simbolos-interpretar")
+                    li(v-for="(simbolo, i) in simbolos")
+                        simbolo(:id="`js-simbolo-${i}`" :key="simbolo.hid + simbolo.indice" :simbolo="simbolo" @selecionado="selecionarSimbolo(i)" :class="{ 'simbolo--ativo': (simboloAtual == i) }")
+
 </template>
 
 <script>
 import Vlibras from './Vlibras/Vlibras';
 import HandTalk from './HandTalk/HandTalk';
+import DOMUtils from '../../util/dom';
 
 export default {
     name:'tradutor',
     data() {
         return {
-            tradutorPronto: false
+            tradutorPronto: false,
+            palavra: null,
+            simboloAtual: 0
         }
     },
     props: {
@@ -25,17 +51,41 @@ export default {
     watch: {
         interpretar: function(novoValor, antigoValor) {
             console.log('interpretar: ', novoValor, antigoValor);
+        },
+
+        simboloAtual: function(novoValor, antigoValor) {
+            this.palavra = this.simbolos[this.simboloAtual].nome;
+            DOMUtils.scrollCenterOnElem('js-simbolos-interpretar', `js-simbolo-${this.simboloAtual}`);
         }
     },
     methods: {
         fechar() {
-            if(this.interpretar && this.tradutorPronto) {
+            if(this.interpretar) {
                 this.$emit('terminou', 'canceled');
             }
         },
 
         tradutorCarregou(result) {
             this.tradutorPronto = true;
+
+            if (this.simbolos.length > 0)
+                this.palavra = this.simbolos[this.simboloAtual].nome;
+        }, 
+        
+        simboloAnterior() {
+            this.simboloAtual = this.simboloAtual - 1 < 0 ? 0 : this.simboloAtual - 1;
+        },
+
+        proximoSimbolo() {
+            this.simboloAtual = this.simboloAtual + 1 >= this.simbolos.length ? this.simbolos.length - 1 : this.simboloAtual + 1;
+        },
+
+        repetirTudo() {
+            this.simboloAtual = 0;
+        },
+
+        selecionarSimbolo(indice) {
+            this.simboloAtual = indice;
         }
     }
 }

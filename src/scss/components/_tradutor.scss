@@ -22,7 +22,110 @@
         background-color: #fff;
         border-radius: 10px;
         box-shadow: 0px 0px 15px -7px #333333;
-        padding: 10px;
+        padding: 15px;
+
+        .tradutor-close {
+            position: absolute;
+            display: block;
+            width: 30px;
+            height: 30px;
+            top: 10px;
+            right: 10px;
+            background: #fff;
+            border: none;
+            border-radius: 100%;
+            line-height: 30px;
+            font-weight: bold;
+            font-size: 1.6rem;
+            transition: .2s;
+            text-align: center;
+            z-index: 9999999;
+            outline: none;
+
+            span {
+                display: inline-block;
+                vertical-align: middle;
+                line-height: normal;
+                margin-top: -17px;
+            }
+
+            &:hover {
+                background: $white-grayer;
+            }
+        }
+
+        .interprete {
+            position: relative;
+            display: block;
+
+            & > div {
+                display: flex !important;
+                justify-content: center;
+            }
+        }
+
+        .palavra-atual {
+            margin: 10px 0;
+            text-align: center;
+            margin-bottom: 0px;
+        }
+
+        .simbolos-interpretar {
+
+            .simbolos-botoes {
+                display: grid;
+                position: relative;
+                margin: 15px 0px;
+                grid-column-gap: 15px;
+                grid-template-columns: auto auto auto;
+
+                & > button {
+                    border-radius: 5px;
+                    outline: none;
+
+                    i {
+                        display: none;
+                    }
+                }
+            }
+
+            .simbolos-sentenca {
+                position: relative;
+                display: flex;
+                overflow: auto;
+                padding: 10px 6px;
+                margin: 0;
+
+                li {
+                    list-style: none;
+
+                    .simbolo {
+                        @include simbolo-size($simbolo-sm-dim);
+                        padding: 5px !important;
+                        margin: 0px 5px;
+                        transition: .2s;
+
+                        .simbolo-content {
+                            .simbolo-icone {
+                                width: 100%;
+                                height: 100%;
+                                max-width: 100%;
+                            }
+
+                            .simbolo-palavra {
+                                display: none;
+                            }
+                        }
+                    }
+
+                    .simbolo--ativo {
+                        transform: scale(1.2);
+                    }
+                }
+            }
+        }
+
+        
     }
 }
 
@@ -45,6 +148,22 @@
     .tradutor { 
         .tradutor-content{ 
             min-width: 0px;
+
+            .simbolos-interpretar {
+                .simbolos-botoes {
+                    & > button {
+                        padding: 10px 1px;
+
+                        span {
+                            display: none;
+                        }
+
+                        i {
+                            display: block;
+                        }
+                    }
+                }
+            }
         }
     }    
 }
