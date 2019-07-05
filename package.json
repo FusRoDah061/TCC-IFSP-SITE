@@ -9,7 +9,7 @@
     "build-heroku": "set HOST=heroku&& vue-cli-service build",
     "lint": "vue-cli-service lint",
     "deploy-gh": "push-dir --dir=dist --local-branch-name=githubdeploy --branch=gh-pages --cleanup",
-    "deploy-heroku": "push-dir --dir=dist --local-branch-name=herokudeploy --remote=heroku --branch=master --cleanup",,
+    "deploy-heroku": "push-dir --dir=dist --local-branch-name=herokudeploy --remote=heroku --branch=master --cleanup",
     "deploy": "start npm run deploy-gh && start npm run deploy-heroku",
     "start": "node server.js"
   },
