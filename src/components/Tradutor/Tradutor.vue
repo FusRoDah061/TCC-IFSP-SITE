@@ -5,7 +5,14 @@
                 span &times;
 
             div.interprete
-                hand-talk(:ativo="interpretar" @onload="tradutorCarregou")
+                hand-talk(:ativo="interpretar" 
+                    :frase="palavra"
+                    :elemento="`js-simbolo-${simboloAtual}`"
+                    @onload="tradutorLoad" 
+                    @onloaderror="tradutorLoadError"
+                    @ontranslated="tradutorTranslated" 
+                    @ontranslatederror="tradutorTranslatedError" 
+                    @onsignalized="tradutorSignalized")
 
             p.palavra-atual {{ palavra }}
 
@@ -55,6 +62,7 @@ export default {
 
         simboloAtual: function(novoValor, antigoValor) {
             this.palavra = this.simbolos[this.simboloAtual].nome;
+            console.log('Vai traduzir: ', this.palavra);
             DOMUtils.scrollCenterOnElem('js-simbolos-interpretar', `js-simbolo-${this.simboloAtual}`);
         }
     },
@@ -65,13 +73,30 @@ export default {
             }
         },
 
-        tradutorCarregou(result) {
+        tradutorLoad(result) {
             this.tradutorPronto = true;
 
             if (this.simbolos.length > 0)
                 this.palavra = this.simbolos[this.simboloAtual].nome;
         }, 
+
+        tradutorLoadError(result) {
+            console.log(result);
+        },
+
+        tradutorTranslated(result) {
+            console.log(result);
+        },
         
+        tradutorTranslatedError(result) {
+            console.log(result);
+        },
+
+        tradutorSignalized(result) {
+            console.log(result);
+            this.proximoSimbolo();
+        },
+
         simboloAnterior() {
             this.simboloAtual = this.simboloAtual - 1 < 0 ? 0 : this.simboloAtual - 1;
         },
@@ -90,3 +115,4 @@ export default {
     }
 }
 </script>
+ 

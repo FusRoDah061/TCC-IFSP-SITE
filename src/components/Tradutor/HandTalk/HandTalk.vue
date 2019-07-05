@@ -39,12 +39,14 @@ export default {
     name: 'hand-talk',
     data() {
         return {
-            handTalk: null
+            handTalk: null,
+            traduzindo: false
         }
     },
     props: {
         ativo: Boolean,
-        palavra: String
+        frase: String,
+        elemento: String
     },
     mounted() {
         this.initTradutor();
@@ -53,6 +55,13 @@ export default {
         ativo: function(novoValor, antigoValor) {
             if(novoValor) {
                 this.initTradutor();
+            }
+        },
+
+        frase: function(novoValor, antigoValor) {
+            if(novoValor && novoValor != antigoValor) {
+                this.traduzindo = true;
+                this.traduzir();
             }
         }
     },
@@ -71,40 +80,33 @@ export default {
                 parent.lastElementChild.children[2].click();
 
                 this.handTalk.on('errorOnAuth', () => {
-                    console.log('Erro ao autenticar');
-                    this.$emit('onload', 'Erro ao autenticar');
+                    this.$emit('onloaderror', 'Erro ao autenticar');
                 });
 
                 this.handTalk.on('hugoLoaded', () => {
-                    console.log('Hugo carregado');
                     this.$emit('onload', 'Hugo carregado');
                 });
 
-                this.handTalk.on('activated', () => {
-                    console.log('Feature de texto ou vídeo ativada');
-                });
-
                 this.handTalk.on('translated', () => {
-                    console.log('Texto traduzido corretamente no Servidor da Hand Talk');
+                    this.$emit('ontranslated', 'Texto traduzido corretamente no Servidor da Hand Talk');
                 });
 
                 this.handTalk.on('errorOnTranslate', () => {
-                    console.log('Erro ao traduzir texto no servidor da Hand Talk');
+                    this.$emit('ontranslatederror', 'Erro ao traduzir texto no servidor da Hand Talk');
                 });
 
                 this.handTalk.on('signalized', () => {
-                    console.log('Sentença sinalizada por completo');
+                    this.$emit('onsignalized', 'Sentença sinalizada por completo');
                 });
             }
         },
 
         traduzir() {
-            /*
-            ht = this.handTalk
-            ht.textManager.lastText = "Allex"
-            ht.textManager.emit('validElementClicked', { target: document.getElementById('js-teste') }, "Allex")
-            emit('validElementClicked', clickEventObj, targetText)
-            */
+            console.log('Traduzindo: ', this.frase);
+
+            let ht = this.handTalk;
+            ht.textManager.lastText = this.frase;
+            ht.textManager.emit('validElementClicked', { target: document.getElementById(this.elemento) }, this.frase);
         }
     }
 }
