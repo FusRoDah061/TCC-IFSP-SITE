@@ -11,8 +11,8 @@
     "deploy-gh": "npm run build-gh && push-dir --dir=dist --local-branch-name=githubdeploy --branch=gh-pages --cleanup",
     "deploy-heroku": "npm run build-heroku && git push heroku master",
     "deploy": "npm run deploy-gh && npm run deploy-heroku",
-    "start": "node server.js",
-    "heroku-postbuild": "npm run build"
+    "postinstall": "if test \"$NODE_ENV\" = \"production\" ; then npm run build ; fi ",
+    "start": "node server.js"
   },
   "dependencies": {
     "@mars/heroku-js-runtime-env": "^3.0.2",
