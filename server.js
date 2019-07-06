@@ -7,6 +7,10 @@ app = express();
 app.use(express.static('dist'));
 
 app.get('*', (req, res) => {
+    if(req.protocol === 'https') {
+        res.redirect('http://' + req.headers.host + req.url);
+    }
+
     res.sendFile(path.resolve(__dirname, 'dist', 'index.html'));
 });
 
