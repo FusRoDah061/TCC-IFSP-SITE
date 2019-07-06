@@ -4,12 +4,11 @@ var serveStatic = require('serve-static');
 
 app = express();
 
-app.use(serveStatic(__dirname + "/dist"));
+app.use(express.static('dist'));
 
 app.get('*', (req, res) => {
     res.sendFile(path.resolve(__dirname, 'dist', 'index.html'));
 });
-
 
 var port = process.env.PORT || 5000;
 app.listen(port);
