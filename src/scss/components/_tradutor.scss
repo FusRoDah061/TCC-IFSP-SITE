@@ -58,7 +58,32 @@
             position: relative;
             display: block;
 
-            & > div {
+            &-load {
+                position: absolute;
+                display: flex;
+                background: rgba(255, 255, 255, 0.7);
+                top: 0;
+                right: 0;
+                bottom: 0;
+                left: 0;
+                z-index: 1000001;
+                flex-direction: column;
+                justify-content: center;
+
+                p {
+                    margin: 0;
+                }
+
+                div > .spinner-grow:nth-child(2) {
+                    animation-delay: .1s;
+                }
+
+                div > .spinner-grow:nth-child(3) {
+                    animation-delay: .2s;
+                }
+            }
+
+            & > .vlibras, & > .handtalk {
                 display: flex !important;
                 justify-content: center;
             }

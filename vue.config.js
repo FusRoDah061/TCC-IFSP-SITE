@@ -1,6 +1,6 @@
 module.exports = {
     devServer: {
-        host:'tcc.site'
+        host:'pca-libras.herokuapp.com'
     },
     publicPath: getPublicPath () 
 }

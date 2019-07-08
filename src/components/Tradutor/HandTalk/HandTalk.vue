@@ -16,16 +16,6 @@
             right: auto;
         }
 
-        /*.Z3VP_ow4tw0rnDnoiLykZ {
-            position: relative;
-            bottom: auto;
-            right: auto;
-
-            .ht-md-actions {
-                display: none;
-            }
-        }*/
-
         ._2VauUVQw9BdMxBDl8GX4GQ, ._3Q4E6l7PtCF-ICONC1-lT_ {
             opacity: 0;
             visibility: hidden;
@@ -40,34 +30,20 @@ export default {
     data() {
         return {
             handTalk: null,
-            traduzindo: false
+            traduzindo: false,
+            palavra: null
         }
     },
     props: {
-        ativo: Boolean,
-        frase: String,
-        elemento: String
+        bus: Object
     },
     mounted() {
-        this.initTradutor();
-    },
-    watch: {
-        ativo: function(novoValor, antigoValor) {
-            if(novoValor) {
-                this.initTradutor();
-            }
-        },
-
-        frase: function(novoValor, antigoValor) {
-            if(novoValor && novoValor != antigoValor) {
-                this.traduzindo = true;
-                this.traduzir();
-            }
-        }
+        this.bus.$on('initialize', this.initTradutor);
+        this.bus.$on('traduzir', this.traduzir);
     },
     methods: {
         initTradutor() {
-            if(this.ativo && !this.handTalk){
+            if(!this.handTalk){
                 let parent = document.getElementById('handtalk-parent');
 
                 this.handTalk = new HT({
@@ -80,33 +56,42 @@ export default {
                 parent.lastElementChild.children[2].click();
 
                 this.handTalk.on('errorOnAuth', () => {
+                    this.loading = false;
                     this.$emit('onloaderror', 'Erro ao autenticar');
                 });
 
                 this.handTalk.on('hugoLoaded', () => {
+                    this.loading = false;
                     this.$emit('onload', 'Hugo carregado');
                 });
 
                 this.handTalk.on('translated', () => {
-                    this.$emit('ontranslated', 'Texto traduzido corretamente no Servidor da Hand Talk');
+                    this.loading = false;
+                    this.$emit('ontranslated', this.palavra);
                 });
 
                 this.handTalk.on('errorOnTranslate', () => {
+                    this.loading = false;
+                    this.traduzindo = false;
                     this.$emit('ontranslatederror', 'Erro ao traduzir texto no servidor da Hand Talk');
                 });
 
                 this.handTalk.on('signalized', () => {
+                    this.loading = false;
+                    this.traduzindo = false;
                     this.$emit('onsignalized', 'Sentença sinalizada por completo');
                 });
             }
         },
 
-        traduzir() {
-            console.log('Traduzindo: ', this.frase);
+        traduzir(event) {
+            this.traduzindo = true;
+            this.palavra = event.palavra;
+            this.$emit('ontranslating', event.palavra);
 
             let ht = this.handTalk;
-            ht.textManager.lastText = this.frase;
-            ht.textManager.emit('validElementClicked', { target: document.getElementById(this.elemento) }, this.frase);
+            ht.textManager.lastText = event.palavra;
+            ht.textManager.emit('validElementClicked', { target: document.getElementById(event.elemento) }, event.palavra);
         }
     }
 }

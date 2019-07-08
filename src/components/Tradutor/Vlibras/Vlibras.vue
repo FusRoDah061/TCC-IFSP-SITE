@@ -1,5 +1,5 @@
 <template lang="pug">
-    div(vp)
+    div.vlibras(vp)
         div(vp-message-box)
         div(vp-settings)
         div(vp-settings-btn)

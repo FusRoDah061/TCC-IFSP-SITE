@@ -8,9 +8,8 @@
                 button(v-on:click="todosSimbolos") Todos os símbolos
             li.categoria(v-for="(categoria, i) in categorias" :key="categoria.hid" v-bind:class="{ 'categoria--selected': (categoriaSelecionada == categoria.hid) }")
                 button(v-on:click="disparaCategoria(categoria.hid)" v-bind:style="{ 'background-color':categoria.cor, 'border-color':escurecerCor(categoria.cor), 'color':contraste(categoria.cor) }") {{ categoria.nome }}
-            //-
-                li.categoria.btn-todos-simbolos(v-if="categorias" v-bind:class="{ 'categoria--selected': (categoriaSelecionada == 'meus') }")
-                    button(v-on:click="meusSimbolos") Meus símbolos
+            li.categoria.btn-todos-simbolos(v-if="categorias" v-bind:class="{ 'categoria--selected': (categoriaSelecionada == 'meus') }")
+                button(v-on:click="meusSimbolos") Meus símbolos
 </template>
 
 <script>

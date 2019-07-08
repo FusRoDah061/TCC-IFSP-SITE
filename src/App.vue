@@ -13,7 +13,6 @@ export default {
   name: 'app',
   mounted() {
     const env = runtimeEnv();
-    console.log(env.JS_RUNTIME_MESSAGE || 'JS_RUNTIME_MESSAGE is empty.');
   }
 }
 </script>

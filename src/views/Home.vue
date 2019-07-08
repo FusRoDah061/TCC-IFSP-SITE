@@ -2,7 +2,7 @@
     div.body
         cabecalho
 
-        //- pranchas(:usuario="usuario.hid" :auth="usuario.api_token")
+        pranchas(:usuario="usuario.hid" :auth="usuario.api_token")
 
         simbolos-board(:usuario="usuario" :sentenca="true")
 
