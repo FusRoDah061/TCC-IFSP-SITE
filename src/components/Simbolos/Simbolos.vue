@@ -97,9 +97,6 @@ export default {
                 return;
             }
 
-            console.lgo(process.env.VUE_APP_CATEGORIA_TODOS);
-            console.lgo(process.env.VUE_APP_CATEGORIA_MEUS);
-
             if(this.prancha){
                 url = `${process.env.VUE_APP_API_URL}/usuarios/${this.usuario}/pranchas/${this.prancha}/simbolos?nome=${this.busca || ''}&page=${this.pagina}`;
             }

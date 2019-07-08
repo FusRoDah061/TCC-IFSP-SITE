@@ -21,10 +21,11 @@
                         span.spinner-grow.spinner-grow-sm(role="status" aria-hidden="true")
                         span.spinner-grow.spinner-grow-sm(role="status" aria-hidden="true")
 
-            p.palavra-atual {{ palavra }}
+            p.mt-2.mb-0.text-center.font-italic {{ palavra }}
 
             div.simbolos-interpretar
-                div.simbolos-botoes
+                
+                div.simbolos-botoes.my-2
                     button.btn.btn-white(@click="simboloAnteriorClick" :disabled="tradutorLoading")
                         i.icon.ion-md-skip-backward
                         span Anterior 
@@ -35,7 +36,13 @@
                         i.icon.ion-md-refresh
                         span Repetir tudo 
                 
-                ul.simbolos-sentenca(id="js-simbolos-interpretar")
+                div.traducao-automatica
+                    div.switch
+                        input#js-trad-auto.switch__checkbox(type="checkbox" v-model="traducaoAutomatica" :disabled="tradutorLoading")
+                        span
+                    label.mb-0.ml-2(for="#js-trad-auto") {{ traducaoAutomaticaTexto }}
+
+                ul.simbolos-sentenca.mt-2.mb-0(id="js-simbolos-interpretar")
                     li(v-for="(simbolo, i) in simbolos")
                         simbolo(:id="`js-simbolo-${i}`" :key="simbolo.hid + simbolo.indice" :simbolo="simbolo" @selecionado="selecionarSimbolo(i)" :class="{ 'simbolo--ativo': (simboloAtual == i) }")
 
@@ -55,9 +62,14 @@ export default {
             simboloAtual: -1,
             traduzindo: false,
             bus: new Vue(),
-            traducaoAutomatica: true,
+            traducaoAutomatica: false,
             palavra: null,
             tradutorLoading: true
+        }
+    },
+    computed: {
+        traducaoAutomaticaTexto: function() {
+            return `Interpretar automáticamente? ${ (this.traducaoAutomatica) ? 'Sim!' : 'Não.' }`;
         }
     },
     props: {
