@@ -1,6 +1,11 @@
 module.exports = {
     devServer: {
-        host:'pca-libras.herokuapp.com'
+        host:'pca-libras.herokuapp.com',
+        compress: true,
+        historyApiFallback: {
+            disableDotRule: false,
+            verbose: true
+        }
     },
     publicPath: getPublicPath () 
 }

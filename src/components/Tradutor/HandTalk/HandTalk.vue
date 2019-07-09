@@ -79,7 +79,7 @@ export default {
                 this.handTalk.on('signalized', () => {
                     this.loading = false;
                     this.traduzindo = false;
-                    this.$emit('onsignalized', 'Sentença sinalizada por completo');
+                    this.$emit('onsignalized', this.palavra);
                 });
             }
         },

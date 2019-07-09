@@ -59,9 +59,6 @@ export default new Router({
       name: "home",
       beforeEnter: authGuard,
       component: Home
-    },
-    {
-      path: "/:anything"
     }
 
     //prancha/:hid   visualizar
