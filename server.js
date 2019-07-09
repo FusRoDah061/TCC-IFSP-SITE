@@ -6,14 +6,23 @@ app = express();
 
 app.use(express.static('dist'));
 
-app.get('*', (req, res) => {
+/*app.get('*', (req, res) => {
+    console.log(req.protocol, req.headers.host, req.url);
+
     if(req.protocol === 'https') {
         res.redirect('http://' + req.headers.host + req.url);
     }
 
     res.sendFile(path.resolve(__dirname, 'dist', 'index.html'));
+});*/
+
+app.get('*', (req, res) => {
+    console.log(req.protocol, req.headers.host, req.url);
+    res.sendFile(path.resolve(__dirname, 'dist'));
 });
 
 var port = process.env.PORT || 5000;
 app.listen(port);
 console.log('server started '+ port);
+
+

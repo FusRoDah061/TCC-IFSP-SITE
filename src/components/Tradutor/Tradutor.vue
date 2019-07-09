@@ -5,23 +5,31 @@
                 span &times;
 
             div.interprete
-                hand-talk(:ativo="interpretar" 
-                    :bus="bus"
+                vlibras(:bus="bus"
                     @onload="tradutorLoad" 
                     @onloaderror="tradutorLoadError"
                     @ontranslated="tradutorTranslated" 
                     @ontranslatederror="tradutorTranslatedError" 
                     @onsignalized="tradutorSignalized"
                     @ontranslating="tradutorTraduzindo")
+
+                //-
+                    hand-talk(:bus="bus"
+                        @onload="tradutorLoad" 
+                        @onloaderror="tradutorLoadError"
+                        @ontranslated="tradutorTranslated" 
+                        @ontranslatederror="tradutorTranslatedError" 
+                        @onsignalized="tradutorSignalized"
+                        @ontranslating="tradutorTraduzindo")
                 
                 div.interprete-load(v-if="tradutorLoading")
-                    p.text-center Aguarde...
+                    p.text-center Aguarde, traduzindo {{ palavraTraduzir }}...
                     div.text-center
                         span.spinner-grow.spinner-grow-sm(role="status" aria-hidden="true")
                         span.spinner-grow.spinner-grow-sm(role="status" aria-hidden="true")
                         span.spinner-grow.spinner-grow-sm(role="status" aria-hidden="true")
 
-            p.mt-2.mb-0.text-center.font-italic {{ palavra }}
+            p.mt-2.mb-0.text-center.font-italic(:class="{ 'text-danger': error }") {{ palavra }}
 
             div.simbolos-interpretar
                 
@@ -67,12 +75,20 @@ export default {
             palavra: null,
             tradutorLoading: true,
             pararTraducao: false,
-            esperandoTraducao: false
+            esperandoTraducao: false,
+            error: false
         }
     },
     computed: {
         traducaoAutomaticaTexto: function() {
             return `Interpretar automáticamente? ${ (this.traducaoAutomatica) ? 'Sim!' : 'Não.' }`;
+        },
+
+        palavraTraduzir: function() {
+            if(this.indiceAtual >= 0)
+                return `"${this.simbolos[this.indiceAtual].nome}"`;
+            
+            return null;
         }
     },
     props: {
@@ -127,8 +143,10 @@ export default {
         },
 
         tradutorLoad(result) {
+            console.log('tradutorLoad');
             this.tradutorPronto = true;
             this.tradutorLoading = false;
+            this.error = false;
 
             if (this.simbolos.length > 0 && this.traducaoAutomatica) {
                 this.traduzir(0);
@@ -136,22 +154,30 @@ export default {
         }, 
 
         tradutorLoadError(result) {
+            console.log('tradutorLoadError');
             this.tradutorLoading = false;
+            this.palavra = result;
+            this.error = true;
         },
 
         tradutorTranslated(result) {
+            console.log('tradutorTranslated');
             this.tradutorLoading = false;
             this.palavra = result;
             this.esperandoTraducao = false;
+            this.error = false;
         },
         
         tradutorTranslatedError(result) {
+            console.log('tradutorTranslatedError');
             this.tradutorLoading = false;
             this.traduzindo = false;
             this.palavra = result;
+            this.error = true;
         },
 
         tradutorSignalized(result) {
+            console.log('tradutorSignalized');
             this.tradutorLoading = false;
             this.traduzindo = false;
 
@@ -160,6 +186,7 @@ export default {
         },
 
         tradutorTraduzindo(result) {
+            console.log('tradutorTraduzindo');
             this.traduzindo = true;
         },
 

@@ -12,7 +12,8 @@
     "deploy-heroku": "npm run build-heroku && git push heroku master",
     "deploy": "npm run deploy-gh && npm run deploy-heroku",
     "postinstall": "if test \"$NODE_ENV\" = \"production\" ; then npm run build-heroku ; fi ",
-    "start": "node server.js"
+    "start": "node server.js",
+    "dev": "npm run build-heroku && node server.js"
   },
   "dependencies": {
     "@mars/heroku-js-runtime-env": "^3.0.2",
