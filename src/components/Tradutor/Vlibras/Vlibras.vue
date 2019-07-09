@@ -1,6 +1,6 @@
 <template lang="pug">
     div.vlibras(vp)
-        div(vp-message-box :class="{ 'message-box--silent': traduzindo }")
+        div(vp-message-box)
         div(vp-settings)
         div(vp-settings-btn)
         div(vp-info-screen)
@@ -20,7 +20,7 @@
     .vlibras .settings, .vlibras div[vp-settings], 
     .vlibras .settings-btn, .vlibras div[vp-settings-btn], 
     .vlibras .controls, .vlibras div[vp-controls],
-    .vlibras .message, .vlibras .message-box--silent  {
+    .vlibras .message, .vlibras div[vp-message-box], .vlibras .message-box  {
         display: none !important;
     }
 </style>
@@ -115,7 +115,7 @@ export default {
                         this.animationPlay = false;
                         this.loading = false;
                         this.traduzindo = false;
-                        this.$emit('onsignalized', 'Sentença sinalizada por completo');
+                        this.$emit('onsignalized', this.palavra);
                     }
                 });
             }

@@ -177,9 +177,11 @@ export default {
         },
 
         tradutorSignalized(result) {
-            console.log('tradutorSignalized');
+            console.log('tradutorSignalized', result);
             this.tradutorLoading = false;
             this.traduzindo = false;
+            this.error = false;
+            this.palavra = result;
 
             if(this.traducaoAutomatica && !this.pararTraducao && this.indiceAtual < this.simbolos.length)
                 this.proximoSimbolo();
