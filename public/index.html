@@ -11,6 +11,16 @@
 
     <title>Prancha de Comunicação Online</title>
 
+    <script>
+      (function(){
+        var redirect = sessionStorage.redirect;
+        delete sessionStorage.redirect;
+        if (redirect && redirect != location.href) {
+          history.replaceState(null, null, redirect);
+        }
+      })();
+    </script>
+
     <script src="https://www.google.com/recaptcha/api.js"></script>
     <script src="<%= BASE_URL %>scripts/md5.min.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
