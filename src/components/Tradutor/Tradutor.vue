@@ -44,7 +44,7 @@
 
                 ul.simbolos-sentenca.mt-2.mb-0(id="js-simbolos-interpretar")
                     li(v-for="(simbolo, i) in simbolos")
-                        simbolo(:id="`js-simbolo-${i}`" :key="simbolo.hid + simbolo.indice" :simbolo="simbolo" @selecionado="selecionarSimbolo(i)" :class="{ 'simbolo--ativo': (simboloAtual == i) }")
+                        simbolo(:id="`js-simbolo-${i}`" :key="simbolo.hid + simbolo.indice" :simbolo="simbolo" @selecionado="selecionarSimbolo(i)" :class="{ 'simbolo--ativo': (indiceAtual == i) }")
 
 </template>
 
@@ -53,18 +53,21 @@ import Vlibras from './Vlibras/Vlibras';
 import HandTalk from './HandTalk/HandTalk';
 import DOMUtils from '../../util/dom';
 import Vue from "vue";
+import { setTimeout } from 'timers';
 
 export default {
     name:'tradutor',
     data() {
         return {
             tradutorPronto: false,
-            simboloAtual: -1,
+            indiceAtual: -1,
             traduzindo: false,
             bus: new Vue(),
-            traducaoAutomatica: false,
+            traducaoAutomatica: true,
             palavra: null,
-            tradutorLoading: true
+            tradutorLoading: true,
+            pararTraducao: false,
+            esperandoTraducao: false
         }
     },
     computed: {
@@ -80,53 +83,55 @@ export default {
         Vlibras, HandTalk
     },
     watch: {
-        interpretar: function(novoValor, antigoValor) {
-            console.log('interpretar: ', novoValor, antigoValor);
-            
+        interpretar: function(novoValor, antigoValor) { 
+            console.log("Abriu");
+
             if(novoValor) {
-                this.bus.$emit('initialize', null);
+                this.pararTraducao = false;
+
+                if(!this.tradutorPronto)
+                    this.bus.$emit('initialize', null);
+                else
+                    setTimeout(() => {
+                        this.tradutorLoad();
+                    }, 300);
             }
             else {
+                this.pararTraducao = true;
                 this.reset();
             }
         },
 
         traducaoAutomatica: function(novoValor, antigoValor) {
-            if(!antigoValor && novoValor) {
+            if(novoValor && !this.pararTraducao && !this.traduzindo) {
+                consoel.log("Automático ligado");
                 this.proximoSimbolo();
             }
-        },
-
-        simboloAtual: function(novoValor, antigoValor) {
-            if(novoValor < 0) return;
-
-            DOMUtils.scrollCenterOnElem('js-simbolos-interpretar', `js-simbolo-${novoValor}`);            
-            this.traduzir(this.simbolos[novoValor]);
         }
     },
     methods: {
         fechar() {
             if(this.interpretar) {
+                this.pararTraducao = true;
                 this.reset();
                 this.$emit('terminou', 'canceled');
             }
         },
 
         reset() {
-            this.tradutorPronto = false;
-            this.simboloAtual = 0;
+            this.indiceAtual = 0;
             this.traduzindo = false;
             this.palavra = null;
             this.tradutorLoading = false;
+            this.esperandoTraducao = false;
         },
 
         tradutorLoad(result) {
-            console.log(result);
             this.tradutorPronto = true;
             this.tradutorLoading = false;
 
             if (this.simbolos.length > 0 && this.traducaoAutomatica) {
-                this.simboloAtual = 0;
+                this.traduzir(0);
             }
         }, 
 
@@ -135,9 +140,9 @@ export default {
         },
 
         tradutorTranslated(result) {
-            console.log(result);
             this.tradutorLoading = false;
             this.palavra = result;
+            this.esperandoTraducao = false;
         },
         
         tradutorTranslatedError(result) {
@@ -150,7 +155,7 @@ export default {
             this.tradutorLoading = false;
             this.traduzindo = false;
 
-            if(this.traducaoAutomatica)
+            if(this.traducaoAutomatica && !this.pararTraducao && this.indiceAtual < this.simbolos.length)
                 this.proximoSimbolo();
         },
 
@@ -159,12 +164,23 @@ export default {
         },
 
         simboloAnteriorClick () {
+            let indice = this.indiceAtual;
+
+            if(indice >= this.simbolos.length)
+                indice = this.simbolos.length - 1;
+            else 
+                indice -= 1;
+
             this.traducaoAutomatica = false;
-            this.simboloAtual = this.simboloAtual - 1 < 0 ? 0 : this.simboloAtual - 1;
+            this.traduzir(indice);
         },
 
         proximoSimbolo () {
-            this.simboloAtual = this.simboloAtual + 1 >= this.simbolos.length ? this.simbolos.length - 1 : this.simboloAtual + 1;
+            let indice = this.indiceAtual + 1;
+            
+            if(indice >= this.simbolos.length) return;
+
+            this.traduzir(indice);
         },
 
         proximoSimboloClick ()  {
@@ -173,23 +189,32 @@ export default {
         },
 
         repetirTudoClick () {
-            this.simboloAtual = -1;
-            this.traducaoAutomatica = true;
+            this.traduzir(0);
         },
 
         selecionarSimbolo(indice) {
             this.traducaoAutomatica = false;
-            this.simboloAtual = indice;
+            this.indiceAtual = indice;
+            this.traduzir(indice);
         },
 
-        traduzir(simbolo) {
-            console.log('Vai traduzir: ', simbolo.nome);
+        traduzir(indice) {
+            if(this.esperandoTraducao) return;
+
+            let simbolo = this.simbolos[indice];
+
+            this.indiceAtual = indice;
+            this.esperandoTraducao = true;
+            this.traduzindo = true;
             this.tradutorLoading = true;
 
+            DOMUtils.scrollCenterOnElem('js-simbolos-interpretar', `js-simbolo-${indice}`); 
+
             if(this.tradutorPronto) {
+                console.log('Vai traduzir: ', simbolo.nome);
                 this.bus.$emit('traduzir', {
                     palavra: simbolo.nome,
-                    elem: `js-simbolo-${this.simboloAtual}`
+                    elem: `js-simbolo-${this.indiceAtual}`
                 });
             }
         }

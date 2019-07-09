@@ -15,14 +15,15 @@
             ul.sidemenu-list
                 li.sidemenu-item.item--static
                     p Ações
-                li.sidemenu-item
-                    router-link(to="/prancha") Criar prancha
-                li.sidemenu-item
-                    router-link(to="/simbolo") Criar símbolo
-                li.sidemenu-item.item--divider
-                li.sidemenu-item
-                    router-link(to="/perfil") Minha conta
-                li.sidemenu-item.item--divider
+                //-
+                    li.sidemenu-item
+                        router-link(to="/prancha") Criar prancha
+                    li.sidemenu-item
+                        router-link(to="/simbolo") Criar símbolo
+                    li.sidemenu-item.item--divider
+                    li.sidemenu-item
+                        router-link(to="/perfil") Minha conta
+                    li.sidemenu-item.item--divider
                 li.sidemenu-item
                     p(v-on:click="logout") Sair
 </template>
