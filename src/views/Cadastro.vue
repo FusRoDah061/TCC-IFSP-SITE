@@ -36,8 +36,6 @@
 </template>
 
 <script>
-    import { Values } from '../env';
-
     export default {
         name: 'cadastro',
         data() {
@@ -82,7 +80,7 @@
 
                 axios({
                     method: 'post',
-                    url: `${Values.API_URL}/usuarios`,
+                    url: `${process.env.VUE_APP_API_URL}/usuarios`,
                     data: {
                         nome: this.nome,
                         email: this.email,

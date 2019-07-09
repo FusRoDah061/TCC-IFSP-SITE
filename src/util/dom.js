@@ -28,4 +28,16 @@ export default class DOMUtils {
             }
         }
     }
+
+    static scrollToEnd (elemId) {
+        let elem = document.getElementById(elemId);
+        elem.scrollLeft = elem.scrollWidth;
+    }
+
+    static scrollCenterOnElem(idParent, idTarget) {
+        let parent = document.getElementById(idParent);
+        let target = document.getElementById(idTarget);
+
+        parent.scrollLeft = target.offsetLeft - ((parent.clientWidth - target.clientWidth) / 2);
+    }
 }

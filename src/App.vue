@@ -5,3 +5,15 @@
 </template>
 
 <style src="./scss/main.scss" lang="scss"></style>
+
+<script>
+import runtimeEnv from '@mars/heroku-js-runtime-env';
+
+export default {
+  name: 'app',
+  mounted() {
+    const env = runtimeEnv();
+  }
+}
+</script>
+

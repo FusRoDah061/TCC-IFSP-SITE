@@ -13,6 +13,8 @@
 
 <script>
 import { setTimeout } from 'timers';
+import DOMUtils from '../../util/dom';
+
 export default {
     name: 'sentenca',
     data() {
@@ -44,8 +46,7 @@ export default {
             .filter(e => newVal[e]).map(e => newVal[e]);
 
             setTimeout(function () {
-                let elem = document.getElementById('js-sentenca-simbolos');
-                elem.scrollLeft = elem.scrollWidth;
+                DOMUtils.scrollToEnd('js-sentenca-simbolos');
             }, 200);            
         }
     }

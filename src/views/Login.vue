@@ -26,8 +26,6 @@
 
 <script>
 
-    import { Values } from '../env';
-
     export default {
         name: 'login',
         data()  {
@@ -62,7 +60,7 @@
 
                 axios({
                     method: 'get',
-                    url: `${Values.API_URL}/auth`,
+                    url: `${process.env.VUE_APP_API_URL}/auth`,
                     params: {
                         email: this.email,
                         password: md5(this.senha)

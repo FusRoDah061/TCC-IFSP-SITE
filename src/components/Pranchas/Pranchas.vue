@@ -15,8 +15,6 @@
 </template>
 
 <script>
-import { Values } from '../../env';
-
 export default {
     name: 'pranchas',
     data() {
@@ -39,7 +37,7 @@ export default {
 
             axios({
                 method: 'get',
-                url: `${Values.API_URL}/usuarios/${this.usuario}/pranchas`,
+                url: `${process.env.VUE_APP_API_URL}/usuarios/${this.usuario}/pranchas`,
                 headers: {
                     'Accept': 'application/json',
                     'Authorization': `Bearer ${this.auth}`

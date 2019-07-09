@@ -26,8 +26,6 @@
 </template>
 
 <script>
-import { Values } from '../env';
-
 export default {
     name: 'senha',
     data() {
@@ -77,7 +75,7 @@ export default {
 
             axios({
                 method: 'put',
-                url: `${Values.API_URL}/usuarios/${this.usuario.hid}/senha`,
+                url: `${process.env.VUE_APP_API_URL}/usuarios/${this.usuario.hid}/senha`,
                 params: {
                     recuperar: true,
                     validation: recaptchaToken
@@ -118,7 +116,7 @@ export default {
 
             axios({
                 method: 'get',
-                url: `${Values.API_URL}/senha/recuperar/${tokenPedido}`,
+                url: `${process.env.VUE_APP_API_URL}/senha/recuperar/${tokenPedido}`,
                 headers: {
                     'Accept': 'application/json'
                 }
@@ -154,7 +152,7 @@ export default {
                     this.isLoading = false;
 
                     grecaptcha.render('recaptcha', {
-                        'sitekey': Values.RECAPTCHA_KEY
+                        'sitekey': process.env.VUE_APP_RECAPTCHA_KEY
                     });
                 }
             }, 200);

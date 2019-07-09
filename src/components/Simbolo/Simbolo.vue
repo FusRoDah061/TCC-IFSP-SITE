@@ -7,7 +7,6 @@
 </template>
 
 <script>
-import { Values } from '../../env';
 import ColorUtils from '../../util/color';
 
 export default {
@@ -21,7 +20,7 @@ export default {
         },
 
         getUrlIcone(simbolo){ 
-            return `${Values.IMAGEM_URL}/${this.simbolo.arquivo}`;
+            return `${process.env.VUE_APP_IMAGEM_URL}/${this.simbolo.arquivo}`;
         },
 
         contraste(cor){

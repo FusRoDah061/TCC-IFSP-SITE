@@ -5,14 +5,24 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "build-gh": "set HOST=github&& vue-cli-service build",
+    "build-heroku": "set HOST=heroku&& vue-cli-service build",
+    "lint": "vue-cli-service lint",
+    "deploy-gh": "npm run build-gh && push-dir --dir=dist --local-branch-name=githubdeploy --branch=gh-pages --cleanup",
+    "deploy-heroku": "npm run build-heroku && git push heroku master",
+    "deploy": "npm run deploy-gh && npm run deploy-heroku",
+    "postinstall": "if test \"$NODE_ENV\" = \"production\" ; then npm run build-heroku ; fi ",
+    "start": "node server.js"
   },
   "dependencies": {
+    "@mars/heroku-js-runtime-env": "^3.0.2",
     "bootstrap": "^4.3.1",
+    "express": "^4.17.1",
     "md5": "^2.2.1",
     "vue": "^2.6.6",
     "vue-plugin-load-script": "^1.2.0",
-    "vue-router": "^3.0.1"
+    "vue-router": "^3.0.1",
+    "serve-static": "1.14.1"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.5.0",
@@ -25,6 +35,7 @@
     "fibers": "^3.1.1",
     "pug": "^2.0.3",
     "pug-plain-loader": "^1.0.0",
+    "push-dir": "^0.4.1",
     "sass": "^1.17.2",
     "sass-loader": "^7.1.0",
     "vue-template-compiler": "^2.5.21"
