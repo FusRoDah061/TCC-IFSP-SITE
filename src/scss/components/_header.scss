@@ -99,13 +99,14 @@ $image-size-smaller: 60px;
             .sidemenu-item {
                 list-style: none;
                 cursor: pointer;
-                padding: 15px 20px;
                 transition: .2s;
 
                 a, p {
+                    display: block;
                     color: $black;
                     text-decoration: none !important;
                     margin: 0;
+                    padding: 15px 20px;
                 }
 
                 &:hover {
@@ -115,13 +116,15 @@ $image-size-smaller: 60px;
             }
 
             .item--static {
-                padding: 0px 27px;
+                margin-top: 5px;
                 transition: none;
                 cursor: default;
                 font-size: .75rem;
 
                 a, p {
+                    display: block;
                     color: $gray;
+                    padding: 0px 27px;
                 }
 
                 &:hover {

@@ -1,15 +1,32 @@
 .spinner {
-    display: none;
+    display: none !important;
     z-index: 200;
 
     &--shown {
-        display: block;
+        display: block !important;
     }
 
     &--fixed {
-        position: absolute;
-        top: 25px;
+        position: fixed;
+        top: 20px;
         left: 0;
         right: 0;
+    }
+}
+
+.text-text.spinner--shown {
+    display: inline-block !important;
+}
+
+.text-text {
+    margin-left: 10px;
+    font-weight: normal;
+
+    .spinner-border {
+        width: 1.5rem;
+        height: 1.5rem;
+        border: 0.2em solid currentColor;
+        border-right-color: transparent;
+        border-radius: 100%;
     }
 }

@@ -8,12 +8,6 @@
 
     &-busca {
         margin-bottom: 10px;
-
-        .btn {
-            padding: 8px 0px;
-            min-width: 110px;
-            width: 110px;
-        }
     }
 
     .sentenca-aberta {
@@ -39,10 +33,6 @@
             margin-top: 10px;    
             grid-column-start: 1;
             grid-column-end: -1;
-
-            .spinner {
-                width: 100%;
-            }
         }
     }
 }

@@ -1,7 +1,5 @@
 <template lang="pug">
-    div.body
-        cabecalho
-
+    div.home
         pranchas(:usuario="usuario.hid" :auth="usuario.api_token")
 
         simbolos-board(:usuario="usuario" :sentenca="true")

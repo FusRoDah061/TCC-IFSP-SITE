@@ -119,23 +119,6 @@
 
 }
 
-.spinner--shown {
-    display: inline-block;
-}
-
-.spinner {
-    margin-left: 10px;
-
-    .spinner-border {
-        width: 1.5rem;
-        height: 1.5rem;
-        border: 0.2em solid currentColor;
-        border-right-color: transparent;
-        border-radius: 100%;
-    }
-}
-
-
 @media only screen and (max-width: 770px) {
     .pranchas {
         .pranchas-content {

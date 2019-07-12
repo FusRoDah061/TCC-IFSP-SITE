@@ -16,12 +16,16 @@
                 li.sidemenu-item.item--static
                     p Ações
                 li.sidemenu-item
-                    router-link(to="/prancha") Criar prancha
+                    router-link(to="/app/prancha") Criar prancha
                 li.sidemenu-item
-                    router-link(to="/simbolo") Criar símbolo
+                    router-link(to="/app/simbolo") Criar símbolo
                 li.sidemenu-item.item--divider
+                li.sidemenu-item.item--static
+                    p Páginas
                 li.sidemenu-item
-                    router-link(to="/perfil") Minha conta
+                    router-link(to="/app") Início
+                li.sidemenu-item
+                    router-link(to="/app/perfil") Minha conta
                 li.sidemenu-item.item--divider
                 li.sidemenu-item
                     p(v-on:click="logout") Sair

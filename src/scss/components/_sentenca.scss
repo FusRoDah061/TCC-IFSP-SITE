@@ -32,25 +32,7 @@
             list-style: none;
             margin: 0px 3px;
 
-            &:hover::before { 
-                content: "\F398";
-                font-family: "Ionicons";
-                position: absolute;
-                display: flex;
-                top: 0;
-                right: 0;
-                bottom: 0;
-                left: 0;
-                z-index: 10;
-                background: rgba(255, 77, 77,.8);
-                border-radius: 5px;
-                cursor: pointer;
-                color: #fcfcfc;
-                font-size: 3rem;
-                align-items: center;
-                justify-content: center;
-                pointer-events: none;
-            }
+            
         }
     }
 
