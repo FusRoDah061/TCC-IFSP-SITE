@@ -74,7 +74,7 @@
 
                     if(response.status == 200){
                         localStorage.usuario = JSON.stringify(response.data);
-                        this.$router.push("/home");
+                        this.$router.push("app");
                     }
                 })
                 .catch(error => {

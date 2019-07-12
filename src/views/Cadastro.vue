@@ -56,23 +56,23 @@
                 event.preventDefault();
 
                 if(!this.nome) {
-                    toast.info('Informe seu nome.');
+                    this.toast.info('Informe seu nome.');
                     return;
                 }
                 else if(!this.email) {
-                    toast.info('Informe seu e-mail.');
+                    this.toast.info('Informe seu e-mail.');
                     return;
                 }
                 else if(!this.senha) {
-                    toast.info('Você deve informar uma senha.');
+                    this.toast.info('Você deve informar uma senha.');
                     return;
                 }
                 else if(this.senha.length < 8){
-                    toast.info('Sua senha não deve conter menos de 8 caracteres.');
+                    this.toast.info('Sua senha não deve conter menos de 8 caracteres.');
                     return;
                 }
                 else if(this.senha != this.senhaConf) {
-                    toast.info('As senhas devem ser iguais.');
+                    this.toast.info('As senhas devem ser iguais.');
                     return;
                 }
 
@@ -97,7 +97,7 @@
 
                     if(response.status == 201){
                         localStorage.usuario = JSON.stringify(response.data);
-                        this.$router.push("home");
+                        this.$router.push("app");
                     }
                 })
                 .catch(error => {

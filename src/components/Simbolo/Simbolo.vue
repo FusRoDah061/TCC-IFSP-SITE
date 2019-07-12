@@ -1,5 +1,5 @@
 <template lang="pug">
-    div.simbolo(@click="simboloClicado" :style="{ 'background-color':simbolo.categoria.cor, 'border-color':escurecerCor(simbolo.categoria.cor), 'color':contraste(simbolo.categoria.cor) }")
+    div.simbolo(@click="simboloClicado" :class="{ 'simbolo-deletable':deletable }" :style="{ 'background-color':simbolo.categoria.cor, 'border-color':escurecerCor(simbolo.categoria.cor), 'color':contraste(simbolo.categoria.cor) }")
         div.simbolo-content
             span.simbolo-indice(v-if="simbolo.indice") {{simbolo.indice}}
             img.simbolo-icone(:src="getUrlIcone(simbolo.imagem)")
@@ -12,7 +12,8 @@ import ColorUtils from '../../util/color';
 export default {
     name: 'simbolo',
     props: {
-        simbolo: Object
+        simbolo: Object,
+        deletable: Boolean
     },
     methods: {
         escurecerCor(cor) {

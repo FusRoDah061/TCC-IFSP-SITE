@@ -5,6 +5,8 @@ import Cadastro from "./views/Cadastro.vue";
 import Recuperar from "./views/Recuperar.vue";
 import Senha from "./views/Senha.vue";
 import Home from "./views/Home.vue";
+import Prancha from "./views/Prancha.vue";
+import AreaLogado from "./views/AreaLogado.vue";
 
 Vue.use(Router);
 
@@ -19,7 +21,7 @@ function authGuard(to, from, next) {
 
 function loginGuard(to, from, next) {
   if (localStorage.usuario) {
-    next('/home');
+    next('/app');
   }
   else {
     next();
@@ -55,13 +57,24 @@ export default new Router({
       component: Senha
     },
     {
-      path: "/home",
-      name: "home",
+      path: "/app",
+      name: "app",
       beforeEnter: authGuard,
-      component: Home
+      component: AreaLogado,
+      children: [
+        {
+          path: "",
+          component: Home,
+        },
+        {
+          path: "prancha",
+          component: Prancha,
+        },
+        {
+          path: "prancha/:hid",
+          component: Prancha,
+        }
+      ]
     }
-
-    //prancha/:hid   visualizar
-    //prancha/      criar
   ]
 });

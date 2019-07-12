@@ -4,7 +4,7 @@
 
         ul.sentenca-simbolos#js-sentenca-simbolos
             li(v-for="(simbolo, i) in simbolosReais")
-                simbolo.simbolo-sm(:key="simbolo.hid" :simbolo="simbolo" @selecionado="removerSimbolo")
+                simbolo.simbolo-sm(:key="simbolo.hid" :simbolo="simbolo" @selecionado="removerSimbolo" :deletable="true")
         
         div.sentenca-buttons
             button.btn.btn-blue.btn-block(@click="interpretar") Interpretar

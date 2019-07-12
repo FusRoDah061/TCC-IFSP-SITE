@@ -1,7 +1,7 @@
 <template lang="pug">
     div.simbolos
         p Símbolos
-            spinner(position="center" v-bind:show="isLoading")
+            spinner(position="text" v-bind:show="isLoading")
 
         form.simbolos-busca.form-inline
             div.form-inputs
@@ -9,14 +9,14 @@
                 div.form-control.form-search.input--w-icon
                     input#js-palavra(v-model="busca" type="text" maxlength="255" autofocus)
 
-            button.btn.btn-green(@click="buscarSimbolos") Buscar
+            button.btn.btn-green.py-2.px-4(@click="buscarSimbolos") Buscar
 
         ul.simbolos-box(:class="{'sentenca-aberta': sentenca}")
             li(v-for="(simbolo, i) in simbolos")
-                simbolo(:key="simbolo.hid + simbolo.indice" :simbolo="simbolo" @selecionado="simboloSelecionado")
+                simbolo(:key="simbolo.hid" :simbolo="simbolo" @selecionado="simboloSelecionado")
 
             li.simbolos-load-more#js-simbolos-load-more
-                spinner(position="center" v-bind:show="isLoading")
+                spinner.spinner-border-sm.width-100(position="center" v-bind:show="isLoading")
 </template>
 
 <script>

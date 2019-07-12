@@ -1,3 +1,25 @@
+.simbolo-deletable {
+    &:hover::before { 
+        content: "\F398";
+        font-family: "Ionicons";
+        position: absolute;
+        display: flex;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        z-index: 10;
+        background: rgba(255, 77, 77,.8);
+        border-radius: 4px;
+        cursor: pointer;
+        color: #fcfcfc;
+        font-size: 3rem;
+        align-items: center;
+        justify-content: center;
+        pointer-events: none;
+    }
+}
+
 .simbolo {
     position: relative;
     display: block;
@@ -7,6 +29,10 @@
     padding: 5px;
     list-style: none;
     cursor: pointer;
+
+    &:hover {
+        transform: scale(1.1);
+    }
 
     & > button {
         position: relative;

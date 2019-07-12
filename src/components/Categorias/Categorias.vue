@@ -1,7 +1,7 @@
 <template lang="pug">
     div.categorias
         p Categorias de símbolos
-            spinner(position="center" v-bind:show="isLoading")
+            spinner(position="text" v-bind:show="isLoading")
 
         ul.categorias-list
             li.categoria.btn-todos-simbolos(v-if="categorias" v-bind:class="{ 'categoria--selected': (categoriaSelecionada == 'todos') }")

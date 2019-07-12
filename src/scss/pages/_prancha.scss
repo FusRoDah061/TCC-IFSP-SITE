@@ -1,0 +1,10 @@
+.simbolos-add {
+    position: relative;
+    display: grid;
+    grid-gap: 10px;
+    grid-template-columns:  repeat(auto-fit, $simbolo-sm-dim);
+    padding: 0;
+    place-content: space-between;
+    max-height: $simbolo-sm-dim * 2 + 30px;
+    overflow: auto;
+}
