@@ -1,5 +1,5 @@
 <template lang="pug">
-    div.pranchas(v-bind:class="{ 'pranchas-modal':modalView }" @click="closeModal")
+    div.pranchas(v-bind:class="{ 'pranchas-modal':modalView }" @click.self="closeModal")
         div.pranchas-content
             p Minhas pranchas temáticas
                 spinner(position="text" v-bind:show="isLoading")
@@ -8,14 +8,14 @@
                 ul.pranchas-list
                     li.prancha.btn-nova-prancha
                         router-link.btn.btn-green(to="/app/prancha") Criar nova
-                    li.prancha(v-for="prancha in pranchas")
-                        router-link.btn.btn-white(:to="'/app/' + prancha.hid") {{ prancha.nome }}
+                    li.prancha(v-for="prancha in pranchas" :class="{ 'prancha-selecionada': pranchaAtiva == prancha.hid }")
+                        button.btn.btn-white(@click.stop="pranchaSelecionada(prancha)") {{ prancha.nome }}
                         router-link.btn.btn-blue(:to="'/app/prancha/' + prancha.hid") 
                             i.icon.ion-md-create
-                        button.btn.btn-red(@click="deletarPrancha($event, prancha.hid)")
+                        button.btn.btn-red(@click.stop="deletarPrancha(prancha.hid)")
                             i.icon.ion-md-trash
                     li.prancha.btn-todas-pranchas(v-if="pranchas")
-                        button.btn.btn-white(@click="openModal") Ver todas
+                        button.btn.btn-white(@click.stop="openModal") Ver todas
 </template>
 
 <script>
@@ -25,7 +25,8 @@ export default {
         return {
             pranchas: null,
             isLoading: false,
-            modalView: false
+            modalView: false,
+            pranchaAtiva: null
         };
     },
     props: {
@@ -65,8 +66,7 @@ export default {
             });
         },
 
-        deletarPrancha(event, hid){
-            event.stopPropagation();
+        deletarPrancha(hid){
             this.isLoading = true;
 
             axios({
@@ -96,15 +96,18 @@ export default {
             });
         },
 
-        openModal (event) {
-            event.stopPropagation();
+        openModal () {
             this.modalView = true;
         },
 
-        closeModal(event) {
-            event.stopPropagation();
+        closeModal() {
             if(this.modalView)
                 this.modalView = false;
+        },
+
+        pranchaSelecionada(prancha){
+            this.pranchaAtiva = prancha.hid;
+            this.$emit('selected', prancha);
         }
     }
 }

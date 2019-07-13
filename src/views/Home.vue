@@ -1,19 +1,21 @@
 <template lang="pug">
     div.home
-        pranchas(:usuario="usuario.hid" :auth="usuario.api_token")
+        pranchas(:usuario="usuario.hid" :auth="usuario.api_token" @selected="pranchaSelecionada")
 
-        simbolos-board(:usuario="usuario" :sentenca="true")
+        simbolos-board(:usuario="usuario" :prancha="prancha" :sentenca="true")
 
 </template>
 
 <script>
 import Pranchas from "../components/Pranchas/Pranchas";
+import { constants } from 'crypto';
 
 export default {
     name: 'home',
     data() {
         return {
-            usuario: null
+            usuario: null,
+            prancha: null
         };
     },
     components: {
@@ -21,7 +23,12 @@ export default {
     },
     created() {
         this.usuario = JSON.parse(localStorage.usuario);
-        console.log(this.$route.params.prancha);
+    },
+    methods: {
+        pranchaSelecionada(prancha) {
+            console.log(prancha);
+            this.prancha = prancha.hid;
+        }
     }
 }
 </script>

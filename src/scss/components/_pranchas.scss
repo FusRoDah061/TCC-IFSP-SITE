@@ -28,6 +28,12 @@
                     display: block;
                 }
 
+                .prancha-selecionada {
+                    .btn-white {
+                        border-color: $red !important;
+                    }
+                }
+
                 .prancha {
                     display: block;
                     list-style: none;

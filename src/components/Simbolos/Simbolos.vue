@@ -153,16 +153,27 @@ export default {
             let url = this.url.substring(0, this.url.indexOf('page=')) + `page=${this.pagina}`;
 
             this.fetchSimbolos(url);
+        },
+
+        reset() {
+            this.simbolos = [];
+            this.pagina = 1;
+            this.busca = null,
+            this.url = null,
+            this.buscandoPagina = false
         }
     },
     watch: {
         categoria: function(novoValor, antigoValor) {
             if(novoValor && novoValor != antigoValor) {
-                this.simbolos = [];
-                this.pagina = 1;
-                this.busca = null,
-                this.url = null,
-                this.buscandoPagina = false
+                this.reset();
+                this.carregarSimbolos();
+            }
+        },
+
+        prancha: function(valor) {
+            if(valor) {
+                this.reset();
                 this.carregarSimbolos();
             }
         }

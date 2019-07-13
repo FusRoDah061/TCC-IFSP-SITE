@@ -2,7 +2,7 @@
     div.simbolo-picker
         categorias(v-bind:auth="usuario.api_token" @selected="mudaCategoria")
 
-        simbolos(:usuario="usuario.hid" :auth="usuario.api_token" :categoria="categoria" :sentenca="simbolosSentenca.length > 0" @selected="simboloSelecionado")
+        simbolos(:usuario="usuario.hid" :prancha="prancha" :auth="usuario.api_token" :categoria="categoria" :sentenca="simbolosSentenca.length > 0" @selected="simboloSelecionado")
 
         sentenca(v-if="sentenca" :simbolos="simbolosSentenca" @simboloRemovido="simboloRemovidoSentenca" @limpar="limparSentenca" @interpretar="interpretarSentenca")
 
@@ -26,7 +26,8 @@ export default {
     },
     props: {
         usuario: Object,
-        sentenca: Boolean
+        sentenca: Boolean,
+        prancha: String
     },
     components: {
         Sentenca, Categorias, Simbolos, Tradutor
