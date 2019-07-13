@@ -12,7 +12,7 @@
                         router-link.btn.btn-white(:to="'/app/' + prancha.hid") {{ prancha.nome }}
                         router-link.btn.btn-blue(:to="'/app/prancha/' + prancha.hid") 
                             i.icon.ion-md-create
-                        button.btn.btn-red
+                        button.btn.btn-red(@click="deletarPrancha($event, prancha.hid)")
                             i.icon.ion-md-trash
                     li.prancha.btn-todas-pranchas(v-if="pranchas")
                         button.btn.btn-white(@click="openModal") Ver todas
@@ -65,19 +65,46 @@ export default {
             });
         },
 
+        deletarPrancha(event, hid){
+            event.stopPropagation();
+            this.isLoading = true;
+
+            axios({
+                method: 'delete',
+                url: `${process.env.VUE_APP_API_URL}/usuarios/${this.usuario}/pranchas/${hid}`,
+                headers: {
+                    'Accept': 'application/json',
+                    'Authorization': `Bearer ${this.auth}`
+                }
+            })
+            .then(response => {
+                this.isLoading = false;
+
+                if(response.status == 200){
+                    let i = this.pranchas.findIndex(item => item.hid === hid);
+                    this.pranchas.splice(i, 1);
+                }
+            })
+            .catch(error => {
+                this.isLoading = false;
+                if (error.response) {
+                    console.log(error.response.data.message);
+                }
+                else {
+                    console.log(error.message, error.stack);
+                }
+            });
+        },
+
         openModal (event) {
             event.stopPropagation();
             this.modalView = true;
-
-            console.log("Abrir modal");
         },
 
         closeModal(event) {
             event.stopPropagation();
             if(this.modalView)
                 this.modalView = false;
-
-            console.log("Fechar modal");
         }
     }
 }
