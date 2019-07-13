@@ -21,6 +21,7 @@ export default {
     },
     created() {
         this.usuario = JSON.parse(localStorage.usuario);
+        console.log(this.$route.params.prancha);
     }
 }
 </script>

@@ -37,9 +37,9 @@ button:disabled {
 }
 
 .btn-white {
-    background: $white;
-    color: $black;
-    border: 3px solid $white-grayer;
+    background: $white !important;
+    color: $black !important;
+    border: 3px solid $white-grayer !important;
 
     &::after {
         content: "";
@@ -72,9 +72,9 @@ button:disabled {
 }
 
 .btn-green {
-    background: $green;
-    color: $white;
-    border: 3px solid $green-darker;
+    background: $green !important;
+    color: $white !important;
+    border: 3px solid $green-darker !important;
 
     &::after {
         content: "";
@@ -107,9 +107,9 @@ button:disabled {
 }
 
 .btn-blue {
-    background: $blue;
-    color: $white;
-    border: 3px solid $blue-darker;
+    background: $blue !important;
+    color: $white !important;
+    border: 3px solid $blue-darker !important;
     
     &::after {
         content: "";
@@ -117,6 +117,41 @@ button:disabled {
         display: block;
         transition: 0.25s;
         background: $blue-darker;
+        width: 10%;
+        height: 10%;
+        border-radius: 100%;
+        transform-origin: 50% 50%;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        margin: auto;
+        opacity: 0;
+        z-index: -1;
+    }
+
+    &:hover{
+        color: $white;
+
+        &::after {
+            opacity: 1;
+            transform: scale(15);
+            transition-timing-function: ease-in-out;
+        }
+    }
+}
+
+.btn-red {
+    background: $red !important;
+    color: $white !important;
+    border: 3px solid $red-darker !important;
+    
+    &::after {
+        content: "";
+        position: absolute;
+        display: block;
+        transition: 0.25s;
+        background: $red-darker;
         width: 10%;
         height: 10%;
         border-radius: 100%;

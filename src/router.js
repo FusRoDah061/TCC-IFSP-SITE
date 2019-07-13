@@ -71,8 +71,12 @@ export default new Router({
           component: Prancha,
         },
         {
-          path: "prancha/:hid",
+          path: "prancha/:prancha",
           component: Prancha,
+        },
+        {
+          path: ":prancha",
+          component: Home,
         }
       ]
     }

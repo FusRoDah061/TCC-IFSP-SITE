@@ -1,5 +1,5 @@
 <template lang="pug">
-    div.pranchas(v-bind:class="{ 'pranchas-modal':modalView }" v-on:click="toggleModal")
+    div.pranchas(v-bind:class="{ 'pranchas-modal':modalView }" @click="closeModal")
         div.pranchas-content
             p Minhas pranchas temáticas
                 spinner(position="text" v-bind:show="isLoading")
@@ -9,9 +9,13 @@
                     li.prancha.btn-nova-prancha
                         router-link.btn.btn-green(to="/app/prancha") Criar nova
                     li.prancha(v-for="prancha in pranchas")
-                        router-link.btn.btn-white(:to="'/app/prancha/' + prancha.hid") {{ prancha.nome }}
+                        router-link.btn.btn-white(:to="'/app/' + prancha.hid") {{ prancha.nome }}
+                        router-link.btn.btn-blue(:to="'/app/prancha/' + prancha.hid") 
+                            i.icon.ion-md-create
+                        button.btn.btn-red
+                            i.icon.ion-md-trash
                     li.prancha.btn-todas-pranchas(v-if="pranchas")
-                        button.btn.btn-white(v-on:click="toggleModal") Ver todas
+                        button.btn.btn-white(@click="openModal") Ver todas
 </template>
 
 <script>
@@ -61,9 +65,19 @@ export default {
             });
         },
 
-        toggleModal(event) {
+        openModal (event) {
             event.stopPropagation();
-            this.modalView = !this.modalView;
+            this.modalView = true;
+
+            console.log("Abrir modal");
+        },
+
+        closeModal(event) {
+            event.stopPropagation();
+            if(this.modalView)
+                this.modalView = false;
+
+            console.log("Fechar modal");
         }
     }
 }

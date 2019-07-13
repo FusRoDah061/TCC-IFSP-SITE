@@ -10,7 +10,7 @@
             div.form-inputs
                 label(for="tit-prancha") Título da prancha
                 div.form-control
-                    input#tit-prancha(v-model="pranchaObj.titulo" type="text" maxlength="255" minlength="1" autofocus)
+                    input#tit-prancha(v-model="pranchaObj.nome" type="text" maxlength="255" minlength="1" autofocus)
 
             button.btn.btn-green.py-2.px-4(:disabled="pranchaInvalida" @click="salvarPrancha") Salvar prancha
         
@@ -18,7 +18,7 @@
             p.mb-0.mt-4 Símbolos adicionados
             p.text-muted Clique em um símbolo para remover da prancha.
 
-            ul.simbolos-add.p-0
+            ul.simbolos-add.px-0.py-2
                 li.list-style-none(v-for="(simbolo, i) in pranchaObj.simbolos")
                     simbolo.simbolo-sm(:key="simbolo.hid" :simbolo="simbolo" @selecionado="simboloRemover" :deletable="true")
 
@@ -37,7 +37,7 @@ export default {
     data() {
         return {
             pranchaObj: {
-                titulo: null,
+                nome: null,
                 simbolos: []
             },
             editar: false,
@@ -47,9 +47,6 @@ export default {
             toast: null
         }
     },
-    props: {
-        prancha: Object
-    },
     components: {
         Categorias, Simbolos
     },
@@ -58,10 +55,10 @@ export default {
     },
     mounted() {
         this.toast = this.$refs.toast;
-
-        if(this.prancha) {
+        
+        if(this.$route.params.prancha) {
             this.editar = true;
-            fetchPrancha(this.prancha);
+            this.fetchPrancha(this.$route.params.prancha);
         }
     },
     computed: {
@@ -69,26 +66,54 @@ export default {
             if(this.editar)
                 if(this.isLoading)
                     return 'Aguarde, buscando prancha...';
+                else if(this.pranchaObj.nome)
+                    return `Editar prancha ${this.pranchaObj.nome}`;
                 else
-                    return `Editar prancha ${pranchaObj.titulo}`;
-            else 
-                return 'Criar nova prancha';
+                    this.editar = false;
+
+            return 'Criar nova prancha';
         },
 
         pranchaInvalida() {
             return !this.pranchaObj || 
-                !this.pranchaObj.titulo || 
+                !this.pranchaObj.nome || 
                 !this.pranchaObj.simbolos ||
                 this.pranchaObj.simbolos.length <= 0;
         }
     },
     methods: {
         fetchPrancha(hid) {
-            //TODO: buscar prancha para editar
             this.isLoading = true;
+
+            axios({
+                method: 'get',
+                url: `${process.env.VUE_APP_API_URL}/usuarios/${this.usuario.hid}/pranchas/${hid}`,
+                headers: {
+                    'Accept': 'application/json',
+                    'Authorization': `Bearer ${this.usuario.api_token}`
+                }
+            })            
+            .then(response =>  {
+                this.isLoading = false;
+
+                if(response.status == 200 && typeof(response.data) === 'object'){
+                    this.pranchaObj = response.data;
+                }
+            })
+            .catch(error => {
+                this.isLoading = false;
+
+                if (error.response) {
+                    this.toast.error(error.response.data.message);
+                }
+                else {
+                    this.toast.error(error.message, error.stack);
+                }
+            });
         },
 
         simboloSelecionado(simbolo) {
+            console.log(simbolo);
             if(!this.pranchaObj.simbolos.includes(simbolo))
                 this.pranchaObj.simbolos.push(simbolo);
         },
@@ -102,9 +127,8 @@ export default {
             this.categoria = categoria;
         },
 
-        salvarPrancha() {
-
-            if(!this.pranchaObj.titulo) {
+        salvarPrancha(){
+            if(!this.pranchaObj.nome) {
                 this.toast.info('Dê um nome para sua prancha.');
                 return;
             }
@@ -116,14 +140,13 @@ export default {
             this.isLoading = true;
 
             axios({
-                method: 'post',
-                url: `${process.env.VUE_APP_API_URL}/usuarios/${this.usuario.hid}/pranchas`,
+                method: this.editar ? 'put' : 'post',
+                url: `${process.env.VUE_APP_API_URL}/usuarios/${this.usuario.hid}/pranchas${ this.editar ? `/${this.pranchaObj.hid}` : '' }`,
                 data: {
-                    nome: this.pranchaObj.titulo,
+                    nome: this.pranchaObj.nome,
                     simbolos: this.pranchaObj.simbolos.map(item => item.hid),
                 },
                 headers: {
-                    'Accept': 'application/json',
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${this.usuario.api_token}`
                 }
@@ -131,7 +154,10 @@ export default {
             .then(response =>  {
                 this.isLoading = false;
 
-                if(response.status == 201){
+                if(this.editar && response.status == 200) {
+                    this.toast.success('Prancha atualizada com sucesso!');
+                }
+                else if(!this.editar && response.status == 201){
                     this.toast.success('Prancha criada com sucesso!');
                 }
             })
@@ -145,7 +171,6 @@ export default {
                     this.toast.error(error.message, error.stack);
                 }
             });
-
         }
     }
 }
