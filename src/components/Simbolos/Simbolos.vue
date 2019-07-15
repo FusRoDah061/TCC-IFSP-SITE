@@ -9,7 +9,7 @@
                 div.form-control.form-search.input--w-icon
                     input#js-palavra(v-model="busca" type="text" maxlength="255" autofocus)
 
-            button.btn.btn-green.py-2.px-4(@click="buscarSimbolos") Buscar
+            button.btn.btn-green.py-2.px-4(@click.stop="fetchSimbolos") Buscar
 
         ul.simbolos-box(:class="{'sentenca-aberta': sentenca}")
             li(v-for="(simbolo, i) in simbolos")
@@ -32,7 +32,6 @@ export default {
             pagina: 1,
             isLoading: true,
             busca: null,
-            url: null,
             buscandoPagina: false,
             disparouBuscaPagina: false
         }
@@ -46,7 +45,7 @@ export default {
     },
     mounted() {
         if(this.categoria != null)
-            this.carregarSimbolos();
+            this.fetchSimbolos();
 
         document.addEventListener('scroll', () => {
             let estaVisivel = DOMUtils.isElementInViewport('js-simbolos-load-more');
@@ -66,57 +65,19 @@ export default {
         });
     },
     methods: {
-        carregarSimbolos() {
-            let url = '';
 
-            if(this.prancha){
-                url = `${process.env.VUE_APP_API_URL}/usuarios/${this.usuario}/pranchas/${this.prancha}/simbolos?page=${this.pagina}`;
-            }
-            else if(this.categoria == process.env.VUE_APP_CATEGORIA_TODOS || !this.categoria){
-                url = `${process.env.VUE_APP_API_URL}/usuarios/${this.usuario}/categorias/simbolos?page=${this.pagina}`;
-            }
-            else if (this.categoria == process.env.VUE_APP_CATEGORIA_MEUS) {
-                url = `${process.env.VUE_APP_API_URL}/usuarios/${this.usuario}/simbolos?page=${this.pagina}`;
-            }
-            else if(this.categoria){
-                url = `${process.env.VUE_APP_API_URL}/usuarios/${this.usuario}/categorias/${this.categoria}/simbolos?page=${this.pagina}`;
-            }
-
-            this.fetchSimbolos(url);
-        },
-
-        buscarSimbolos(event) {
-            let url = '';
-            this.simbolos = [];
-            this.pagina = 1;
-
-            event.preventDefault();
-
-            if(!this.busca) {
-                this.carregarSimbolos();
-                return;
-            }
-
-            if(this.prancha){
-                url = `${process.env.VUE_APP_API_URL}/usuarios/${this.usuario}/pranchas/${this.prancha}/simbolos?nome=${this.busca || ''}&page=${this.pagina}`;
-            }
-            else if(this.categoria && this.categoria != process.env.VUE_APP_CATEGORIA_TODOS && this.categoria != process.env.VUE_APP_CATEGORIA_MEUS) {
-                url = `${process.env.VUE_APP_API_URL}/usuarios/${this.usuario}/simbolos/buscar?nome=${this.busca || ''}&categoria=${this.categoria}&page=${this.pagina}`;
-            }
-            else {
-                url = `${process.env.VUE_APP_API_URL}/usuarios/${this.usuario}/simbolos/buscar?nome=${this.busca || ''}&page=${this.pagina}`;
-            }
-
-            this.fetchSimbolos(url);
-        },
-
-        fetchSimbolos(url) {
-            this.url = url;
+        fetchSimbolos() {
             this.isLoading = true;
 
             axios({
                 method: 'get',
-                url: url,
+                url: `${process.env.VUE_APP_API_URL}/usuarios/${this.usuario}/simbolos`,
+                params: {
+                    prancha: this.prancha || '',
+                    categoria: this.categoria || '',
+                    busca: this.busca || '',
+                    page: this.pagina
+                },
                 headers: {
                     'Accept': 'application/json',
                     'Authorization': `Bearer ${this.auth}`
@@ -150,16 +111,13 @@ export default {
 
         carregaNovaPagina() {
             this.pagina++;
-            let url = this.url.substring(0, this.url.indexOf('page=')) + `page=${this.pagina}`;
-
-            this.fetchSimbolos(url);
+            this.fetchSimbolos();
         },
 
         reset() {
             this.simbolos = [];
             this.pagina = 1;
             this.busca = null,
-            this.url = null,
             this.buscandoPagina = false
         }
     },
@@ -167,14 +125,14 @@ export default {
         categoria: function(novoValor, antigoValor) {
             if(novoValor && novoValor != antigoValor) {
                 this.reset();
-                this.carregarSimbolos();
+                this.fetchSimbolos();
             }
         },
 
         prancha: function(valor) {
             if(valor) {
                 this.reset();
-                this.carregarSimbolos();
+                this.fetchSimbolos();
             }
         }
     }

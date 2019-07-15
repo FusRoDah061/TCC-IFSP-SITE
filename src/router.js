@@ -67,12 +67,12 @@ export default new Router({
           component: Home,
         },
         {
-          path: "prancha/:prancha",
+          path: "prancha/",
           component: Prancha,
         },
         {
-          path: ":prancha",
-          component: Home,
+          path: "prancha/:prancha",
+          component: Prancha,
         }
       ]
     }

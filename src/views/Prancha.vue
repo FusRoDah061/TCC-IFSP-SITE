@@ -18,7 +18,7 @@
             p.mb-0.mt-4 Símbolos adicionados
             p.text-muted Clique em um símbolo para remover da prancha.
 
-            ul.simbolos-add.px-0.py-2
+            ul.simbolos-add.p-2
                 li.list-style-none(v-for="(simbolo, i) in pranchaObj.simbolos")
                     simbolo.simbolo-sm(:key="simbolo.hid" :simbolo="simbolo" @selecionado="simboloRemover" :deletable="true")
 

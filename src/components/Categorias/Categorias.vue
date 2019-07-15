@@ -4,11 +4,11 @@
             spinner(position="text" v-bind:show="isLoading")
 
         ul.categorias-list
-            li.categoria.btn-todos-simbolos(v-if="categorias" v-bind:class="{ 'categoria--selected': (categoriaSelecionada == 'todos') }")
+            li.categoria.btn-todos-simbolos(v-if="categorias" v-bind:class="{ 'categoria--selected': (categoriaSelecionada == 'all') }")
                 button(v-on:click="todosSimbolos") Todos os símbolos
             li.categoria(v-for="(categoria, i) in categorias" :key="categoria.hid" v-bind:class="{ 'categoria--selected': (categoriaSelecionada == categoria.hid) }")
                 button(v-on:click="disparaCategoria(categoria.hid)" v-bind:style="{ 'background-color':categoria.cor, 'border-color':escurecerCor(categoria.cor), 'color':contraste(categoria.cor) }") {{ categoria.nome }}
-            li.categoria.btn-todos-simbolos(v-if="categorias" v-bind:class="{ 'categoria--selected': (categoriaSelecionada == 'meus') }")
+            li.categoria.btn-todos-simbolos(v-if="categorias" v-bind:class="{ 'categoria--selected': (categoriaSelecionada == 'user') }")
                 button(v-on:click="meusSimbolos") Meus símbolos
 </template>
 
@@ -62,13 +62,13 @@ export default {
         },
 
         meusSimbolos() {
-            this.categoriaSelecionada = 'meus';
-            this.$emit('selected', 'meus');
+            this.categoriaSelecionada = 'user';
+            this.$emit('selected', 'user');
         },
 
         todosSimbolos() {
-            this.categoriaSelecionada = 'todos';
-            this.$emit('selected', 'todos');
+            this.categoriaSelecionada = 'all';
+            this.$emit('selected', 'all');
         },
 
         disparaCategoria(hid) {
