@@ -1,6 +1,6 @@
 module.exports = {
     devServer: {
-        host:'pca-libras.herokuapp.com',
+        host:'localhost',
         compress: true,
         historyApiFallback: {
             disableDotRule: false,
