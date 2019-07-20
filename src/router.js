@@ -7,6 +7,7 @@ import Senha from "./views/Senha.vue";
 import Home from "./views/Home.vue";
 import Prancha from "./views/Prancha.vue";
 import AreaLogado from "./views/AreaLogado.vue";
+import Perfil from "./views/Perfil.vue";
 
 Vue.use(Router);
 
@@ -58,7 +59,6 @@ export default new Router({
     },
     {
       path: "/app",
-      name: "app",
       beforeEnter: authGuard,
       component: AreaLogado,
       children: [
@@ -73,6 +73,10 @@ export default new Router({
         {
           path: "prancha/:prancha",
           component: Prancha,
+        },
+        {
+          path: "perfil/",
+          component: Perfil,
         }
       ]
     }

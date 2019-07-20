@@ -1,0 +1,26 @@
+.perfil {
+
+    .perfil-foto {
+
+        img {
+            position: relative;
+            display: block;
+            width: 200px;
+            max-width: 200px;
+            margin: auto;
+            border: 5px solid #f1f1f1;
+            border-radius: 100%;
+        }
+    }
+}
+
+@media screen and (max-width: 570px) {
+    .perfil {
+        .perfil-foto {
+            img {
+                width: 150px;
+                max-width: 150px;
+            }
+        }
+    }
+}
