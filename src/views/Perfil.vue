@@ -100,11 +100,107 @@ export default {
         },
 
         salvarInformacoesBasicas() {
-            console.log(this.usuario);
+            if(!this.usuario.nome) {
+                this.toast.info('Informe seu nome.');
+                return;
+            }
+            else if(!this.usuario.email) {
+                this.toast.info('Informe seu e-mail.');
+                return;
+            }
+
+            this.isLoading = true;
+
+            axios({
+                method: 'put',
+                url: `${process.env.VUE_APP_API_URL}/usuarios/${this.usuario.hid}`,
+                data: {
+                    nome: this.usuario.nome,
+                    email: this.usuario.email
+                },
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${this.usuario.api_token}`
+                }
+            })
+            .then(response =>  {
+                this.isLoading = false;
+
+                if(response.status == 200){
+                    this.toast.success("Informações atualizadas.");
+                }
+            })
+            .catch(error => {
+                this.isLoading = false;
+
+                if (error.response) {
+                    this.toast.error(error.response.data.message);
+                }
+                else {
+                    this.toast.error(error.message, error.stack);
+                }
+            });
         },
 
         salvarSenha() {
             console.log(this.senha);
+
+            let recaptchaToken = grecaptcha.getResponse();
+
+            if(!this.senha.atual) {
+                this.toast.info('Informe sua senha atual.');
+                return;
+            }
+            else if(this.senha.atual.length < 8 || this.senha.nova.length < 8) {
+                toast.info('Sua senha não deve conter menos de 8 caracteres.');
+                return;
+            }
+            else if(!this.senha.nova) {
+                this.toast.info('Informe sua nova senha.');
+                return;
+            }
+            else if(this.senha.nova !== this.senha.confirmacao) {
+                this.toast.info('Sua nova senha não está igual à confirmação.');
+                return;
+            }
+            else if(!recaptchaToken) {
+                this.toast.info('Marque a caixa "Não sou um robô".');
+                return;
+            }
+
+            this.isLoading = true;
+
+            axios({
+                method: 'put',
+                url: `${process.env.VUE_APP_API_URL}/usuarios/${this.usuario.hid}/senha?recuperar=true&validation=${recaptchaToken}`,
+                data: {
+                    senhaAtual: md5(this.senha.atual),
+                    senhaNova: md5(this.senha.nova)
+                },
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${this.usuario.api_token}`
+                }
+            })
+            .then(response =>  {
+                this.isLoading = false;
+
+                if(response.status == 200){
+                    this.toast.success("Senha atualizada.");
+                }
+            })
+            .catch(error => {
+                this.isLoading = false;
+
+                if (error.response) {
+                    this.toast.error(error.response.data.message);
+                }
+                else {
+                    this.toast.error(error.message, error.stack);
+                }
+            });
         }
     }
 }
