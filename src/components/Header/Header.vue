@@ -15,19 +15,19 @@
             ul.sidemenu-list
                 li.sidemenu-item.item--static
                     p Ações
-                li.sidemenu-item
+                li.sidemenu-item(@click="toggleMenu")
                     router-link(to="/app/prancha") Criar prancha
-                li.sidemenu-item
+                li.sidemenu-item(@click="toggleMenu")
                     router-link(to="/app/simbolo") Criar símbolo
                 li.sidemenu-item.item--divider
                 li.sidemenu-item.item--static
                     p Páginas
-                li.sidemenu-item
+                li.sidemenu-item(@click="toggleMenu")
                     router-link(to="/app") Início
-                li.sidemenu-item
+                li.sidemenu-item(@click="toggleMenu")
                     router-link(to="/app/perfil") Minha conta
                 li.sidemenu-item.item--divider
-                li.sidemenu-item
+                li.sidemenu-item(@click="toggleMenu")
                     p(v-on:click="logout") Sair
 </template>
 
