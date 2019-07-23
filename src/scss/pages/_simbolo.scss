@@ -1,0 +1,23 @@
+.simbolo-view {
+
+    .simbolo-imagem {
+        background-color: $black;
+
+        img {
+            max-height: 300px;
+            margin: auto;
+        }
+
+    }
+
+}
+
+@media screen and (min-width: 1400px) {
+    .simbolo-view {
+        .simbolo-imagem {
+            img {
+                max-height: 500px;
+            }
+        }
+    }
+}

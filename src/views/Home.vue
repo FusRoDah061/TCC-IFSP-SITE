@@ -1,5 +1,5 @@
 <template lang="pug">
-    div.home
+    div.home-view
         pranchas(:usuario="usuario.hid" :auth="usuario.api_token" @selected="pranchaSelecionada")
 
         simbolos-board(:usuario="usuario" :prancha="prancha" :sentenca="true")

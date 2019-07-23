@@ -1,5 +1,5 @@
 <template lang="pug">
-    section.prancha
+    section.prancha-view
         toast(ref="toast")
 
         spinner(position="center" fixed=true v-bind:show="isLoading")

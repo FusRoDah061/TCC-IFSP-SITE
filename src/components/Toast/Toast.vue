@@ -2,11 +2,11 @@
     div.toast(v-bind:class="classObject")
         button.toast-close(v-on:click="close")
             i.icon.ion-md-close
-        p.toast-msg {{ this.mensagem }}
+        p.toast-msg {{ mensagem }}
         p.toast-toggle-details(v-if="detalhes" v-on:click="toggleDetails") Ver detalhes
             i.icon.ion-md-arrow-dropright(v-bind:class="{ 'rotate-45deg-right': showDetails }")
         div.toast-details(v-bind:class="{'toast-details--open': showDetails}")
-            p {{ this.detalhes }}
+            p(v-html="detalhes")
 
 </template>
 

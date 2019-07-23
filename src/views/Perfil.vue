@@ -1,5 +1,5 @@
 <template lang="pug">
-    div.perfil.row
+    div.perfil-view.row
         toast(ref="toast")
         spinner(position="center" fixed=true v-bind:show="isLoading")
 

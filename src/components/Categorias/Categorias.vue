@@ -4,11 +4,11 @@
             spinner(position="text" v-bind:show="isLoading")
 
         ul.categorias-list
-            li.categoria.btn-todos-simbolos(v-if="categorias" v-bind:class="{ 'categoria--selected': (categoriaSelecionada == 'all') }")
+            li.categoria.btn-todos-simbolos(v-if="categorias && !apenasParaSimbolo" v-bind:class="{ 'categoria--selected': (categoriaSelecionada == 'all') }")
                 button(v-on:click="todosSimbolos") Todos os símbolos
             li.categoria(v-for="(categoria, i) in categorias" :key="categoria.hid" v-bind:class="{ 'categoria--selected': (categoriaSelecionada == categoria.hid) }")
                 button(v-on:click="disparaCategoria(categoria.hid)" v-bind:style="{ 'background-color':categoria.cor, 'border-color':escurecerCor(categoria.cor), 'color':contraste(categoria.cor) }") {{ categoria.nome }}
-            li.categoria.btn-todos-simbolos(v-if="categorias" v-bind:class="{ 'categoria--selected': (categoriaSelecionada == 'user') }")
+            li.categoria.btn-todos-simbolos(v-if="categorias && !apenasParaSimbolo" v-bind:class="{ 'categoria--selected': (categoriaSelecionada == 'user') }")
                 button(v-on:click="meusSimbolos") Meus símbolos
 </template>
 
@@ -25,7 +25,8 @@ export default {
         };
     },
     props: {
-        auth: String
+        auth: String,
+        apenasParaSimbolo: Boolean
     },
     mounted() {
         this.fetchCategorias();
@@ -62,11 +63,15 @@ export default {
         },
 
         meusSimbolos() {
+            if(this.apenasParaSimbolo) return;
+
             this.categoriaSelecionada = 'user';
             this.$emit('selected', 'user');
         },
 
         todosSimbolos() {
+            if(this.apenasParaSimbolo) return;
+
             this.categoriaSelecionada = 'all';
             this.$emit('selected', 'all');
         },

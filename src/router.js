@@ -8,6 +8,7 @@ import Home from "./views/Home.vue";
 import Prancha from "./views/Prancha.vue";
 import AreaLogado from "./views/AreaLogado.vue";
 import Perfil from "./views/Perfil.vue";
+import Simbolo from "./views/Simbolo.vue";
 
 Vue.use(Router);
 
@@ -77,6 +78,10 @@ export default new Router({
         {
           path: "perfil/",
           component: Perfil,
+        },
+        {
+          path: "simbolo/",
+          component: Simbolo,
         }
       ]
     }
