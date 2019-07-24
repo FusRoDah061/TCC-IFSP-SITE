@@ -24,16 +24,23 @@
                         input.d-none(id="arquivo" type="file" accept=".gif, .jpg, .png, .jpeg, .mp4" @change="previewArquivo")
                         p.text-muted.mb-0 Os formatos permitidos são .jpg, .jpeg, .png, .gif, .mp4
 
-                div.col-md-12.py-4.px-0.row
-                    div.col-md-8
+                div.col-md-12.pt-4.pb-2.px-0.row.m-0
+                    div.col-md-8.p-0
                         p {{ simbolo.nomeArquivo }}
                         div.d-none.simbolo-imagem.col-md-12.p-0(:class="{ 'd-flex': simbolo.tipo == simboloImagem}")
                             img(id="js-imagem-preview")
                         div.d-none.simbolo-video(:class="{ 'd-block': simbolo.tipo == simboloVideo}")
-                            video.col-md-12.p-0(controls)
-                                source(id="js-video-preview")
-                    div.col-md-4
-                        p simbolos
+                            video.col-md-12.p-0(type="video/mp4" autoplay controls)
+                                source(id="js-video-preview" type="video/mp4")
+                            canvas.d-none(id="js-video-thumbnail")
+                    div.col-md-4.p-0
+                        ul.simbolo-preview
+                            li
+                                simbolo(:simbolo="simbolo" preview=true)
+                            li
+                                simbolo.simbolo-md(:simbolo="simbolo" preview=true)
+                            li
+                                simbolo.simbolo-sm(:simbolo="simbolo" preview=true)
 
             section
                 categorias(:auth="usuario.api_token" @selected="selecionaCategoria" apenasParaSimbolo=true)
@@ -42,7 +49,7 @@
 <script>
 import Categorias from "../components/Categorias/Categorias";
 import FileUtils from "../util/file";
-import { totalmem } from 'os';
+import { setTimeout } from 'timers';
 
 export default {
     data() {
@@ -54,8 +61,9 @@ export default {
             simbolo: {
                 nomeArquivo: null,
                 nome: null,
-                hid_categoria: null,
-                tipo: process.env.VUE_APP_SIMBOLO_IMAGEM
+                categoria: null,
+                tipo: process.env.VUE_APP_SIMBOLO_IMAGEM,
+                imagem: null
             }
         }
     },
@@ -64,7 +72,7 @@ export default {
     },
     computed: {
         simboloInvalido: function() {
-            return !this.simbolo.nome || !this.simbolo.hid_categoria || !this.simbolo;
+            return !this.simbolo.nome || !this.simbolo.categoria || !this.simbolo.imagem || !this.simbolo.tipo || !this.simbolo;
         },
 
         simboloImagem: function() {
@@ -87,7 +95,8 @@ export default {
         },
 
         selecionaCategoria(categoria) {
-            this.simbolo.hid_categoria = categoria;
+            console.log(categoria);
+            this.simbolo.categoria = categoria;
         },
 
         previewArquivo (event) {
@@ -136,8 +145,9 @@ export default {
         previewImagem(file) {
             let reader = new FileReader();
             
-            reader.onload = function(e) {
+            reader.onload = (e) => {
                 document.getElementById('js-imagem-preview').src = e.target.result;
+                this.simbolo.imagem = e.target.result;
             }
             
             reader.readAsDataURL(file);
@@ -147,7 +157,21 @@ export default {
             let blobURL = URL.createObjectURL(file);
             let source = document.getElementById('js-video-preview');
             source.src = blobURL;
+
+            source.parentElement.oncanplaythrough = () => {
+                setTimeout(() => {
+                    this.simbolo.imagem = this.getVideoThumbnail(source.parentElement);
+                }, 2000);
+            };
+
             source.parentElement.load();
+        },
+
+        getVideoThumbnail(video) {
+            let canvas = document.getElementById('js-video-thumbnail');
+            console.log(video.videoWidth, video.videoHeight);
+            canvas.getContext('2d').drawImage(video, 0, 0, video.videoWidth, video.videoHeight);
+            return canvas.toDataURL("image/jpg");
         }
     }
 }

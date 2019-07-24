@@ -6,8 +6,8 @@
         ul.categorias-list
             li.categoria.btn-todos-simbolos(v-if="categorias && !apenasParaSimbolo" v-bind:class="{ 'categoria--selected': (categoriaSelecionada == 'all') }")
                 button(v-on:click="todosSimbolos") Todos os símbolos
-            li.categoria(v-for="(categoria, i) in categorias" :key="categoria.hid" v-bind:class="{ 'categoria--selected': (categoriaSelecionada == categoria.hid) }")
-                button(v-on:click="disparaCategoria(categoria.hid)" v-bind:style="{ 'background-color':categoria.cor, 'border-color':escurecerCor(categoria.cor), 'color':contraste(categoria.cor) }") {{ categoria.nome }}
+            li.categoria(v-for="(categoria, i) in categorias" :key="categoria.hid" v-bind:class="{ 'categoria--selected': (categoriaSelecionada && categoriaSelecionada.hid == categoria.hid) }")
+                button(v-on:click="disparaCategoria(categoria)" v-bind:style="{ 'background-color':categoria.cor, 'border-color':escurecerCor(categoria.cor), 'color':contraste(categoria.cor) }") {{ categoria.nome }}
             li.categoria.btn-todos-simbolos(v-if="categorias && !apenasParaSimbolo" v-bind:class="{ 'categoria--selected': (categoriaSelecionada == 'user') }")
                 button(v-on:click="meusSimbolos") Meus símbolos
 </template>
@@ -49,6 +49,15 @@ export default {
 
                 if(response.status == 200 && typeof(response.data) === 'object'){
                     this.categorias = response.data;
+
+                    let categoria = 'all';
+
+                    if(this.apenasParaSimbolo)
+                        categoria = response.data[0];
+
+                    this.categoriaSelecionada = categoria;
+
+                    this.$emit('selected', categoria);
                 }
             })
             .catch(error => {
@@ -76,9 +85,9 @@ export default {
             this.$emit('selected', 'all');
         },
 
-        disparaCategoria(hid) {
-            this.categoriaSelecionada = hid;
-            this.$emit('selected', hid);
+        disparaCategoria(categoria) {
+            this.categoriaSelecionada = categoria;
+            this.$emit('selected', categoria);
         },
 
         escurecerCor(cor) {

@@ -2,7 +2,7 @@
     div.simbolo(@click="simboloClicado" :class="{ 'simbolo-deletable':deletable }" :style="{ 'background-color':simbolo.categoria.cor, 'border-color':escurecerCor(simbolo.categoria.cor), 'color':contraste(simbolo.categoria.cor) }")
         div.simbolo-content
             span.simbolo-indice(v-if="simbolo.indice") {{simbolo.indice}}
-            img.simbolo-icone(:src="getUrlIcone(simbolo.imagem)")
+            img.simbolo-icone(:src="(preview) ? simbolo.imagem : getUrlIcone(simbolo.imagem)")
             p.simbolo-palavra {{ simbolo.nome }}
 </template>
 
@@ -13,7 +13,8 @@ export default {
     name: 'simbolo',
     props: {
         simbolo: Object,
-        deletable: Boolean
+        deletable: Boolean,
+        preview: Boolean
     },
     methods: {
         escurecerCor(cor) {
