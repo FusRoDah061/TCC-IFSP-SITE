@@ -25,16 +25,17 @@
                         p.text-muted.mb-0 Os formatos permitidos são .jpg, .jpeg, .png, .gif, .mp4
 
                 div.col-md-12.pt-4.pb-2.px-0.row.m-0
-                    div.col-md-8.p-0
-                        p {{ simbolo.nomeArquivo }}
-                        div.d-none.simbolo-imagem.col-md-12.p-0(:class="{ 'd-flex': simbolo.tipo == simboloImagem}")
-                            img(id="js-imagem-preview")
+                    div.col-md-8.p-0.mb-2.mb-md-0
+                        p.mb-2(v-if="simbolo.imagem") Arquivo selecionado: 
+                            span.font-italic {{ simbolo.nomeArquivo }}
+                        div.d-none.simbolo-imagem.col-md-12.p-0(:class="{ 'd-flex': simbolo.tipo == simboloImagem, 'imagem-preview--padrao': !simbolo.imagem}")
+                            img(id="js-imagem-preview" src="@/assets/images/simbolo-placeholder.png")
                         div.d-none.simbolo-video(:class="{ 'd-block': simbolo.tipo == simboloVideo}")
                             video.col-md-12.p-0(type="video/mp4" autoplay controls)
                                 source(id="js-video-preview" type="video/mp4")
                             canvas.d-none(id="js-video-thumbnail")
                     div.col-md-4.p-0
-                        ul.simbolo-preview
+                        ul.simbolo-preview(v-if="simbolo && simbolo.categoria")
                             li
                                 simbolo(:simbolo="simbolo" preview=true)
                             li
@@ -95,7 +96,6 @@ export default {
         },
 
         selecionaCategoria(categoria) {
-            console.log(categoria);
             this.simbolo.categoria = categoria;
         },
 
