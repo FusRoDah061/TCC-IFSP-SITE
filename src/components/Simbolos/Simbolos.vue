@@ -3,17 +3,17 @@
         p Símbolos
             spinner(position="text" v-bind:show="isLoading")
 
-        form.simbolos-busca.form-inline
+        form.simbolos-busca.form-inline(@submit.prevent="buscarSimbolos")
             div.form-inputs
                 label(for="js-palavra") Buscar símbolo por palavra
                 div.form-control.form-search.input--w-icon
                     input#js-palavra(v-model="busca" type="text" maxlength="255" autofocus)
 
-            button.btn.btn-green.py-2.px-4(@click.stop="fetchSimbolos") Buscar
+            button.btn.btn-green.py-2.px-4 Buscar
 
         ul.simbolos-box(:class="{'sentenca-aberta': sentenca}")
             li(v-for="(simbolo, i) in simbolos")
-                simbolo(:key="simbolo.hid" :simbolo="simbolo" @selecionado="simboloSelecionado")
+                simbolo(:key="simbolo.hid" :simbolo="simbolo" :auth="auth" @selecionado="simboloSelecionado")
 
             li.simbolos-load-more#js-simbolos-load-more
                 spinner.spinner-border-sm.width-100(position="center" v-bind:show="isLoading")
@@ -47,7 +47,14 @@ export default {
         if(this.categoria != null)
             this.fetchSimbolos();
 
-        document.addEventListener('scroll', () => {
+        document.addEventListener('scroll', this.handleOnScroll);
+    },
+    destroyed() {
+        document.removeEventListener('scroll', this.handleOnScroll);
+    },
+    methods: {
+
+        handleOnScroll() {
             let estaVisivel = DOMUtils.isElementInViewport('js-simbolos-load-more');
 
             if( estaVisivel && 
@@ -62,9 +69,13 @@ export default {
             else if (!estaVisivel){
                 this.disparouBuscaPagina = false
             }
-        });
-    },
-    methods: {
+        },
+
+        buscarSimbolos() {
+            this.simbolos = [];
+            this.pagina = 1;
+            this.fetchSimbolos();
+        },
 
         fetchSimbolos() {
             this.isLoading = true;

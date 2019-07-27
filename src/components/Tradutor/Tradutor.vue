@@ -52,7 +52,7 @@
 
                 ul.simbolos-sentenca.mt-2.mb-0(id="js-simbolos-interpretar")
                     li(v-for="(simbolo, i) in simbolos")
-                        simbolo(:id="`js-simbolo-${i}`" :key="simbolo.hid + simbolo.indice" :simbolo="simbolo" @selecionado="selecionarSimbolo(i)" :class="{ 'simbolo--ativo': (indiceAtual == i) }")
+                        simbolo(:id="`js-simbolo-${i}`" :auth="auth" :key="simbolo.hid + simbolo.indice" :simbolo="simbolo" @selecionado="selecionarSimbolo(i)" :class="{ 'simbolo--ativo': (indiceAtual == i) }")
 
 </template>
 
@@ -93,7 +93,8 @@ export default {
     },
     props: {
         interpretar: Boolean,
-        simbolos: Array
+        simbolos: Array,
+        auth: String
     },
     components: {
         Vlibras, HandTalk

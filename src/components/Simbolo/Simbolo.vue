@@ -14,7 +14,8 @@ export default {
     props: {
         simbolo: Object,
         deletable: Boolean,
-        preview: Boolean
+        preview: Boolean,
+        auth: String
     },
     methods: {
         escurecerCor(cor) {
@@ -22,7 +23,12 @@ export default {
         },
 
         getUrlIcone(simbolo){ 
-            return `${process.env.VUE_APP_IMAGEM_URL}/${this.simbolo.arquivo}`;
+            if(this.simbolo.arquivo.includes("users")) {
+                return `${process.env.VUE_APP_IMAGEM_URL}/${this.simbolo.arquivo}?api_token=${this.auth}`;
+            }
+            else {
+                return `${process.env.VUE_APP_IMAGEM_URL}/${this.simbolo.arquivo}`;
+            }
         },
 
         contraste(cor){
@@ -30,6 +36,7 @@ export default {
         },
 
         simboloClicado() {
+            console.log(this.simbolo);
             this.$emit('selecionado', this.simbolo);
         }
     }

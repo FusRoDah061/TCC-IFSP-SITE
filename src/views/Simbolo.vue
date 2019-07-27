@@ -20,8 +20,8 @@
                     fieldset
                         legend.font-weight-bold Arquivo
                         
-                        label.btn.btn-green.cursor-pointer(for="arquivo") Escolher arquivo...
-                        input.d-none(id="arquivo" type="file" accept=".gif, .jpg, .png, .jpeg, .mp4" @change="previewArquivo")
+                        label.btn.btn-green.cursor-pointer(for="js-arquivo") Escolher arquivo...
+                        input.d-none(id="js-arquivo" type="file" accept=".gif, .jpg, .png, .jpeg, .mp4" @change="previewArquivo")
                         p.text-muted.mb-0 Os formatos permitidos são .jpg, .jpeg, .png, .gif, .mp4
 
                 div.col-md-12.pt-4.pb-2.px-0.row.m-0
@@ -33,7 +33,7 @@
                         div.d-none.simbolo-video(:class="{ 'd-block': simbolo.tipo == simboloVideo}")
                             video.col-md-12.p-0(type="video/mp4" autoplay controls)
                                 source(id="js-video-preview" type="video/mp4")
-                            canvas.d-none(id="js-video-thumbnail")
+                            canvas.d-block(id="js-video-thumbnail")
                     div.col-md-4.p-0
                         ul.simbolo-preview(v-if="simbolo && simbolo.categoria")
                             li
@@ -50,7 +50,6 @@
 <script>
 import Categorias from "../components/Categorias/Categorias";
 import FileUtils from "../util/file";
-import { setTimeout } from 'timers';
 
 export default {
     data() {
@@ -92,7 +91,42 @@ export default {
     },
     methods: {
         salvarSimbolo() {
-            console.log(this.simbolo);
+            this.isLoading = true;
+
+            let form = new FormData();
+            let file = document.getElementById('js-arquivo');
+
+            form.append('nome', this.simbolo.nome);
+            form.append('tipo', this.simbolo.tipo);
+            form.append('hid_categoria', this.simbolo.categoria.hid);
+            form.append('arquivo', file.files[0]);
+
+            axios({
+                method: 'POST',
+                url: `${process.env.VUE_APP_API_URL}/usuarios/${this.usuario.hid}/simbolos`, 
+                data: form, 
+                headers: {
+                    'Authorization': `Bearer ${this.usuario.api_token}`,
+                    'Content-Type': 'multipart/form-data',
+                    'Accept': 'application/json'
+                }
+            }).then(response =>  {
+                this.isLoading = false;
+
+                if(response.status == 201){
+                    this.toast.success('Símbolo criado com sucesso.');
+                }
+            })
+            .catch(error => {
+                this.isLoading = false;
+
+                if (error.response) {
+                    this.toast.error(error.response.data.message);
+                }
+                else {
+                    this.toast.error(error.message, error.stack);
+                }
+            });
         },
 
         selecionaCategoria(categoria) {
@@ -158,19 +192,20 @@ export default {
             let source = document.getElementById('js-video-preview');
             source.src = blobURL;
 
-            source.parentElement.oncanplaythrough = () => {
-                setTimeout(() => {
-                    this.simbolo.imagem = this.getVideoThumbnail(source.parentElement);
-                }, 2000);
-            };
+            source.parentElement.addEventListener('canplay', () => {
+                this.simbolo.imagem = this.getVideoThumbnail(source.parentElement);
+            });
 
             source.parentElement.load();
         },
 
         getVideoThumbnail(video) {
             let canvas = document.getElementById('js-video-thumbnail');
-            console.log(video.videoWidth, video.videoHeight);
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+
             canvas.getContext('2d').drawImage(video, 0, 0, video.videoWidth, video.videoHeight);
+
             return canvas.toDataURL("image/jpg");
         }
     }

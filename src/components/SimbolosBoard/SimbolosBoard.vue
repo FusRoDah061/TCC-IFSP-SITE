@@ -4,9 +4,9 @@
 
         simbolos(:usuario="usuario.hid" :prancha="prancha" :auth="usuario.api_token" :categoria="categoria" :sentenca="simbolosSentenca.length > 0" @selected="simboloSelecionado")
 
-        sentenca(v-if="sentenca" :simbolos="simbolosSentenca" @simboloRemovido="simboloRemovidoSentenca" @limpar="limparSentenca" @interpretar="interpretarSentenca")
+        sentenca(v-if="sentenca" :auth="usuario.api_token" :simbolos="simbolosSentenca" @simboloRemovido="simboloRemovidoSentenca" @limpar="limparSentenca" @interpretar="interpretarSentenca")
 
-        tradutor(v-if="sentenca" :simbolos="simbolosSentenca" :interpretar="interpretar" @terminou="interpretarAcabou")
+        tradutor(v-if="sentenca" :auth="usuario.api_token" :simbolos="simbolosSentenca" :interpretar="interpretar" @terminou="interpretarAcabou")
 </template>
 
 <script>
@@ -38,7 +38,10 @@ export default {
         },
 
         mudaCategoria(categoria) {
-            this.categoria = categoria;
+            if(typeof(categoria) === 'object')
+                this.categoria = categoria.hid;
+            else 
+                this.categoria = categoria;
         },
 
         simboloSelecionado(simbolo) {
