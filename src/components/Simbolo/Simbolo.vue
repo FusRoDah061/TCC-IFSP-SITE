@@ -1,5 +1,5 @@
 <template lang="pug">
-    div.simbolo(@click="simboloClicado" :class="{ 'simbolo-deletable':deletable }" :style="{ 'background-color':simbolo.categoria.cor, 'border-color':escurecerCor(simbolo.categoria.cor), 'color':contraste(simbolo.categoria.cor) }")
+    div.simbolo(:class="{ 'simbolo-deletable':deletable }" :style="{ 'background-color':simbolo.categoria.cor, 'border-color':escurecerCor(simbolo.categoria.cor), 'color':contraste(simbolo.categoria.cor) }")
         div.simbolo-content
             span.simbolo-indice(v-if="simbolo.indice") {{simbolo.indice}}
             img.simbolo-icone(:src="(preview) ? simbolo.imagem : getUrlIcone(simbolo.imagem)")
@@ -14,8 +14,7 @@ export default {
     props: {
         simbolo: Object,
         deletable: Boolean,
-        preview: Boolean,
-        auth: String
+        preview: Boolean
     },
     methods: {
         escurecerCor(cor) {
@@ -24,7 +23,7 @@ export default {
 
         getUrlIcone(simbolo){ 
             if(this.simbolo.arquivo.includes("users")) {
-                return `${process.env.VUE_APP_IMAGEM_URL}/${this.simbolo.arquivo}?api_token=${this.auth}`;
+                return `${process.env.VUE_APP_IMAGEM_URL}/${this.simbolo.arquivo}?api_token=${this.$store.state.usuario.api_token}`;
             }
             else {
                 return `${process.env.VUE_APP_IMAGEM_URL}/${this.simbolo.arquivo}`;
@@ -34,11 +33,6 @@ export default {
         contraste(cor){
             return ColorUtils.higherContrast(cor);
         },
-
-        simboloClicado() {
-            console.log(this.simbolo);
-            this.$emit('selecionado', this.simbolo);
-        }
     }
 }
 </script>

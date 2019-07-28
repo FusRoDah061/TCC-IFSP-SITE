@@ -29,10 +29,6 @@ export default {
             pranchaAtiva: null
         };
     },
-    props: {
-        usuario: String,
-        auth: String
-    },
     mounted() {
         this.fetchPranchas();
     },
@@ -42,10 +38,10 @@ export default {
 
             axios({
                 method: 'get',
-                url: `${process.env.VUE_APP_API_URL}/usuarios/${this.usuario}/pranchas`,
+                url: `${process.env.VUE_APP_API_URL}/usuarios/${this.$store.state.usuario.hid}/pranchas`,
                 headers: {
                     'Accept': 'application/json',
-                    'Authorization': `Bearer ${this.auth}`
+                    'Authorization': `Bearer ${this.$store.state.usuario.api_token}`
                 }
             })
             .then(response => {
@@ -71,10 +67,10 @@ export default {
 
             axios({
                 method: 'delete',
-                url: `${process.env.VUE_APP_API_URL}/usuarios/${this.usuario}/pranchas/${hid}`,
+                url: `${process.env.VUE_APP_API_URL}/usuarios/${this.$store.state.usuario.hid}/pranchas/${hid}`,
                 headers: {
                     'Accept': 'application/json',
-                    'Authorization': `Bearer ${this.auth}`
+                    'Authorization': `Bearer ${this.$store.state.usuario.api_token}`
                 }
             })
             .then(response => {

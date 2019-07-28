@@ -7,17 +7,25 @@
 <style src="./scss/main.scss" lang="scss"></style>
 
 <script>
-import runtimeEnv from '@mars/heroku-js-runtime-env';
+    import { mapActions } from 'vuex';
 
 export default {
   name: 'app',
-  mounted() {
-    const env = runtimeEnv();
+  created() {
+    let usuario = localStorage.usuario;
+
+    if(usuario) {
+      	this.initUsuario(JSON.parse(usuario));
+    }
   },
   watch: {
     '$route' (to, from) {
       //console.log("$route (to/from):", to, from);
     }
+  },
+  methods: {
+    ...mapActions (['initUsuario']),
+    ...mapActions ({initUsuario: 'initUsuario'}),
   }
 }
 </script>

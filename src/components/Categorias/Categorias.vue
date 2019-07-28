@@ -41,7 +41,7 @@ export default {
                 url: `${process.env.VUE_APP_API_URL}/categorias`,
                 headers: {
                     'Accept': 'application/json',
-                    'Authorization': `Bearer ${this.auth}`
+                    'Authorization': `Bearer ${this.$store.state.usuario.api_token}`
                 }
             })
             .then(response => {

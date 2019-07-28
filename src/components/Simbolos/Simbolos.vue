@@ -13,7 +13,7 @@
 
         ul.simbolos-box(:class="{'sentenca-aberta': sentenca}")
             li(v-for="(simbolo, i) in simbolos")
-                simbolo(:key="simbolo.hid" :simbolo="simbolo" :auth="auth" @selecionado="simboloSelecionado")
+                simbolo(:key="simbolo.hid" :simbolo="simbolo" @click.native.stop="simboloSelecionado(simbolo)")
 
             li.simbolos-load-more#js-simbolos-load-more
                 spinner.spinner-border-sm.width-100(position="center" v-bind:show="isLoading")
@@ -37,8 +37,6 @@ export default {
         }
     },
     props: {
-        usuario: String,
-        auth: String,
         prancha: String,
         categoria: String,
         sentenca: Boolean
@@ -82,7 +80,7 @@ export default {
 
             axios({
                 method: 'get',
-                url: `${process.env.VUE_APP_API_URL}/usuarios/${this.usuario}/simbolos`,
+                url: `${process.env.VUE_APP_API_URL}/usuarios/${this.$store.state.usuario.hid}/simbolos`,
                 params: {
                     prancha: this.prancha || '',
                     categoria: this.categoria || '',
@@ -91,7 +89,7 @@ export default {
                 },
                 headers: {
                     'Accept': 'application/json',
-                    'Authorization': `Bearer ${this.auth}`
+                    'Authorization': `Bearer ${this.$store.state.usuario.api_token}`
                 }
             })
             .then(response => {

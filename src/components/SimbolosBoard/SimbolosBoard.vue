@@ -1,12 +1,12 @@
 <template lang="pug">
     div.simbolo-picker
-        categorias(v-bind:auth="usuario.api_token" @selected="mudaCategoria")
+        categorias(@selected="mudaCategoria")
 
-        simbolos(:usuario="usuario.hid" :prancha="prancha" :auth="usuario.api_token" :categoria="categoria" :sentenca="simbolosSentenca.length > 0" @selected="simboloSelecionado")
+        simbolos(:prancha="prancha" :categoria="categoria" :sentenca="simbolosSentenca.length > 0" @selected="simboloSelecionado")
 
-        sentenca(v-if="sentenca" :auth="usuario.api_token" :simbolos="simbolosSentenca" @simboloRemovido="simboloRemovidoSentenca" @limpar="limparSentenca" @interpretar="interpretarSentenca")
+        sentenca(v-if="sentenca" :simbolos="simbolosSentenca" @simboloRemovido="simboloRemovidoSentenca" @limpar="limparSentenca" @interpretar="interpretarSentenca")
 
-        tradutor(v-if="sentenca" :auth="usuario.api_token" :simbolos="simbolosSentenca" :interpretar="interpretar" @terminou="interpretarAcabou")
+        tradutor(v-if="sentenca" :simbolos="simbolosSentenca" :interpretar="interpretar" @terminou="interpretarAcabou")
 </template>
 
 <script>
@@ -33,10 +33,6 @@ export default {
         Sentenca, Categorias, Simbolos, Tradutor
     },
     methods: {
-        simboloSelecionado(simbolo) {
-            this.$emit('simboloSelected', simbolo);
-        },
-
         mudaCategoria(categoria) {
             if(typeof(categoria) === 'object')
                 this.categoria = categoria.hid;
@@ -59,12 +55,10 @@ export default {
         },
 
         interpretarSentenca(simbolos){
-            console.log(simbolos);
             this.interpretar = true;
         },
 
         interpretarAcabou(result) {
-            console.log('terminou de interpretar: ', result);
             this.interpretar = false;
         }
     }

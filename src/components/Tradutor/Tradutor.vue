@@ -52,7 +52,7 @@
 
                 ul.simbolos-sentenca.mt-2.mb-0(id="js-simbolos-interpretar")
                     li(v-for="(simbolo, i) in simbolos")
-                        simbolo(:id="`js-simbolo-${i}`" :auth="auth" :key="simbolo.hid + simbolo.indice" :simbolo="simbolo" @selecionado="selecionarSimbolo(i)" :class="{ 'simbolo--ativo': (indiceAtual == i) }")
+                        simbolo(:id="`js-simbolo-${i}`" :key="simbolo.hid" :simbolo="simbolo" @click.native.stop="selecionarSimbolo(i)" :class="{ 'simbolo--ativo': (indiceAtual == i) }")
 
 </template>
 
@@ -79,6 +79,13 @@ export default {
             error: false
         }
     },
+    props: {
+        interpretar: Boolean,
+        simbolos: Array
+    },
+    components: {
+        Vlibras, HandTalk
+    },
     computed: {
         traducaoAutomaticaTexto: function() {
             return `Interpretar automáticamente? ${ (this.traducaoAutomatica) ? 'Sim!' : 'Não.' }`;
@@ -91,18 +98,8 @@ export default {
             return null;
         }
     },
-    props: {
-        interpretar: Boolean,
-        simbolos: Array,
-        auth: String
-    },
-    components: {
-        Vlibras, HandTalk
-    },
     watch: {
         interpretar: function(novoValor, antigoValor) { 
-            console.log("Abriu");
-
             if(novoValor) {
                 this.pararTraducao = false;
 
@@ -241,7 +238,6 @@ export default {
             DOMUtils.scrollCenterOnElem('js-simbolos-interpretar', `js-simbolo-${indice}`); 
 
             if(this.tradutorPronto) {
-                console.log('Vai traduzir: ', simbolo.nome);
                 this.bus.$emit('traduzir', {
                     palavra: simbolo.nome,
                     elem: `js-simbolo-${this.indiceAtual}`
