@@ -33,7 +33,7 @@
                         div.d-none.simbolo-video(:class="{ 'd-block': simbolo.tipo == simboloVideo}")
                             video.col-md-12.p-0(type="video/mp4" autoplay controls)
                                 source(id="js-video-preview" type="video/mp4")
-                            canvas.d-block(id="js-video-thumbnail")
+                            canvas.d-none(id="js-video-thumbnail")
                     div.col-md-4.p-0
                         ul.simbolo-preview(v-if="simbolo && simbolo.categoria")
                             li
@@ -100,6 +100,7 @@ export default {
             form.append('tipo', this.simbolo.tipo);
             form.append('hid_categoria', this.simbolo.categoria.hid);
             form.append('arquivo', file.files[0]);
+            form.append('thumbnail', FileUtils.dataURLtoFile(this.simbolo.imagem, "thumbnail.jpg"));
 
             axios({
                 method: 'POST',
