@@ -4,8 +4,8 @@
             button.tradutor-close(@click="fechar") 
                 span &times;
 
-            div.interprete
-                vlibras(:bus="bus"
+            div.interprete(:class="{ 'd-none': isVideo }")
+                vlibras(:bus="busImagem"
                     @onload="tradutorLoad" 
                     @onloaderror="tradutorLoadError"
                     @ontranslated="tradutorTranslated" 
@@ -28,6 +28,15 @@
                         span.spinner-grow.spinner-grow-sm(role="status" aria-hidden="true")
                         span.spinner-grow.spinner-grow-sm(role="status" aria-hidden="true")
                         span.spinner-grow.spinner-grow-sm(role="status" aria-hidden="true")
+
+            div.video(:class="{ 'd-none': !isVideo }")
+                videoplayer(:bus="busVideo"
+                    @onload="tradutorLoad" 
+                    @onloaderror="tradutorLoadError"
+                    @ontranslated="tradutorTranslated" 
+                    @ontranslatederror="tradutorTranslatedError" 
+                    @onsignalized="tradutorSignalized"
+                    @ontranslating="tradutorTraduzindo")
 
             p.mt-2.mb-0.text-center.font-italic(:class="{ 'text-danger': error }") {{ palavra }}
 
@@ -59,6 +68,7 @@
 <script>
 import Vlibras from './Vlibras/Vlibras';
 import HandTalk from './HandTalk/HandTalk';
+import Videoplayer from './Videoplayer';
 import DOMUtils from '../../util/dom';
 import Vue from "vue";
 import { setTimeout } from 'timers';
@@ -70,13 +80,15 @@ export default {
             tradutorPronto: false,
             indiceAtual: -1,
             traduzindo: false,
-            bus: new Vue(),
+            busImagem: new Vue(),
+            busVideo: new Vue(),
             traducaoAutomatica: true,
             palavra: null,
             tradutorLoading: true,
             pararTraducao: false,
             esperandoTraducao: false,
-            error: false
+            error: false,
+            isVideo: false
         }
     },
     props: {
@@ -84,7 +96,7 @@ export default {
         simbolos: Array
     },
     components: {
-        Vlibras, HandTalk
+        Vlibras, HandTalk, Videoplayer
     },
     computed: {
         traducaoAutomaticaTexto: function() {
@@ -103,12 +115,19 @@ export default {
             if(novoValor) {
                 this.pararTraducao = false;
 
-                if(!this.tradutorPronto)
-                    this.bus.$emit('initialize', null);
-                else
-                    setTimeout(() => {
-                        this.tradutorLoad();
-                    }, 300);
+                //Verifica se existem símbolos de imagem para inicializar o interprete
+                if(this.simbolos.find(item => item.tipo == process.env.VUE_APP_SIMBOLO_IMAGEM)) {
+                    if(!this.tradutorPronto)
+                        this.busImagem.$emit('initialize', null);
+                    else
+                        setTimeout(() => {
+                            this.tradutorLoad();
+                        }, 300);
+                }
+                else {
+                    this.isVideo = true;
+                    this.tradutorLoad();
+                }
             }
             else {
                 this.pararTraducao = true;
@@ -118,7 +137,7 @@ export default {
 
         traducaoAutomatica: function(novoValor, antigoValor) {
             if(novoValor && !this.pararTraducao && !this.traduzindo) {
-                consoel.log("Automático ligado");
+                console.log("Automático ligado");
                 this.proximoSimbolo();
             }
         }
@@ -138,6 +157,8 @@ export default {
             this.palavra = null;
             this.tradutorLoading = false;
             this.esperandoTraducao = false;
+            this.isVideo = false;
+            this.busVideo.$emit('stop');
         },
 
         tradutorLoad(result) {
@@ -172,6 +193,7 @@ export default {
             this.traduzindo = false;
             this.palavra = result;
             this.error = true;
+            this.esperandoTraducao = false;
         },
 
         tradutorSignalized(result) {
@@ -226,9 +248,11 @@ export default {
         },
 
         traduzir(indice) {
+            console.log(indice);
             if(this.esperandoTraducao) return;
 
             let simbolo = this.simbolos[indice];
+            console.log(simbolo);
 
             this.indiceAtual = indice;
             this.esperandoTraducao = true;
@@ -237,12 +261,36 @@ export default {
 
             DOMUtils.scrollCenterOnElem('js-simbolos-interpretar', `js-simbolo-${indice}`); 
 
+            // Para o vídeo se estiver reproduzindo
+            this.busVideo.$emit('stop');
+
+            switch(simbolo.tipo) {
+                case parseInt(process.env.VUE_APP_SIMBOLO_IMAGEM):
+                    this.isVideo = false;
+                    this.traduzirImagem(simbolo);
+                    break;
+
+                case parseInt(process.env.VUE_APP_SIMBOLO_VIDEO):
+                    this.isVideo = true;
+                    this.traduzirVideo(simbolo);
+                    break;
+            }
+        },
+
+        traduzirImagem(simbolo) {
             if(this.tradutorPronto) {
-                this.bus.$emit('traduzir', {
+                this.busImagem.$emit('traduzir', {
                     palavra: simbolo.nome,
                     elem: `js-simbolo-${this.indiceAtual}`
                 });
             }
+        },
+
+        traduzirVideo(simbolo) {
+            this.busVideo.$emit('traduzir', {
+                palavra: simbolo.nome,
+                arquivo: simbolo.arquivo
+            });
         }
     }
 }

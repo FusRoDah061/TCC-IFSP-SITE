@@ -100,7 +100,10 @@ export default {
             form.append('tipo', this.simbolo.tipo);
             form.append('hid_categoria', this.simbolo.categoria.hid);
             form.append('arquivo', file.files[0]);
-            form.append('thumbnail', FileUtils.dataURLtoFile(this.simbolo.imagem, "thumbnail.jpg"));
+
+            if(this.simbolo.tipo == process.env.VUE_APP_SIMBOLO_VIDEO) {
+                form.append('thumbnail', FileUtils.dataURLtoFile(this.simbolo.imagem, "thumbnail.jpg"));
+            }
 
             axios({
                 method: 'POST',

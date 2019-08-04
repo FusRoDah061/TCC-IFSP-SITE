@@ -85,7 +85,8 @@ export default {
                             break;
                         case 'translation_error':
                             this.loading = false;
-                            this.$emit('ontranslatederror', 'Erro ao traduzir texto no servidor do VLibras');
+                            this.$emit('ontranslated', this.palavra);
+                            //this.$emit('ontranslatederror', 'Erro ao traduzir texto no servidor do VLibras');
                             break;
                         case 'internal_error':
                             this.traduzindo = false;
