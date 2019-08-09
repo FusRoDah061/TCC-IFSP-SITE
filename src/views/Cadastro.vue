@@ -36,6 +36,8 @@
 </template>
 
 <script>
+    import { mapActions } from 'vuex';
+    
     export default {
         name: 'cadastro',
         data() {
@@ -52,6 +54,9 @@
             this.toast = this.$refs.toast;
         },
         methods: {
+            ...mapActions (['initUsuario']),
+            ...mapActions ({initUsuario: 'initUsuario'}),
+
             cadastrar(event) {
                 event.preventDefault();
 
@@ -96,6 +101,7 @@
                     this.isLoading = false;
 
                     if(response.status == 201){
+                        this.initUsuario(response.data);
                         localStorage.usuario = JSON.stringify(response.data);
                         this.$router.push("app");
                     }
