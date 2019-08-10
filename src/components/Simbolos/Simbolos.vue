@@ -12,8 +12,8 @@
             button.btn.btn-green.py-2.px-4 Buscar
 
         ul.simbolos-box(:class="{'sentenca-aberta': sentenca}")
-            li(v-for="(simbolo, i) in simbolos")
-                simbolo(:key="simbolo.hid" :simbolo="simbolo" @click.native.stop="simboloSelecionado(simbolo)")
+            li(v-for="(simbolo, i) in simbolos" :id="simbolo.hid")
+                simbolo(:key="simbolo.hid" :simbolo="simbolo" @click.native.stop="simboloSelecionado(simbolo)" @deleted="simboloDeletado" :style="{'z-index': 15000 - i}")
 
             li.simbolos-load-more#js-simbolos-load-more
                 spinner.spinner-border-sm.width-100(position="center" v-bind:show="isLoading")
@@ -128,6 +128,10 @@ export default {
             this.pagina = 1;
             this.busca = null,
             this.buscandoPagina = false
+        },
+
+        simboloDeletado(simbolo) {
+            document.getElementById(simbolo.hid).style.display = "none";
         }
     },
     watch: {

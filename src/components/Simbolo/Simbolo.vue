@@ -1,11 +1,11 @@
 <template lang="pug">
     div.simbolo(:class="{ 'simbolo-deletable':deletable, 'd-none': deleted}" :style="{ 'background-color':simbolo.categoria.cor, 'border-color':escurecerCor(simbolo.categoria.cor), 'color':contraste(simbolo.categoria.cor) }")
-        button.btn-deletar(v-if="!deletable && isUsuario" @click.stop.self="deletar")
+        button.btn-deletar(v-if="!deletable && isUsuario" @click.stop="deletar")
             i.icon.ion-md-trash
 
         div.simbolo-content
             span.simbolo-indice(v-if="simbolo.indice") {{simbolo.indice}}
-            img.simbolo-icone(:src="(preview) ? simbolo.imagem : getUrlIcone(simbolo)")
+            img.simbolo-icone(:src="(preview) ? simbolo.imagem : urlIcone")
             p.simbolo-palavra {{ simbolo.nome }}
 </template>
 
@@ -27,16 +27,11 @@ export default {
     },
     computed: {
         isUsuario: function() {
-            return this.simbolo.arquivo.includes('users');
-        }
-    },
-    methods: {
-        escurecerCor(cor) {
-            return ColorUtils.lightenDarkenColor(-.15, cor);
+            return this.simbolo.arquivo && this.simbolo.arquivo.includes('users');
         },
 
-        getUrlIcone(simbolo){ 
-            if(simbolo.tipo == process.env.VUE_APP_SIMBOLO_IMAGEM) {
+        urlIcone(){ 
+            if(this.simbolo.tipo == process.env.VUE_APP_SIMBOLO_IMAGEM && this.simbolo.arquivo) {
                 if(this.simbolo.arquivo.includes("users")) {
                     return `${process.env.VUE_APP_IMAGEM_URL}/${this.simbolo.arquivo}?api_token=${this.$store.state.usuario.api_token}`;
                 }
@@ -44,11 +39,16 @@ export default {
                     return `${process.env.VUE_APP_IMAGEM_URL}/${this.simbolo.arquivo}`;
                 }
             }
-            else if(simbolo.tipo == process.env.VUE_APP_SIMBOLO_VIDEO) {
+            else if(this.simbolo.tipo == process.env.VUE_APP_SIMBOLO_VIDEO) {
                 let position = this.simbolo.arquivo.lastIndexOf('/');
                 let url = [this.simbolo.arquivo.slice(0, position), '/thumbnails', this.simbolo.arquivo.slice(position)].join('').replace('mp4', 'jpeg');
                 return `${process.env.VUE_APP_IMAGEM_URL}/${url}?api_token=${this.$store.state.usuario.api_token}`;
             }
+        }
+    },
+    methods: {
+        escurecerCor(cor) {
+            return ColorUtils.lightenDarkenColor(-.15, cor);
         },
 
         contraste(cor){
@@ -57,6 +57,7 @@ export default {
 
         deletar() {
             // TODO: Confirmar remoção
+            this.isLoading = true;
 
             axios({
                 method: 'delete',
