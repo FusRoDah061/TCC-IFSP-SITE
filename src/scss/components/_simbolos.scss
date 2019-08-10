@@ -43,19 +43,7 @@
             grid-template-columns:  repeat(auto-fit, $simbolo-md-dim);
 
             .simbolo {
-                @include simbolo-size($simbolo-md-dim);
-                
-                &-content {
-                    .simbolo-icone {
-                        max-width: 25px;
-                    }
-            
-                    .simbolo-palavra {
-                        height: 13px * 3.6;
-                        line-height: 13px !important;
-                        font-size: 13px !important;
-                    }
-                }
+                @include simbolo-md();
             }
         }
     }
@@ -68,22 +56,7 @@
             grid-template-columns:  repeat(auto-fit, $simbolo-sm-dim);
             
             .simbolo {
-                @include simbolo-size($simbolo-sm-dim);
-                padding: 5px;
-                
-                &-content {
-                    padding: 1px;
-
-                    .simbolo-icone {
-                        max-width: 30px;
-                    }
-            
-                    .simbolo-palavra {
-                        height: 11px * 2.5;
-                        line-height: 11px !important;
-                        font-size: 11px !important;
-                    }
-                }
+                @include simbolo-sm();
             }
         }
     }

@@ -30,10 +30,6 @@
     list-style: none;
     cursor: pointer;
 
-    &:hover {
-        transform: scale(1.1);
-    }
-
     .btn-deletar {
         position: absolute;
         display: block;
@@ -46,6 +42,8 @@
         background-color: $red;
         color: $white;
         z-index: 0;
+        transition: .2s;
+        padding: 0;
 
         & > .icon {
             position: absolute;
@@ -53,6 +51,20 @@
             top: 0;
             bottom: 0;
             line-height: 50px;
+            transition: .2s;
+        }
+    }
+
+    &:hover {
+        transform: scale(1.1);
+
+        .btn-deletar {
+            right: -30px;
+
+            & > .icon {
+                right: 15px;
+                font-size: 1.3rem;
+            }
         }
     }
 
@@ -100,36 +112,9 @@
 }
 
 .simbolo-md {
-    @include simbolo-size($simbolo-md-dim);
-    
-    .simbolo-content {
-        .simbolo-icone {
-            max-width: 25px !important;
-        }
-
-        .simbolo-palavra {
-            height: 13px * 3.6 !important;
-            line-height: 13px !important;
-            font-size: 13px !important;
-        }
-    }
+    @include simbolo-md();
 }
 
 .simbolo-sm {
-    @include simbolo-size($simbolo-sm-dim);
-    padding: 5px !important;
-    
-    .simbolo-content {
-        padding: 1px !important;
-
-        .simbolo-icone {
-            max-width: 30px !important;
-        }
-
-        .simbolo-palavra {
-            height: 11px * 2.5 !important;
-            line-height: 11px !important;
-            font-size: 11px !important;
-        }
-    }
+    @include simbolo-sm();
 }

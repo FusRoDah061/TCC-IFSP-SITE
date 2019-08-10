@@ -1,6 +1,6 @@
 <template lang="pug">
-    div.simbolo(:class="{ 'simbolo-deletable':deletable }" :style="{ 'background-color':simbolo.categoria.cor, 'border-color':escurecerCor(simbolo.categoria.cor), 'color':contraste(simbolo.categoria.cor) }")
-        button.btn-deletar(v-if="!deletable && isUsuario")
+    div.simbolo(:class="{ 'simbolo-deletable':deletable, 'd-none': deleted}" :style="{ 'background-color':simbolo.categoria.cor, 'border-color':escurecerCor(simbolo.categoria.cor), 'color':contraste(simbolo.categoria.cor) }")
+        button.btn-deletar(v-if="!deletable && isUsuario" @click.stop.self="deletar")
             i.icon.ion-md-trash
 
         div.simbolo-content
@@ -14,13 +14,16 @@ import ColorUtils from '../../util/color';
 
 export default {
     name: 'simbolo',
+    data() {
+        return {
+            isLoading: false,
+            deleted: false
+        }
+    },
     props: {
         simbolo: Object,
         deletable: Boolean,
         preview: Boolean
-    },
-    mounted() {
-        console.log(this.simbolo);
     },
     computed: {
         isUsuario: function() {
@@ -51,6 +54,36 @@ export default {
         contraste(cor){
             return ColorUtils.higherContrast(cor);
         },
+
+        deletar() {
+            // TODO: Confirmar remoção
+
+            axios({
+                method: 'delete',
+                url: `${process.env.VUE_APP_API_URL}/usuarios/${this.$store.state.usuario.hid}/simbolos/${this.simbolo.hid}`,
+                headers: {
+                    'Accept': 'application/json',
+                    'Authorization': `Bearer ${this.$store.state.usuario.api_token}`
+                }
+            })
+            .then(response => {
+                this.isLoading = false;
+
+                if(response.status == 200){
+                    this.deleted = true;
+                    this.$emit('deleted', this.simbolo);
+                }
+            })
+            .catch(error => {
+                this.isLoading = false;
+                if (error.response) {
+                    console.log(error.response.data.message);
+                }
+                else {
+                    console.log(error.message, error.stack);
+                }
+            });
+        }
     }
 }
 </script>
