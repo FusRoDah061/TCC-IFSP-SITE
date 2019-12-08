@@ -1,0 +1,30 @@
+.toast {
+    color: $white !important;
+    border-radius: 12px !important;
+    opacity: 1 !important;
+    box-shadow: 0 0 12px -3px #999 !important;
+
+    p {
+        margin: 0;
+    }
+    
+    &-info {
+        background: $blue;
+        border: 3px solid $blue-darker;
+    }
+
+    &-error {
+        background: $red;
+        border: 3px solid $red-darker;
+    }
+
+    &-success {
+        background: $green;
+        border: 3px solid $green-darker;
+    }
+
+    &-warning {
+        background: $orange;
+        border: 3px solid $orange-darker;
+    }
+}

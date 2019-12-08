@@ -1,0 +1,101 @@
+.sentenca {
+    position: fixed;
+    display: block;
+    width: 95vw;
+    bottom: -100px;
+    left: 0;
+    right: 0;
+    margin: auto;
+    background-color: $white;
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+    padding: 15px 15px 0px;
+    padding-top: 5px;
+    z-index: 10;
+
+    .sentenca-simbolos {
+        position: relative;
+        max-width: 75%;
+        display: flex;
+        padding: 5px;
+        -webkit-box-orient: horizontal;
+        -webkit-box-direction: normal;
+        -ms-flex-direction: row;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        overflow: auto;
+        overflow-y: hidden;
+
+        li {
+            position: relative;
+            list-style: none;
+            margin: 0px 3px;
+        }
+    }
+
+    .sentenca-buttons {
+        position: absolute;
+        display: flex;
+        width: 20%;
+        right: 15px;
+        top: 37px;
+        height: calc(100% - 53px);
+        z-index: 10;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+}
+
+.sentenca--show {
+    box-shadow: 0px 0px 15px -7px #333333;
+    animation-name: slide-up;
+    animation-duration: 0.15s;
+    animation-fill-mode: forwards;
+    animation-timing-function: cubic-bezier(0.63, -0.18, 0.3, 1.18);
+}
+
+@keyframes slide-up {
+    0% {
+        bottom: -150px;
+    }
+    100% {
+        bottom: 0;
+    }
+}
+
+@media only screen and (max-width: 770px) {
+    .sentenca {
+        bottom: -150px;
+
+        .sentenca-simbolos {
+            max-width: 100%;
+            margin-bottom: 10px;
+        }
+
+        .sentenca-buttons {
+            position: relative;
+            width: 100%;
+            flex-direction: row;
+            right: 0;
+            top: 0;
+            margin-bottom: 10px;
+
+            .btn {
+                padding: 4px 0px;
+                font-size: 1rem;
+                margin: 0px 3px;
+            }
+        }
+    }
+}
+
+@media only screen and (max-width: 470px) {
+    .sentenca {
+        .sentenca-buttons {
+            .btn {
+                padding: 4px 0px;
+                font-size: 1rem;
+            }
+        }
+    }
+}

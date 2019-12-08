@@ -1,0 +1,15 @@
+.body {
+    padding: $body-padding;
+}
+
+@media only screen and (max-width: 770px){
+    body {
+        font-size: 17px !important;
+    }
+}
+
+@media only screen and (max-width: 570px){
+    body {
+        font-size: 15px !important;
+    }
+}

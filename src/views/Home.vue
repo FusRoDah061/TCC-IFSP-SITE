@@ -1,18 +1,38 @@
-<template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js App" />
-  </div>
+<template lang="pug">
+    div.home-view
+        pranchas(@selected="pranchaSelecionada" @deselected="pranchaDeselecionada" @deleted="pranchaDeselecionada")
+
+        simbolos-board(:prancha="prancha" :sentenca="true")
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from "@/components/HelloWorld.vue";
+import Pranchas from "../components/Pranchas/Pranchas";
+import { constants } from 'crypto';
 
 export default {
-  name: "home",
-  components: {
-    HelloWorld
-  }
-};
+    name: 'home',
+    data() {
+        return {
+            usuario: null,
+            prancha: null
+        };
+    },
+    components: {
+        Pranchas
+    },
+    created() {
+        this.usuario = JSON.parse(localStorage.usuario);
+    },
+    methods: {
+        pranchaSelecionada(prancha) {
+            console.log(prancha);
+            this.prancha = prancha.hid;
+        },
+
+        pranchaDeselecionada(prancha) {
+            if(this.prancha == prancha.hid)
+                this.prancha = null;
+        },
+    }
+}
 </script>

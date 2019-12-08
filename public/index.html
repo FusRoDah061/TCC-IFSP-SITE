@@ -3,13 +3,39 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="icon" href="<%= BASE_URL %>favicon.ico">
-    <title>prancha-comunicacao</title>
+
+    <link href="//unpkg.com/ionicons@4.5.5/dist/css/ionicons.min.css" rel="stylesheet">
+    <link href="//fonts.googleapis.com/css?family=Nunito:400,700,900&display=swap" rel="stylesheet">
+    <link href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet">
+
+    <title>Prancha de Comunicação Online</title>
+
+    <script>
+      (function(){
+        var redirect = sessionStorage.redirect;
+        delete sessionStorage.redirect;
+        if (redirect && redirect != location.href) {
+          history.replaceState(null, null, redirect);
+        }
+      })();
+    </script>
+
+    <script src="<%= BASE_URL %>scripts/extensions.js"></script>
+    <script src="//www.google.com/recaptcha/api.js"></script>
+    <script src="<%= BASE_URL %>scripts/md5.min.js"></script>
+    <script src="//unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@8"></script>
+    <script src="//code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script src="<%= BASE_URL %>thirdparty/vlibras-widget/vlibras-plugin.js"></script>
+    <!--<script src="//api.handtalk.me/plugin/latest/handtalk.min.js"></script>-->
+    <!--<script src="./scripts/handtalk.js"></script>-->
   </head>
-  <body>
+  <body class="overflow-auto">
     <noscript>
-      <strong>We're sorry but prancha-comunicacao doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
+      <strong>Esse site não pode ser exibido sem JavaScript habilitado.</strong>
     </noscript>
     <div id="app"></div>
     <!-- built files will be auto injected -->

@@ -1,0 +1,36 @@
+<IfModule mod_deflate.c>
+        <IfModule mod_filter.c>
+                # these are known to be safe with MSIE 6
+                AddOutputFilterByType DEFLATE text/html text/plain text/xml
+
+                # everything else may cause problems with MSIE 6
+                AddOutputFilterByType DEFLATE text/css
+                AddOutputFilterByType DEFLATE application/x-javascript application/javascript application/ecmascript
+                AddOutputFilterByType DEFLATE application/rss+xml
+                AddOutputFilterByType DEFLATE application/xml
+        </IfModule>
+</IfModule>
+
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+  RewriteRule ^index\.html$ - [L]
+
+  # Exclui arquivos existentes
+  RewriteCond %{REQUEST_FILENAME} !-f
+
+  # Exclui diretórios existentes
+  RewriteCond %{REQUEST_FILENAME} !-d
+
+  # Exclui BLOB UUID
+  # RewriteCond %{REQUEST_FILENAME} !([A-z0-9]{8}-[A-z0-9]{4}-[A-z0-9]{4}-[A-z0-9]{4}-[A-z0-9]{12})
+
+  # Exclui diretório thirdparty
+  RewriteCond %{REQUEST_URI} !^/thirdparty/
+
+  # Exclui rota api
+  RewriteCond %{REQUEST_URI} !^/api/
+
+  RewriteRule . /index.html [L]
+</IfModule>

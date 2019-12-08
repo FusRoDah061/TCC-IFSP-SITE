@@ -1,0 +1,266 @@
+.pranchas {
+    transition: .1s;
+
+    .pranchas-content {
+        transition: .2s;
+
+        & > p {
+            margin: 0;
+            font-size: $font-size-sec-title-small;
+            margin-bottom: 5px;
+        }
+
+        .pranchas-list-wrapper {
+            .pranchas-list {
+                position: relative;
+                display: flex;
+                padding: 0;
+                margin: 0;
+                overflow: hidden;
+                justify-content: start;
+                padding-right: 5px;
+
+                & li:nth-child(n+11) {
+                    display: none;
+                }
+
+                li:last-child {
+                    display: block;
+                }
+
+                .prancha-selecionada {
+                    .btn-white {
+                        border-color: $red !important;
+                    }
+                }
+
+                .prancha {
+                    display: block;
+                    list-style: none;
+                    flex-grow: 1;
+                    /* flex-basis: 0; */
+                    min-width: 0;
+                    margin: 0px 2px;
+
+                    a, button {
+                        position: relative;
+                        display: block;
+                        background: $white;
+                        width: 100%;
+                        border: 3px solid $white-grayer;
+                        padding: 4px 10px;
+                        border-radius: 8px;
+                        color: $black;
+                        outline: none !important;
+                        text-decoration: none !important;
+                        font-size: 1rem;
+                        font-weight: bold;
+                        white-space: nowrap;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        text-align: center;
+                    }
+
+                    .btn-blue, .btn-red {
+                        display: none;
+                    }
+                }
+
+                .btn-nova-prancha > a {
+                    background: $green;
+                    border: 3px solid $green-darker;
+                    color: $white;
+                    margin-left: 0;
+                }
+
+                .btn-todas-pranchas > button {
+                    background: $white;
+                    border: 3px solid $white-grayer;
+                    text-transform: none;
+                }
+            }
+        }
+    }
+}
+
+.pranchas-modal {
+    position: fixed;
+    background: $overlay-background;
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    z-index: 200;
+
+    .pranchas-content {
+        position: absolute;
+        width: 70vw;
+        height: 60vh;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: $white;
+        margin: auto;
+        padding: $body-padding;
+        box-shadow: 0px 0px 6px 1px $gray;
+        border-radius: 10px;
+
+        .pranchas-list-wrapper {
+            overflow: auto;
+            max-height: calc(100% - 31px);
+
+            .pranchas-list {
+                z-index: 1;
+                flex-direction: column;
+
+                .prancha {
+                    display: grid !important;
+                    width: 100%;
+                    margin-bottom: 5px;
+                    grid-template-columns: auto 50px 50px;
+                    grid-column-gap: 5px;
+
+                    .btn-blue, .btn-red {
+                        display: block;
+                    }
+                }
+
+                .btn-nova-prancha {
+                    display: block !important;
+                }
+
+                .btn-todas-pranchas {
+                    display: none !important;
+                }
+            }
+        }
+    }
+
+}
+
+@media only screen and (max-width: 770px) {
+    .pranchas {
+        .pranchas-content {
+            & > p {
+                margin: 0;
+                font-size: $font-size-sec-title;
+                margin-bottom: 7px;
+            }
+
+            .pranchas-list-wrapper {
+                .pranchas-list {
+                    li {
+                        display: block;
+                    }
+
+                    & li:nth-child(n+5) {
+                        display: none;
+                    }
+
+                    li:last-child {
+                        display: block;
+                    }
+
+                    .prancha {
+                        a, button {
+                            padding: 6px 15px !important;
+                            margin: 0px 3px;
+                        }
+                    }
+
+                    .btn-todas-pranchas > button {
+                        text-transform: uppercase;
+                    }
+                }
+            }
+        }
+    }
+
+    .pranchas-modal {
+        position: absolute;
+        background: $overlay-background;
+        width: 100vw;
+        height: 100vh;
+        top: 0;
+        left: 0;
+        z-index: 200;
+
+        .pranchas-content {
+            position: absolute;
+            width: 70vw;
+            height: 60vh;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: $white;
+            margin: auto;
+            padding: $body-padding;
+            box-shadow: 0px 0px 6px 1px $gray;
+            border-radius: 10px;
+
+            .pranchas-list-wrapper {
+                overflow: auto;
+                max-height: calc(100% - 31px);
+
+                .pranchas-list {
+                    flex-direction: column;
+
+                    .prancha {
+                        width: 100%;
+                        margin-bottom: 5px;
+                    }
+
+                    .btn-todas-pranchas {
+                        display: none !important;
+                    }
+                }
+            }
+        }
+
+    }
+}
+
+
+@media only screen and (max-width: 570px) {
+    .pranchas {
+        .pranchas-content {
+            & > p {
+                margin: 0;
+                font-size: $font-size-sec-title-small;
+                margin-bottom: 5px;
+            }
+
+            .pranchas-list-wrapper {
+                .pranchas-list {
+                    & li:nth-child(n+3) {
+                        display: none;
+                    }
+
+                    li:last-child {
+                        display: block;
+                    }
+
+                    .prancha {
+                        a, button {
+                            padding: 4px 10px;
+                            font-size: 1rem;
+                        }
+                    }
+
+                    .btn-todas-pranchas > button {
+                        text-transform: none;
+                    }
+                }
+            }
+        }
+    }
+
+    .pranchas-modal {
+        .pranchas-content {
+            width: 90vw;
+            height: 70vh;
+        }
+    }
+}

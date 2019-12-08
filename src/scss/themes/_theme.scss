@@ -1,0 +1,27 @@
+.app-title {
+    text-align: center;
+    font-weight: normal;
+    font-size: 2rem;
+
+    span {
+        display: block;
+        text-align: center;
+        font-weight: bold;
+        font-size: 4rem;
+        line-height: normal;
+    }
+}
+
+.component-title {
+    font-weight: bold;
+}
+
+@media only screen and (max-width: 470px) {
+    .app-title {
+        font-size: 1.5rem;
+
+        span {
+            font-size: 2.6rem;
+        }
+    }
+}

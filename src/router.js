@@ -1,8 +1,38 @@
 import Vue from "vue";
 import Router from "vue-router";
+import Login from "./views/Login.vue";
+import Cadastro from "./views/Cadastro.vue";
+import Recuperar from "./views/Recuperar.vue";
+import Senha from "./views/Senha.vue";
 import Home from "./views/Home.vue";
+import Prancha from "./views/Prancha.vue";
+import AreaLogado from "./views/AreaLogado.vue";
+import Perfil from "./views/Perfil.vue";
+import Simbolo from "./views/Simbolo.vue";
 
 Vue.use(Router);
+
+function authGuard(to, from, next) {
+  toastr.remove();
+
+  if (localStorage.usuario) {
+    next();
+  }
+  else {
+    next('/');
+  }
+}
+
+function loginGuard(to, from, next) {
+  toastr.remove();
+  
+  if (localStorage.usuario) {
+    next('/app');
+  }
+  else {
+    next();
+  }
+}
 
 export default new Router({
   mode: "history",
@@ -10,17 +40,54 @@ export default new Router({
   routes: [
     {
       path: "/",
-      name: "home",
-      component: Home
+      name: "login",
+      beforeEnter: loginGuard,
+      component: Login
     },
     {
-      path: "/about",
-      name: "about",
-      // route level code-splitting
-      // this generates a separate chunk (about.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () =>
-        import(/* webpackChunkName: "about" */ "./views/About.vue")
+      path: "/cadastrar",
+      name: "cadastrar",
+      beforeEnter: loginGuard,
+      component: Cadastro
+    },
+    {
+      path: "/recuperar",
+      name: "recuperar",
+      beforeEnter: loginGuard,
+      component: Recuperar
+    },
+    {
+      path: "/senha/:pedido",
+      name: "senha",
+      beforeEnter: loginGuard,
+      component: Senha
+    },
+    {
+      path: "/app",
+      beforeEnter: authGuard,
+      component: AreaLogado,
+      children: [
+        {
+          path: "",
+          component: Home,
+        },
+        {
+          path: "prancha/",
+          component: Prancha,
+        },
+        {
+          path: "prancha/:prancha",
+          component: Prancha,
+        },
+        {
+          path: "perfil/",
+          component: Perfil,
+        },
+        {
+          path: "simbolo/",
+          component: Simbolo,
+        }
+      ]
     }
   ]
 });

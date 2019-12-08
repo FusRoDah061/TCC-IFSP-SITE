@@ -1,0 +1,126 @@
+@mixin simbolo-size($width, $height) {
+    width: $width;
+    height: $height;
+    max-width: $width;
+    max-height: $height;
+    min-width: $width;
+    min-height: $height;
+}
+
+@mixin simbolo-sentenca() {
+    width: $simbolo-senteca-dim !important;
+    min-width: $simbolo-senteca-dim !important;
+    max-width: $simbolo-senteca-dim !important;
+    height: $simbolo-senteca-dim !important;
+    min-height: $simbolo-senteca-dim !important;
+    max-height: $simbolo-senteca-dim !important;
+
+    padding: 5px !important;
+    
+    .simbolo-content {
+        padding: 1px !important;
+
+        .simbolo-icone {
+            max-height: $simbolo-senteca-dim;
+        }
+
+        .simbolo-palavra {
+            display: none;
+        }
+    }
+}
+
+@mixin simbolo-tradutor() {
+    width: $simbolo-tradutor-dim !important;
+    min-width: $simbolo-tradutor-dim !important;
+    max-width: $simbolo-tradutor-dim !important;
+    height: $simbolo-tradutor-dim !important;
+    min-height: $simbolo-tradutor-dim !important;
+    max-height: $simbolo-tradutor-dim !important;
+
+    padding: 5px !important;
+    margin: 0px 5px;
+    transition: .2s;
+    
+    .simbolo-content {
+        padding: 1px !important;
+
+        .simbolo-icone {
+            max-height: $simbolo-tradutor-dim;
+        }
+
+        .simbolo-palavra {
+            display: none;
+        }
+    }
+}
+
+@mixin simbolo-sm() {
+    @include simbolo-size($simbolo-sm-width, $simbolo-sm-height);
+    padding: 5px !important;
+    
+    .simbolo-content {
+        padding: 1px !important;
+
+        .simbolo-icone {
+            max-height: $simbolo-sm-width - 22px;
+        }
+
+        .simbolo-palavra {
+            font-size: 12px !important;
+        }
+    }
+}
+
+@mixin simbolo-md() {
+    @include simbolo-size($simbolo-md-width, $simbolo-md-height);
+    
+    .btn-deletar {
+        bottom: 10px;
+        right: -15px;
+        border-radius: 40px;
+        height: 40px;
+
+        & > .icon {
+            right: 6px;
+            line-height: 40px;
+        }
+    }
+
+    &:hover {
+        .btn-deletar {
+            right: -30px;
+
+            & > .icon {
+                right: 14px;
+                font-size: 1.1rem;
+            }
+        }
+    }
+
+    .simbolo-content {
+
+        .simbolo-icone {
+            max-height: $simbolo-md-width - 28px;
+        }
+
+        .simbolo-palavra {
+            font-size: 13px !important;
+        }
+    }
+}
+
+@mixin simbolo-lg() {
+    @include simbolo-size($simbolo-lg-width, $simbolo-lg-height);
+
+    .simbolo-content {
+
+        .simbolo-icone {
+            max-height: $simbolo-lg-width - 28px;
+        }
+
+        .simbolo-palavra {
+            font-size: 14px !important;
+        }
+    }
+}
